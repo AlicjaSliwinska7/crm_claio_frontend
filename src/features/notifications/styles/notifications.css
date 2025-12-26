@@ -1,0 +1,284 @@
+/* Kolory bazowe (stonowane) */
+:root {
+	--nt-bg: #ffffff;
+	--nt-surface: #f8fafc;
+	--nt-border: #e5e7eb;
+	--nt-muted: #6b7280;
+	--nt-muted-2: #374151;
+	--nt-accent: #4f46e5;
+	--nt-accent-100: #eef2ff;
+	--nt-accent-200: #c7d2fe;
+	--nt-accent-800: #3730a3;
+	--nt-danger: #ef4444;
+	--nt-success: #059669;
+	--nt-row-hover: #f3f6ff;
+	--nt-unread-bg: #fafafa;
+	--nt-focus: #2563eb;
+}
+
+/* Layout strony */
+.notifications-page {
+	display: grid;
+	gap: 12px;
+}
+
+/* Pasek narzędzi */
+.notifications-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+/* lewa część: zakładki + filtry typów */
+.notifications-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+/* Zakładki */
+.tabs {
+	display: inline-flex;
+	gap: 6px;
+}
+.tab {
+	padding: 8px 10px;
+	border-radius: 8px;
+	border: 1px solid var(--nt-border);
+	background: var(--nt-bg);
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tab:hover {
+	background: var(--nt-surface);
+}
+.tab.active {
+	background: var(--nt-accent-100);
+	border-color: var(--nt-accent-200);
+}
+.tab:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in oklab, var(--nt-focus) 30%, transparent);
+}
+
+/* NOWE: filtry po rodzaju powiadomień */
+.notif-type-filters {
+	display: inline-flex;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+.notif-type-pill {
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: #fff;
+	border: 1px solid transparent;
+	font-size: 12px;
+	color: #334155;
+	cursor: pointer;
+	transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+.notif-type-pill:hover {
+	background: #f1f5f9;
+}
+.notif-type-pill.active {
+	background: #e0e7ff;
+	border-color: #c7d2fe;
+	color: #1f2937;
+	font-weight: 600;
+}
+
+/* Akcje */
+.actions .btn-secondary {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	border: 1px solid var(--nt-border);
+	background: var(--nt-bg);
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.actions .btn-secondary:hover {
+	background: var(--nt-surface);
+}
+.actions .btn-secondary:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in oklab, var(--nt-focus) 30%, transparent);
+}
+
+/* Karta listy */
+.card.list-card {
+	background: var(--nt-bg);
+	border: 1px solid var(--nt-border);
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+/* Wiersz powiadomienia */
+.notif-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 14px;
+	border-bottom: 1px solid #f1f5f9;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+.notif-row:last-child {
+	border-bottom: none;
+}
+.notif-row.unread {
+	background: var(--nt-unread-bg);
+}
+.notif-row:hover {
+	background: var(--nt-row-hover);
+}
+.notif-row:focus-visible {
+	outline: none;
+	box-shadow: inset 0 0 0 2px var(--nt-focus);
+	background: var(--nt-row-hover);
+}
+
+/* Treść wiersza */
+.notif-main {
+	display: grid;
+	gap: 4px;
+}
+.notif-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.notif-message {
+	color: var(--nt-muted-2);
+}
+.notif-meta {
+	display: flex;
+	gap: 12px;
+	color: var(--nt-muted);
+	font-size: 12px;
+}
+
+/* Kropka nieprzeczytane */
+.notif-dot {
+	width: 8px;
+	height: 8px;
+	background: var(--nt-danger);
+	border-radius: 999px;
+	display: inline-block;
+}
+
+/* Chip/Przycisk „Odhacz” */
+.btn-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 10px;
+	border-radius: 999px;
+	border: 1px solid var(--nt-border);
+	background: var(--nt-bg);
+	transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-chip:hover {
+	background: var(--nt-surface);
+}
+.btn-chip:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in oklab, var(--nt-focus) 30%, transparent);
+}
+.btn-chip--ghost {
+	opacity: 0.8;
+}
+
+/* Badge tylko na tej stronie */
+.notifications-page .notification-badge {
+	background-color: rgba(82, 142, 233, 0.664);
+	color: white;
+	font-weight: 600;
+	font-size: 10px;
+	min-width: 16px;
+	height: 6px;
+	padding: 0 5px;
+	border-radius: 999px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+	z-index: 2;
+}
+
+/* Dodatkowe (opcjonalne) */
+.notifications-container {
+	background-color: var(--nt-surface);
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* === Kolory dla typów powiadomień === */
+.notif-row.task {
+	background-color: #c5c5ff63;
+}
+.notif-row.task.unread {
+	background-color: #c5c5ff8d;
+}
+
+.notif-row.post {
+	background-color: #f3f4f6;
+}
+.notif-row.post.unread {
+	background-color: #e5e7eb;
+}
+
+.notif-row.training {
+	background-color: #ecfdf5;
+}
+.notif-row.training.unread {
+	background-color: #d1fae5;
+}
+
+.notif-row.meeting {
+	background-color: #eff6ff;
+}
+.notif-row.meeting.unread {
+	background-color: #dbeafe;
+}
+
+/* hover nadal działa */
+.notif-row:hover {
+	filter: brightness(0.98);
+}
+/* select z typami */
+.notif-type-select-wrap {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 8px 4px 0;
+	border-radius: 8px;
+}
+.notif-type-select-label {
+	font-size: 12px;
+	color: #4b5563;
+}
+.notif-type-select {
+	border: 1px solid var(--nt-border);
+	border-radius: 8px;
+	padding: 8px 28px 8px 8px;
+	background: #fff;
+	font-size: 13px;
+	color: #111827;
+	outline: none;
+	cursor: pointer;
+	appearance: auto;
+}
+.notif-type-select:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.22);
+	border-color: rgba(37, 99, 235, 0.55);
+}

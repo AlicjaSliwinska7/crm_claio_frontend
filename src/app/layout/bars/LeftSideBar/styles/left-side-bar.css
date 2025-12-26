@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Left Sidebar — layout-only skin (no shared link/submenu styles here)
+   Path: src/app/layout/bars/LeftSideBar/styles/left-side-bar.css
+   Depends on:
+     - tokens/globals for variables (no :root here)
+     - sidebar-core.css for .sidebar-nav / .sidebar-link / .sidebar-submenu
+     - scroll-bars.css for scrollbar visuals
+   ========================================================================== */
+
+/* ---- USTAWIENIA LOKALNE (możesz nadpisać z zewnątrz) ------------------- */
+:root {
+	/* Szerokość left sidebara, jeśli nie zdefiniowana globalnie */
+	--left-sidebar-width: 250px;
+
+	/* Wewnętrzny luz od góry obszaru przewijanego */
+	--sidebar-inner-gap-left: 6px; /* podbij do 8–10px jeśli wciąż „za wysoko” */
+}
+
+/* ---- KONTENER LEWEGO SIDEBARA ------------------------------------------ */
+.left-sidebar {
+	position: fixed;
+	inset: 0 auto 0 0; /* top:0; right:auto; bottom:0; left:0 */
+	width: var(--left-sidebar-width);
+	background: transparent; /* skórę/kolory robi warstwa shared */
+	padding: 0 10px 10px; /* minimalny wewn. luz poza ScrollArea */
+	box-sizing: border-box;
+	z-index: 998; /* poniżej modali, powyżej tła */
+	font-family: Arial, sans-serif;
+
+	/* przewija tylko ScrollArea w środku */
+	overflow: hidden;
+}
+
+/* Jeśli masz górny pasek / header na stałe, możesz opcjonalnie dodać:
+.left-sidebar { top: var(--app-top, 0); }
+*/
+
+/* ---- OBSZAR PRZEWIJANY (ScrollArea) ------------------------------------- */
+.left-sidebar .scroll-area {
+	height: 100%;
+	overflow: auto;
+	padding-top: var(--sidebar-inner-gap-left);
+}
+
+/* Wariant z wewnętrznym wrapperem (zostaw jak było) */
+.left-sidebar .scroll-area__inner {
+	height: 100%;
+	max-height: 100%;
+	box-sizing: border-box;
+}
+
+/* ---- UKŁAD LISTY NAWIGACJI ---------------------------------------------- */
+/* Odstępy między grupami/sekcjami linków; sam wygląd linków i submenu
+   zapewnia sidebar-core.css */
+.sidebar-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+/* Uwaga:
+   .sidebar-submenu i .sidebar-submenu .sidebar-link SĄ STYLOWANE
+   w sidebar-core.css — nie dublujemy ich tutaj. */
+
+/* ---- RESPONSYWNOŚĆ ------------------------------------------------------ */
+@media (max-width: 768px) {
+	.left-sidebar {
+		display: none;
+	}
+	.main-content-wrapper {
+		margin-left: 0 !important;
+	}
+}
+
+/* ---- OPCJONALNIE: przesunięcie głównej treści o szerokość sidebara ------ */
+/* Jeśli masz wrapper na treść, możesz użyć tej reguły w układach desktop:  */
+/* Zostaw zakomentowane, jeżeli margin-left robisz w komponencie/layout.     */
+/*
+@media (min-width: 769px) {
+  .main-content-wrapper {
+    margin-left: var(--left-sidebar-width);
+  }
+}
+*/

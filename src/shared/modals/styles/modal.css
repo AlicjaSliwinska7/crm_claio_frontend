@@ -1,0 +1,159 @@
+﻿/* =========================================================
+   MODAL — LAYOUT (overlay, kontener, grid header|body|footer)
+   Uwaga: TYLKO układ, spacing, wymiary i animacje.
+   Kolory i styl formularza są w form-modal.css.
+   ========================================================= */
+
+/* ---------- Overlay (pełny ekran) ---------- */
+.ui-modal__backdrop {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center; /* wyśrodkowanie pion */
+	justify-content: center; /* wyśrodkowanie poziom */
+	z-index: 20000; /* ⬅ nad całym UI (wyżej niż shiftdrawer) */
+
+	/* uniwersalny „oddech” + wsparcie dla notch */
+	--ui-modal-viewport-padding: 24px;
+	padding: max(var(--ui-modal-viewport-padding), env(safe-area-inset-top, 0px))
+		max(var(--ui-modal-viewport-padding), env(safe-area-inset-right, 0px))
+		max(var(--ui-modal-viewport-padding), env(safe-area-inset-bottom, 0px))
+		max(var(--ui-modal-viewport-padding), env(safe-area-inset-left, 0px));
+
+	animation: m-fade 0.16s ease-out;
+	overflow: auto; /* gdy dialog > viewport, da się przewinąć */
+}
+
+/* 🔁 MODYFIKATOR: „sheet” spod nawigacji (stare zachowanie)
+   Dodaj klasę do overlayu, gdy chcesz mieć offset od topbarów:
+   <div class="ui-modal__backdrop ui-modal__backdrop--sheet">… */
+.ui-modal__backdrop.ui-modal__backdrop--sheet {
+	align-items: flex-start;
+	--ui-modal-offset: 72px; /* możesz nadpisać w danym ekranie */
+	padding-top: calc(var(--ui-modal-offset) + env(safe-area-inset-top, 0px));
+	padding-right: max(var(--ui-modal-viewport-padding), env(safe-area-inset-right, 0px));
+	padding-bottom: max(var(--ui-modal-viewport-padding), env(safe-area-inset-bottom, 0px));
+	padding-left: max(var(--ui-modal-viewport-padding), env(safe-area-inset-left, 0px));
+}
+
+/* ---------- Kontener dialogu ---------- */
+.ui-modal {
+	/* Neutralne zmienne kształtu/rozmiaru */
+	--modal-radius: 12px;
+	position: relative; /* tworzy własny stacking context */
+	z-index: 20001;
+
+	width: min(900px, 92vw);
+
+	/* centr: odejmujemy symetryczny padding overlayu */
+	max-height: calc(100vh - (2 * max(24px, env(safe-area-inset-top, 0px))));
+	margin: 0;
+	border-radius: var(--modal-radius);
+
+	display: grid;
+	grid-template-rows: auto 1fr auto; /* header | body | footer */
+	overflow: hidden; /* body przewija się w środku */
+	animation: m-slide 0.18s ease-out;
+}
+
+/* Wariant wysokości dla trybu „sheet” (jak dawniej) */
+.ui-modal__backdrop.ui-modal__backdrop--sheet .ui-modal {
+	max-height: calc(
+		100vh - (var(--ui-modal-offset) + env(safe-area-inset-top, 0px)) - max(16px, env(safe-area-inset-bottom, 0px))
+	);
+}
+
+/* Warianty szerokości */
+.ui-modal--sm {
+	width: min(520px, 92vw);
+}
+.ui-modal--md {
+	width: min(760px, 92vw);
+}
+.ui-modal--lg {
+	width: min(1100px, 95vw);
+}
+
+/* ---------- Header / Body / Footer (tylko spacing/układ) ---------- */
+.ui-modal__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 18px 20px 10px;
+}
+
+.ui-modal__title {
+	margin: 0; /* rozmiar/kolor w form-modal.css */
+}
+
+.ui-modal__close {
+	appearance: none;
+	border: 0;
+	background: none;
+	cursor: pointer;
+	padding: 2px 8px;
+	border-radius: 10px;
+	line-height: 1;
+}
+
+.ui-modal__body {
+	padding: 12px 20px 20px;
+	min-height: 0; /* ważne w gridzie */
+	overflow: auto; /* przewijanie treści */
+	-webkit-overflow-scrolling: touch; /* płynny scroll na iOS */
+	overscroll-behavior: contain; /* bez „przebijania” do tła */
+}
+
+.ui-modal__footer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	padding: 12px 20px 16px;
+}
+
+/* ---------- Alternatywa: sticky pasek akcji wewnątrz body ---------- */
+.ui-modal__body .m-actions--footer {
+	bottom: 0;
+	margin: 12px -20px -12px; /* pełna szerokość względem body */
+	padding: 12px 20px;
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+
+/* ---------- Animacje (neutralne) ---------- */
+@keyframes m-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes m-slide {
+	from {
+		transform: translateY(6px);
+		opacity: 0.98;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+/* ---------- Preferencje dostępności: mniej ruchu ---------- */
+@media (prefers-reduced-motion: reduce) {
+	.ui-modal__backdrop,
+	.ui-modal {
+		animation: none;
+	}
+}
+
+/* ---------- Małe wysokości: mniejsze zaokrąglenie ---------- */
+@media (max-height: 640px) {
+	.ui-modal {
+		border-radius: 10px;
+	}
+}

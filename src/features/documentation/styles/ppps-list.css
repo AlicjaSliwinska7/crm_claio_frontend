@@ -1,0 +1,63 @@
+/* ====== PPPsList (lista protokołów PPP) ====== */
+
+.pppList { display:block; }
+
+/* FILTRY */
+.pppList__filters{
+  display:grid;
+  grid-template-columns: 1.2fr 160px 180px 200px 200px;
+  gap:10px;
+  margin-bottom:12px;
+}
+@media (max-width: 1100px){
+  .pppList__filters{ grid-template-columns: 1fr 1fr; }
+}
+.pppList__filters .i{ width:100%; max-width:none; }
+
+.pppList__filters__toggles{
+  grid-column: 1 / -1;
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+
+/* LISTA */
+.pppList__grid{
+  display:grid;
+  gap:10px;
+}
+
+.pppList__item{
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.pppList__item:hover{
+  border-color:#d1d5db;
+  box-shadow: 0 6px 14px rgba(0,0,0,.06);
+}
+
+/* Rzędy w kartach */
+.pppList__row1,
+.pppList__row2,
+.pppList__row3{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.pppList__row1{ justify-content:space-between; margin-bottom:4px; }
+.pppList__row2{ justify-content:space-between; color:#374151; margin-bottom:6px; }
+.pppList__row3{ justify-content:flex-end; }
+
+.pppList__title{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.pppList__linkLike{
+  background:none; border:none; padding:0; cursor:pointer;
+  color:#1d4ed8; border-bottom:1px dashed rgba(29,78,216,.35);
+}
+.pppList__linkLike:hover{ border-bottom-style:solid; }
+
+.pppList__metaRight{ color:#334155; font-size:13px; white-space:nowrap; }
+.pppList__metaLabel{ color:#6b7280; font-size:12px; margin-right:4px; }
+.pppList__sep{ opacity:.5; margin:0 6px; }
+
+/* Kody próbek */
+.pppList__codes{ display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.pppList__code{ background:#f3f4f6; padding:2px 6px; border-radius:6px; }
+.pppList__more{ color:#6b7280; font-size:12px; }
+
+/* Akcje */
+.pppList__actions{ display:flex; gap:8px; flex-wrap:wrap; }

@@ -1,0 +1,47 @@
+/* Styl jak w offers.css — spójny wygląd listy i widoku karty */
+
+.calc-wrap { padding: 16px; }
+.calc-header h1 { margin: 0 0 4px; font-size: 20px; font-weight: 600; }
+.calc-header p { margin: 0; color: #6b7280; font-size: 12px; }
+
+.calc-toolbar {
+  margin: 12px 0 16px;
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 12px;
+  display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+}
+.calc-input { position: relative; width: 280px; max-width: 100%; }
+.calc-input input {
+  width: 100%; box-sizing: border-box; padding: 8px 10px 8px 28px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; outline: none;
+}
+.calc-select { display: inline-flex; align-items: center; gap: 8px; }
+.calc-select select {
+  padding: 8px 10px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; background: #fff;
+}
+
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 8px; font-size: 14px; cursor: pointer; border: 1px solid transparent; background: #000; color: #fff; }
+.btn.outline { background: #fff; color: #111827; border: 1px solid #e5e7eb; }
+.btn.icon { padding: 6px; background: transparent; color: inherit; border: 1px solid #e5e7eb; }
+
+.table-card { overflow: hidden; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; }
+.table-head { display: grid; grid-template-columns: 2fr 2fr 3fr 2fr 1fr 1fr; padding: 10px 12px; font-size: 12px; font-weight: 600; color: #6b7280; }
+.table-sep { height: 1px; background: #e5e7eb; }
+.row { display: grid; grid-template-columns: 2fr 2fr 3fr 2fr 1fr 1fr; align-items: center; padding: 10px 12px; font-size: 14px; border-top: 1px solid #f3f4f6; }
+.row .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: #374151; }
+.row .right { text-align: right; padding-right: 8px; }
+.row .center { text-align: center; }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.badge.draft { background: #f4f4f5; color: #3f3f46; }
+.badge.review { background: #fef3c7; color: #92400e; }
+.badge.approved { background: #d1fae5; color: #047857; }
+
+.docLink { color: #1d4ed8; text-decoration: none; }
+.docLink:hover { text-decoration: underline; }
+
+.panel { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px; background: #fff; }
+.tableLike { border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+.tableLike__head, .tableLike__row { display: grid; grid-template-columns: 5fr 3fr 2fr 2fr; }
+.tableLike__head { padding: 8px 10px; font-size: 12px; font-weight: 600; color: #6b7280; background: #f9fafb; }
+.tableLike__row { padding: 8px 10px; border-top: 1px solid #f3f4f6; }

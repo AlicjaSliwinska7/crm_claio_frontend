@@ -1,0 +1,40 @@
+/* Controls: wyrównanie filtrów i przycisku Dodaj — tylko dla listy klientów */
+.clients-controls .form-row {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+/* identyczna wysokość selectów i przycisku */
+.clients-controls .training-filter-select,
+.clients-controls .add-client-btn {
+  height: 34px;
+  line-height: 34px;
+}
+
+/* przycisk Dodaj: spójny padding, bez „skoków” przy hover */
+.clients-controls .add-client-btn {
+  padding: 0 12px;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Search po lewej, reszta po prawej – lepsze zawijanie na wąskich ekranach */
+.clients-controls .search-container { flex: 1 1 320px; min-width: 260px; max-width: 560px; }
+.clients-controls { gap: 10px; }
+
+/* Mobile: pozwól filtrom zejść pod wyszukiwarkę */
+@media (max-width: 760px) {
+  .clients-controls { justify-content: stretch; }
+  .clients-controls .form-row {
+    margin-left: 0;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .clients-controls .training-filter-select,
+  .clients-controls .add-client-btn {
+    flex: 0 1 auto;
+  }
+}

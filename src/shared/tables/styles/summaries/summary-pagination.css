@@ -1,0 +1,193 @@
+/* =========================================================
+   Summary Pagination (uniwersalna dla tabel i list)
+   Ścieżka: src/shared/tables/styles/summaries/summary-pagination.css
+   Klasy:   .pagination, .pagination__info, .pagination__controls,
+            .pagination__btn, .pagination__page, .pagination__select
+   Warianty: .pagination--solid | .pagination--pill | .pagination--compact | .pagination--primary
+   ========================================================= */
+
+.pagination {
+	/* neutralne, chłodne zmienne – łatwe do podmiany w skinach */
+	--pg-text: #111827; /* główny tekst */
+	--pg-muted: #6b7280; /* opisy, licznik */
+	--pg-border: #e5e7eb; /* obramowania */
+	--pg-bg: #ffffff; /* tło selekta/solid btn */
+	--pg-chip-bg: #f8fafc; /* tło przycisku w wariancie solid */
+	--pg-hover: #f3f4f6; /* hover tła (opcjonalnie) */
+	--pg-focus: #d64545; /* outline (spójne z registers) */
+	--pg-accent: #3a628a; /* kolor akcentu (hover) */
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 8px;
+	font-family: inherit;
+	line-height: 1.2;
+}
+
+/* Informacja (po lewej) */
+.pagination__info {
+	font-size: 13px;
+	color: var(--pg-muted);
+	margin-right: 4px; /* delikatne oddzielenie od kontrolek */
+	white-space: nowrap;
+}
+
+/* Kontrolki */
+.pagination__controls {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+/* Przycisk stronicowania (chevrony tekstowe lub SVG w środku) */
+.pagination__btn {
+	background: transparent;
+	border: 0;
+	border-radius: 8px;
+	color: var(--pg-text);
+	min-width: 32px;
+	height: 32px;
+	padding: 0 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: transform 0.15s ease, color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pagination__btn:hover {
+	transform: scale(1.05);
+	color: var(--pg-accent);
+	background: transparent; /* minimalistycznie */
+}
+
+.pagination__btn:focus-visible {
+	outline: 2px solid var(--pg-focus);
+	outline-offset: 2px;
+}
+
+.pagination__btn:disabled {
+	opacity: 0.35;
+	pointer-events: none;
+}
+
+/* Wskaźnik strony */
+.pagination__page {
+	min-width: 64px;
+	text-align: center;
+	color: var(--pg-muted);
+	font-variant-numeric: tabular-nums;
+	-moz-font-feature-settings: 'tnum' 1;
+	-webkit-font-feature-settings: 'tnum' 1;
+	font-feature-settings: 'tnum' 1;
+}
+
+/* Selekcja rozmiaru strony */
+.pagination__size {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.pagination__select {
+	appearance: none;
+	background: var(--pg-bg);
+	color: var(--pg-text);
+	border: 1px solid var(--pg-border);
+	border-radius: 8px;
+	height: 32px;
+	padding: 0 10px;
+	font: inherit;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.pagination__select:hover {
+	border-color: #d1d5db;
+}
+.pagination__select:focus-visible {
+	outline: 2px solid var(--pg-focus);
+	outline-offset: 2px;
+}
+
+/* =========================
+   Warianty wyglądu
+   ========================= */
+
+/* Solid: delikatne „chipowe” tło i ramka */
+.pagination--solid .pagination__btn {
+	background: var(--pg-chip-bg);
+	border: 1px solid var(--pg-border);
+}
+.pagination--solid .pagination__btn:hover {
+	background: var(--pg-hover);
+}
+
+/* Pill: bardziej „zaokrąglone” */
+.pagination--pill .pagination__btn {
+	border-radius: 999px;
+}
+.pagination--pill .pagination__select {
+	border-radius: 999px;
+}
+
+/* Compact: mniejsze elementy, ciaśniejsza typografia */
+.pagination--compact .pagination__btn {
+	min-width: 28px;
+	height: 28px;
+	padding: 0 8px;
+	border-radius: 6px;
+}
+.pagination--compact .pagination__select {
+	height: 28px;
+	padding: 0 8px;
+	border-radius: 6px;
+}
+.pagination--compact .pagination__info,
+.pagination--compact .pagination__page {
+	font-size: 12px;
+}
+
+/* Primary: nieco silniejszy akcent (kolor brandu) */
+.pagination--primary {
+	--pg-accent: #2c4f6e; /* mocniejszy odcień dla hover */
+}
+
+/* =========================
+   Responsywność
+   ========================= */
+@media (max-width: 560px) {
+	.pagination {
+		flex-wrap: wrap;
+		row-gap: 6px;
+	}
+	.pagination__info {
+		order: 2;
+		width: 100%;
+		text-align: center;
+		margin-right: 0;
+	}
+}
+
+/* =========================
+   Wsparcie dla ciemnych motywów (opcjonalnie)
+   ========================= */
+@media (prefers-color-scheme: dark) {
+	.pagination {
+		--pg-text: #e5e7eb;
+		--pg-muted: #a1a1aa;
+		--pg-border: #3f3f46;
+		--pg-bg: #0b0b0f;
+		--pg-chip-bg: #111319;
+		--pg-hover: #181b22;
+		--pg-focus: #ef4444; /* pozostaje wyraźny */
+		--pg-accent: #9bb1c9;
+	}
+	.pagination--solid .pagination__btn {
+		border-color: var(--pg-border);
+	}
+	.pagination__select {
+		border-color: var(--pg-border);
+	}
+}

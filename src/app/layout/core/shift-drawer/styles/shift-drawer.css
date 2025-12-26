@@ -1,0 +1,246 @@
+/* =========================================================
+   Shift Drawer (portal, fixed) — DARK GLASS + NEON
+   ========================================================= */
+
+/* Warstwy (poniżej modala; modal overlay ma z-index: 20000) */
+:root {
+	--shift-z-root: 10040; /* kontener portalu */
+	--shift-z-base: 10050; /* uchwyt */
+	--shift-z-panel: 10060; /* panel */
+}
+
+/* ---------- ROOT (portal wrapper) ---------- */
+.shift-drawer-root {
+	position: fixed;
+	inset: 0;
+	z-index: var(--shift-z-root);
+	pointer-events: none; /* klikają tylko dzieci */
+}
+
+/* ---------- UCHWYT ---------- */
+.shift-handle {
+	position: fixed;
+	transform: translateX(-50%) !important; /* twardy bezpiecznik */
+	width: 32px;
+	height: 24px;
+	background: transparent;
+	border: none;
+	border-radius: 8px;
+	color: rgb(31 41 55 / 47%);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	pointer-events: auto;
+	outline: none;
+	transition: background 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+	z-index: var(--shift-z-base);
+	will-change: transform;
+}
+.shift-handle svg {
+	transition: transform 0.18s ease;
+}
+.shift-handle.open svg {
+	transform: rotate(180deg);
+}
+
+/* ---------- PANEL (ciemne szkło + neon ring) ---------- */
+.shift-panel {
+	position: fixed;
+	padding: 12px 12px;
+	background: linear-gradient(180deg, rgba(10, 14, 24, 0.78), rgba(10, 14, 24, 0.58));
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 14px;
+	box-sizing: border-box;
+	box-shadow: 0 14px 36px rgba(3, 10, 22, 0.35), 0 0 0 1px rgba(111, 243, 255, 0.05);
+	backdrop-filter: blur(8px) saturate(115%);
+	-webkit-backdrop-filter: blur(8px) saturate(115%);
+	color: #eaf1ff;
+	pointer-events: auto;
+	max-height: 460px;
+	text-align: left;
+
+	left: 0;
+	right: 10px;
+	margin-inline: auto;
+	max-width: var(--main-content-w, 1000px);
+
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-6px);
+	transition: opacity 0.2s ease, transform 0.22s ease, visibility 0s;
+	will-change: transform, opacity;
+	z-index: var(--shift-z-panel);
+}
+.shift-panel.open {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+/* ---------- SIATKA ---------- */
+.shift-groups {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 12px;
+	align-items: start;
+}
+
+/* Header grupy – ciaśniej + zero marginesów nagłówków */
+.shift-group > header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	padding: 2px 0 6px;
+	margin: 0 0 6px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.shift-title,
+.shift-count {
+	margin: 0; /* <-- usuwa „puchnięcie” */
+	line-height: 1.15;
+}
+.shift-title {
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.2px;
+}
+.shift-count {
+	font-size: 12px;
+	color: #b7c4d6;
+}
+
+/* ---------- LISTA OSÓB ---------- */
+.shift-people {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	max-height: 140px;
+}
+
+/* Chip osoby */
+.shift-person {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	color: #f7fbff;
+	border: 1px solid transparent;
+	border-radius: 9999px;
+	padding: 6px 10px;
+	white-space: nowrap;
+	background: rgba(102, 204, 255, 0.12);
+	border-color: rgba(102, 204, 255, 0.55);
+	box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.18), 0 0 10px rgba(102, 204, 255, 0.28),
+		inset 0 0 8px rgba(255, 255, 255, 0.05);
+	transition: filter 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+.shift-person:hover {
+	filter: saturate(1.15) brightness(1.05);
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 16px rgba(102, 204, 255, 0.35),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- PALETY NEON ---------- */
+.shift-group--1 .shift-title {
+	color: #6ff3ff;
+	text-shadow: 0 0 8px rgba(111, 243, 255, 0.45);
+}
+.shift-group--1 .shift-person {
+	background: rgba(111, 243, 255, 0.12);
+	border-color: rgba(111, 243, 255, 0.65);
+	box-shadow: 0 0 0 1px rgba(111, 243, 255, 0.22), 0 0 14px rgba(111, 243, 255, 0.35),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+.shift-group--2 .shift-title {
+	color: #6aa1ff;
+	text-shadow: 0 0 8px rgba(106, 161, 255, 0.45);
+}
+.shift-group--2 .shift-person {
+	background: rgba(106, 161, 255, 0.12);
+	border-color: rgba(106, 161, 255, 0.65);
+	box-shadow: 0 0 0 1px rgba(106, 161, 255, 0.22), 0 0 14px rgba(106, 161, 255, 0.35),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+.shift-group--3 .shift-title {
+	color: #8a7fff; /* cool violet leaning blue */
+	text-shadow: 0 0 8px rgba(138, 127, 255, 0.45);
+}
+.shift-group--3 .shift-person {
+	background: rgba(138, 127, 255, 0.12);
+	border-color: rgba(138, 127, 255, 0.68);
+	box-shadow: 0 0 0 1px rgba(138, 127, 255, 0.24), 0 0 14px rgba(138, 127, 255, 0.38),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+/* Fallback, gdy nie dodasz klas --1/--2/--3 w JSX */
+.shift-group:nth-of-type(1) .shift-title {
+	color: #6ff3ff;
+	text-shadow: 0 0 8px rgba(111, 243, 255, 0.45);
+}
+.shift-group:nth-of-type(1) .shift-person {
+	background: rgba(111, 243, 255, 0.12);
+	border-color: rgba(111, 243, 255, 0.65);
+	box-shadow: 0 0 0 1px rgba(111, 243, 255, 0.22), 0 0 14px rgba(111, 243, 255, 0.35),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+.shift-group:nth-of-type(2) .shift-title {
+	color: #6aa1ff;
+	text-shadow: 0 0 8px rgba(106, 161, 255, 0.45);
+}
+.shift-group:nth-of-type(2) .shift-person {
+	background: rgba(106, 161, 255, 0.12);
+	border-color: rgba(106, 161, 255, 0.65);
+	box-shadow: 0 0 0 1px rgba(106, 161, 255, 0.22), 0 0 14px rgba(106, 161, 255, 0.35),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+.shift-group:nth-of-type(3) .shift-title {
+	color: #8a7fff;
+	text-shadow: 0 0 8px rgba(138, 127, 255, 0.45);
+}
+.shift-group:nth-of-type(3) .shift-person {
+	background: rgba(138, 127, 255, 0.12);
+	border-color: rgba(138, 127, 255, 0.68);
+	box-shadow: 0 0 0 1px rgba(138, 127, 255, 0.24), 0 0 14px rgba(138, 127, 255, 0.38),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- KOTWICA / bufor ---------- */
+.shift-handle-anchor {
+	display: block;
+	width: 100%;
+	height: 0;
+	pointer-events: none;
+}
+.shift-handle-buffer {
+	height: 8px;
+	background: transparent;
+}
+/* alias (stara nazwa) */
+.shift-handle-bar {
+	height: 12px;
+	background: transparent;
+}
+
+/* ---------- Gdy modal jest otwarty: obniż warstwy + wyłącz interakcję ---------- */
+/* Atrybut data-modal-open dodawany na <body> przez Modal.jsx */
+body[data-modal-open] {
+	--shift-z-root: 9000;
+	--shift-z-base: 9100;
+	--shift-z-panel: 9200;
+}
+body[data-modal-open] .shift-drawer-root {
+	pointer-events: none;
+}
+
+/* (opcjonalny fallback) */
+html.has-open-modal {
+	--shift-z-root: 9000;
+	--shift-z-base: 9100;
+	--shift-z-panel: 9200;
+}

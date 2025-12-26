@@ -1,0 +1,365 @@
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+/* ===================== NAVBAR ===================== */
+.navbar {
+  position: relative;
+  top: 0;
+  z-index: 5000; /* ⬅️ PODNIESIONE ponad prawy sidebar/kalendarz */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  height: 85px;
+  font-family: Arial, sans-serif;
+  overflow: visible;
+  background: linear-gradient(145deg, #b0c8da 0%, #dceaf4 25%, #acc2d8 50%, #dceaf4 75%, #b0c8da 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.2) 45%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  background-size: 200% 100%;
+  animation: shine-move 5s infinite linear;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes shine-move {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.navbar a {
+  height: 100%;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+.navbar img {
+  height: 70px;
+  object-fit: contain;
+  margin-right: 10px;
+  padding-bottom: 2px;
+}
+
+/* ===================== SEARCH (center w navbar) ===================== */
+.navbar .search-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  max-width: 90%;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  color: black;
+}
+
+.navbar .search-bar,
+.navbar .search-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  color: black;
+  outline: none;
+  font-size: 16px;
+  padding: 5px 36px 5px 10px;
+  background-color: transparent;
+  transition: border-bottom-color 0.3s;
+}
+
+/* ukryj natywny X w Chromium/WebKit */
+.navbar .search-bar[type='search']::-webkit-search-cancel-button,
+.navbar .search-input[type='search']::-webkit-search-cancel-button,
+.navbar input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.navbar .search-bar:focus,
+.navbar .search-input:focus {
+  border-bottom-color: black;
+}
+
+.navbar .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #585a5d;
+  z-index: 3;
+}
+.navbar .search-icon:hover {
+  color: black;
+}
+
+/* ===================== USER ===================== */
+.user-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 5100; /* ⬅️ ponad navbar i sidebar */
+}
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 6px 0 6px;
+  border-radius: 6px;
+  color: #333;
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+.user-button i {
+  font-size: 24px;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.user-button:hover {
+  color: #11111194;
+}
+
+/* ===================== USER DROPDOWN ===================== */
+.user-dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  min-width: 80%;
+  background-color: rgba(0, 0, 0, 0.26);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-5px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 5200; /* ⬅️ musi być najwyżej */
+}
+
+/* sterowanie przez klasę z Reacta */
+.user-section.is-open .user-dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.user-dropdown a,
+.user-dropdown button {
+  padding: 8px 10px;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  color: #edededc9;
+  background: transparent;
+  border: none;
+  cursor: pointer !important;
+  text-decoration: none;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+  background-color: #ffffff77;
+  color: #000;
+}
+.user-dropdown button:focus {
+  outline: none;
+}
+
+/* ===================== AUTOCOMPLETE (dropdown pod inputem) ===================== */
+.searchbar-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.navbar .autocomplete-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 940;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  display: none;
+  color: #ffffffc6;
+  max-height: 360px;
+  overflow: auto;
+  background-color: rgba(114, 114, 114, 0.886);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 5px;
+}
+.navbar .autocomplete-dropdown.is-open {
+  display: block;
+}
+
+.navbar .autocomplete-item {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* cała zawartość wiersza (lewa/prawa) */
+.autocomplete-dropdown .sug-link,
+.autocomplete-dropdown .sug-link-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 10px;
+  color: inherit;
+  text-decoration: none;
+  text-align: left;
+}
+
+/* lewa część (tytuł + ewentualny opis) */
+.autocomplete-dropdown .sug-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.opt-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+.opt-meta {
+  font-size: 12px;
+  color: #b7c4d6;
+}
+
+/* prawa część: np. "Klient (lokalna lista)" */
+.autocomplete-dropdown .sug-meta {
+  margin-left: auto;
+  text-align: right;
+  font-size: 12px;
+  color: #dfe8f5;
+  white-space: nowrap;
+  opacity: 0.9;
+  transition: color 0.15s ease;
+}
+
+/* HOVER – stary efekt na całym elemencie */
+.navbar .autocomplete-item:hover,
+.navbar .autocomplete-item.is-active {
+  background-color: rgba(255, 255, 255, 0.543);
+  color: #000;
+}
+
+/* prawa kolumna też trochę się uaktywnia */
+.navbar .autocomplete-item:hover .sug-meta,
+.navbar .autocomplete-item.is-active .sug-meta {
+  color: #000;
+}
+
+/* ===================== RESPONSYWNOŚĆ ===================== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+  .navbar .search-container {
+    position: relative;
+    transform: none;
+    left: auto;
+    width: 100%;
+    margin: 5px 0;
+  }
+  .navbar input[type='text'],
+  .navbar button {
+    width: 100%;
+  }
+  .navbar span {
+    font-size: 14px;
+  }
+}
+
+/* ===================== DROBNE PORZĄDKI ===================== */
+form.searchbar.searchbar--page {
+  display: none !important;
+}
+
+/* „Pill” – jeżeli używasz */
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #f3f4f6;
+}
+.pill--client {
+  background: #eef2ff;
+}
+.pill--offer {
+  background: #ecfeff;
+}
+.pill--order {
+  background: #fef9c3;
+}
+.pill--sample {
+  background: #e0f2fe;
+}
+.pill--document {
+  background: #f1f5f9;
+}
+.pill--equipment {
+  background: #e2e8f0;
+}
+.pill--training {
+  background: #fce7f3;
+}
+.pill--post {
+  background: #f4f4f5;
+}
+.pill--message {
+  background: #ffe4e6;
+}
+
+/* ===================== Kiedy modal jest otwarty ===================== */
+body[data-modal-open] .navbar {
+  z-index: 100;
+}
+body[data-modal-open] .user-dropdown {
+  z-index: 110;
+}
+body[data-modal-open] .autocomplete-dropdown {
+  z-index: 110;
+}

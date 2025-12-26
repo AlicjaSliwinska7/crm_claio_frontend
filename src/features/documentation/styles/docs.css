@@ -1,0 +1,69 @@
+/* ===== Dokumentacja / Zlecenia — UI ===== */
+:root{
+  --docs-blue:#2563eb; --docs-blue-weak:#eef2ff; --docs-blue-b:#dbeafe;
+  --docs-green:#10b981; --docs-green-weak:#ecfdf5; --docs-green-b:#bbf7d0;
+  --docs-amber:#f59e0b; --docs-amber-weak:#fffbeb; --docs-amber-b:#fde68a;
+  --docs-red:#ef4444; --docs-red-weak:#fee2e2; --docs-red-b:#fecaca;
+  --docs-slate:#475569; --docs-slate-weak:#f8fafc; --docs-slate-b:#e5e7eb;
+}
+
+.docs__wrap{ display:grid; grid-template-columns: 1fr; gap:14px; }
+.docs__card{ background:#fff; border:1px solid #e5e7eb; border-radius:14px; box-shadow:0 1px 2px rgba(0,0,0,.06), 0 10px 30px rgba(0,0,0,.06); padding:14px; }
+.docs__row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.docs__row + .docs__row{ margin-top:12px; }
+.docs__field{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+.docs__label{ font-size:12px; font-weight:800; color:#6b7280; }
+.docs__input, .docs__select, .docs__textarea{
+  height:40px; border:1px solid #e5e7eb; border-radius:12px; padding:9px 12px; font-size:14px; background:#fff; color:#0b0f19;
+}
+.docs__textarea{ min-height:120px; height:auto; resize:vertical; }
+.docs__input:focus,.docs__select:focus,.docs__textarea:focus{ outline:0; border-color:var(--docs-blue); box-shadow:0 0 0 4px rgba(37,99,235,.18); }
+
+.docs__legend{
+  font-size:12px; color:#374151; background:linear-gradient(0deg,#fff,#fff) padding-box,
+  linear-gradient(90deg,#93c5fd,#a5b4fc) border-box;
+  border:2px solid transparent; border-radius:12px; padding:10px 12px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+}
+.docs__chip{ display:inline-flex; align-items:center; gap:6px; padding:3px 8px; font-size:12px; border-radius:999px; border:1px solid #e5e7eb; background:#f3f4f6; color:#374151; }
+.docs__chip--A{ background:var(--docs-green-weak); border-color:var(--docs-green-b); color:#065f46; font-weight:800; }
+.docs__chip--NA{ background:var(--docs-amber-weak); border-color:var(--docs-amber-b); color:#7c2d12; font-weight:800; }
+
+.docs__statusbar{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  background:#f9fafb; border:1px dashed #e5e7eb; border-radius:12px; padding:10px;
+}
+.docs__status{
+  padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; border:1px solid var(--docs-slate-b); background:var(--docs-slate-weak); color:#111827;
+}
+.docs__status.is-active{ background:var(--docs-blue-weak); border-color:var(--docs-blue-b); color:#1e3a8a; }
+
+.docs__actions{ display:flex; justify-content:flex-end; gap:8px; border-top:1px dashed #e5e7eb; padding-top:10px; margin-top:6px; }
+.docs__btn{ padding:8px 12px; border-radius:10px; border:1px solid #e5e7eb; background:#f8fafc; cursor:pointer; font-weight:600; }
+.docs__btn--primary{ background:#2563eb; border-color:#1d4ed8; color:#fff; }
+.docs__btn--ghost{ background:#f3f4f6; color:#0b0f19; }
+.docs__btn--danger{ background:#fee2e2; border-color:#fecaca; color:#7f1d1d; }
+
+@media (max-width: 980px){
+  .docs__row{ grid-template-columns: 1fr; }
+}
+
+/* ===== Zakres badań (tabela) ===== */
+.scope{ display:grid; gap:10px; }
+.scope__top{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.scope__table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden; }
+.scope__table th, .scope__table td{ padding:8px 10px; border-bottom:1px solid #e5e7eb; font-size:14px; }
+.scope__table thead th{ background:#f9fafb; color:#374151; text-align:left; font-weight:800; }
+.scope__table tbody tr:last-child td{ border-bottom:none; }
+.scope__table input, .scope__table select{
+  height:36px; border:1px solid #e5e7eb; border-radius:10px; padding:6px 10px; width:100%; box-sizing:border-box; font-size:14px; background:#fff;
+}
+.scope__badge{
+  display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800;
+  border:1px solid var(--docs-green-b); background:var(--docs-green-weak); color:#065f46;
+}
+.scope__badge.na{ border-color:var(--docs-amber-b); background:var(--docs-amber-weak); color:#7c2d12; }
+.scope__small{ color:#6b7280; font-size:12px; }
+
+.scope__note{
+  font-size:12px; color:#374151; background:#f8fafc; border:1px solid #e5e7eb; border-radius:10px; padding:8px 10px;
+}

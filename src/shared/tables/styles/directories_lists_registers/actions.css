@@ -1,0 +1,167 @@
+/* src/shared/tables/styles/directories_lists_registers/registers-actions.css */
+/* =========================================================
+   Actions column (Registers/Directory)
+   ========================================================= */
+
+/* Komórka akcji ma się zachowywać jak normalne <td> z tabeli */
+th.actions-col,
+td.actions-col {
+	display: table-cell; /* NIE robimy flex na <td> */
+	text-align: center;
+	vertical-align: top; /* tak samo jak w registers-table.css */
+	white-space: nowrap;
+	padding: 4px; /* jak reszta komórek */
+	width: 60px;
+	min-width: 60px;
+	box-sizing: border-box;
+
+	/* ważne: pozwól hover-ikonie "wyjść" bez wpływu na layout */
+	overflow: visible;
+}
+
+/* tła dla zebra/hover – żeby sticky nie psuł */
+.data-table tbody tr:nth-child(odd) td.actions-col {
+	background: rgba(0, 0, 0, 0.015);
+}
+.data-table tbody tr:hover td.actions-col {
+	background: rgba(58, 98, 138, 0.06);
+}
+
+/* -----------------------------------------------
+   Wewnętrzny wrapper – tu możemy robić flex/sticky
+   ----------------------------------------------- */
+.actions-col__inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	height: 100%; /* wypełnij wysokość td */
+
+	/* ważne dla powiększanych ikon */
+	overflow: visible;
+}
+
+.actions-col__inner--sticky {
+	position: sticky;
+	right: 0;
+	z-index: 1;
+
+	/* bardziej przewidywalne niż inherit w sticky */
+	background: transparent;
+	overflow: visible;
+}
+
+/* -----------------------------------------------
+   Kontener na przyciski
+   ----------------------------------------------- */
+.row-actions,
+.row-actions--inline {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	white-space: nowrap;
+	max-width: 100%;
+	line-height: 1;
+	overflow: visible;
+}
+
+/* -----------------------------------------------
+   Przycisk akcji – STAŁE pole, żeby hover nie rozszerzał td
+   ----------------------------------------------- */
+.row-actions .action-btn,
+.action-btn {
+	appearance: none;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+
+	/* stały box */
+	width: 22px;
+	height: 22px;
+	min-width: 22px;
+	min-height: 22px;
+	flex: 0 0 22px;
+
+	transition: color 120ms ease, opacity 120ms ease;
+	overflow: visible;
+}
+
+/* focus */
+.row-actions .action-btn:focus-visible,
+.action-btn:focus-visible {
+	outline: 2px solid #305377;
+	outline-offset: 2px;
+	border-radius: 6px;
+}
+
+/* -----------------------------------------------
+   Ikony w środku – skalujemy tylko je
+   ----------------------------------------------- */
+.row-actions .action-btn svg,
+.action-btn svg {
+	display: block;
+	width: 16px;
+	height: 16px;
+	pointer-events: none;
+
+	transition: transform 120ms ease;
+	transform-origin: center;
+	will-change: transform;
+}
+
+/* Font Awesome fallback */
+.row-actions .action-btn i,
+.row-actions .action-btn [class^='fa'],
+.row-actions .action-btn [class*=' fa-'],
+.action-btn i,
+.action-btn [class^='fa'],
+.action-btn [class*=' fa-'] {
+	font-size: 14px;
+	line-height: 1;
+
+	transition: transform 120ms ease;
+	transform-origin: center;
+	will-change: transform;
+}
+
+/* hover – powiększ IKONĘ, nie przycisk */
+.row-actions .action-btn:hover svg,
+.action-btn:hover svg,
+.row-actions .action-btn:hover i,
+.action-btn:hover i {
+	transform: scale(1.35);
+}
+
+/* -----------------------------------------------
+   Kolory
+   ----------------------------------------------- */
+
+/* wszystkie poza delete */
+.data-table td.actions-col .row-actions .action-btn:not(.delete):not(.action-delete) {
+	color: #6e88a2b3;
+}
+.data-table td.actions-col .row-actions .action-btn:not(.delete):not(.action-delete):hover {
+	color: #5e768fb3;
+}
+
+/* delete / action-delete – czerwone */
+.data-table td.actions-col .row-actions .action-btn.delete,
+.data-table td.actions-col .row-actions .action-btn.action-delete,
+.data-table td.actions-col .row-actions .action-btn.delete svg,
+.data-table td.actions-col .row-actions .action-btn.action-delete svg,
+.data-table td.actions-col .row-actions .action-btn.delete [stroke],
+.data-table td.actions-col .row-actions .action-btn.action-delete [stroke] {
+	color: #d60000 !important;
+	stroke: #d60000 !important;
+}
+
+.data-table td.actions-col .row-actions .action-btn.delete:hover,
+.data-table td.actions-col .row-actions .action-btn.action-delete:hover {
+	color: #aa0000 !important;
+	stroke: #aa0000 !important;
+}

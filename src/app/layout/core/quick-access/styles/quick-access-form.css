@@ -1,0 +1,190 @@
+/* =========================
+   QUICK ACCESS – FORM + MODAL (label po lewej)
+   ========================= */
+
+/* kontener treści modala */
+.qa-add-modal {
+	background: transparent;
+	padding: 10px 0 12px;
+	overflow: visible;
+}
+
+/* -------------------- SUGESTIE -------------------- */
+
+.qa-suggestions {
+	margin-bottom: 6px;
+	margin-top: 6px;
+}
+
+/* kanciaste przyciski propozycji */
+.qa-suggestions__grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: 4px;
+}
+
+.qa-suggestion.btn {
+	background: #a6acb4;
+	border: 1px solid #a6acb4;
+	color: #fff;
+	border-radius: 3px;
+	font-size: 12px;
+	line-height: 1;
+	padding: 7px 10px;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		color 0.15s ease,
+		transform 0.15s ease,
+		box-shadow 0.15s ease;
+}
+.qa-suggestion.btn:hover {
+	background: #a6acb4;
+	border: 1.5px solid #a6acb4;
+	color: #fff;
+	transform: translateY(-1.5px);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.09);
+}
+
+/* -------------------- SEPARATOR -------------------- */
+
+.qa-sep {
+	height: 1px;
+	margin: 10px 0 9px;
+	background: #d2d9e3;
+	border: none;
+}
+
+/* -------------------- FORM (INLINE, LABEL → INPUT) -------------------- */
+
+.qa-form-shell {
+	width: 100%;
+}
+
+.qa-form.qa-form--inline {
+	display: flex;
+	align-items: center; /* środek w pionie */
+	gap: 10px;
+	width: 100%;
+	flex-wrap: nowrap;
+	min-height: 50px;
+}
+
+/* jedno pole – poziomo: label | input */
+.qa-field {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+}
+
+/* stała szerokość labela, wyrównany do prawej */
+.qa-field label {
+	display: block;
+	text-align: right;
+	font-size: 14px;
+	font-weight: 550;
+	color: rgba(15, 23, 42, 0.65);
+	white-space: nowrap;
+}
+
+/* input zajmuje resztę */
+.qa-field input {
+	width: 100%;
+	font-size: 12px;
+	line-height: 1.35;
+	color: #0f172a;
+	background: #fff;
+	border: 0.5px solid #e6edf5;
+	border-radius: 2px;
+	padding: 5px 10px;
+	outline: none;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+	box-sizing: border-box;
+	height: 32px;
+}
+
+.qa-field input:focus-visible {
+	border-color: #3a628a;
+	box-shadow: 0 0 0 3px rgba(58, 98, 138, 0.12);
+}
+
+.qa-field.is-invalid input {
+	border-color: #d60000;
+}
+
+/* komunikat błędu – pod inputem, ale nie psuje wysokości */
+.qa-error {
+	position: absolute;
+	top: calc(100% + 2px);
+	left: 50px; /* szerokość labela (50) + odstęp (6) */
+	font-size: 11px;
+	color: #d60000;
+	pointer-events: none;
+	white-space: nowrap;
+}
+
+/* specyficzne szerokości dla dwóch pól */
+.qa-field--title {
+	flex: 0 0 280px;
+}
+.qa-field--url {
+	flex: 1 1 auto;
+	min-width: 200px;
+}
+
+/* -------------------- PRZYCISKI -------------------- */
+
+.qa-actions {
+	display: flex;
+	gap: 6px;
+	margin-left: auto;
+	flex: 0 0 auto;
+	align-items: center; /* wycentrowanie względem inputów */
+}
+
+.qa-actions .btn {
+	border-radius: 3px;
+	border: 1px solid #e6edf5;
+	background: #fff;
+	color: #0f172a;
+	font-size: 14px;
+	padding: 4px 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+	height: 32px;
+	box-sizing: border-box;
+}
+.qa-actions .btn:hover {
+	background: #f2f4f7;
+	border-color: #d0d6df;
+}
+
+.qa-actions .btn.btn--primary {
+	background: #3a628a;
+	border-color: #3a628a;
+	color: #fff;
+}
+.qa-actions .btn.btn--primary:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* -------------------- RESPONSYWNOŚĆ -------------------- */
+
+@media (max-width: 720px) {
+	.qa-form.qa-form--inline {
+		flex-wrap: wrap;
+	}
+	.qa-actions {
+		width: 100%;
+		justify-content: flex-end;
+	}
+}

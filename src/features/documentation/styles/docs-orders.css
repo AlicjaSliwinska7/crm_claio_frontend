@@ -1,0 +1,84 @@
+/* ==== Dokumentacja / Zlecenia – layout ==== */
+.docOrders__wrap{
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:16px;
+  align-items:start;
+}
+.panel{ background:#fff; border:1px solid #e5e7eb; border-radius:14px; box-shadow:0 1px 2px rgba(0,0,0,.06), 0 10px 30px rgba(0,0,0,.06); }
+.docOrders__side.panel{ padding:14px; position:sticky; top:calc(var(--nav-offset,0px) + 12px); }
+.docOrders__main.panel{ padding:14px; }
+
+.docOrders__title{ margin:0 0 8px 0; font-size:16px; font-weight:800; }
+.docOrders__hint{ font-size:12px; color:#475569; background:#f8fafc; border:1px dashed #e5e7eb; border-radius:10px; padding:8px; }
+
+/* ==== Formularz ==== */
+.docOrderForm{ display:grid; gap:10px; }
+.docOrderForm .row{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+.f{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+.lbl{ font-size:12px; font-weight:800; color:#6b7280; }
+.lbl em{ color:#ef4444; font-style:normal; margin-left:4px; }
+
+.inp{ height:40px; border:1px solid #e5e7eb; border-radius:12px; padding:9px 12px; font-size:14px; }
+.inp:focus{ outline:none; border-color:#2563eb; box-shadow:0 0 0 4px rgba(37,99,235,.18); }
+.ta{ min-height:96px; resize:vertical; }
+.select{ -webkit-appearance:none; appearance:none; padding-right:36px; background:
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path d='M6 8l4 4 4-4' stroke='%23677' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>")
+  no-repeat right 10px center / 20px 20px; }
+
+.form-err{ font-size:12px; color:#7f1d1d; background:#fee2e2; border:1px solid #fecaca; padding:6px 8px; border-radius:10px; }
+.actions{ display:flex; gap:10px; justify-content:flex-end; padding-top:8px; border-top:1px dashed #e5e7eb; }
+
+/* Buttons (lokalne) */
+.btn{ font-size:14px; font-weight:600; padding:8px 12px; border-radius:10px; border:1px solid #e5e7eb; background:#f8fafc; cursor:pointer; }
+.btn--primary{ background:#2563eb; color:#fff; border-color:#1d4ed8; }
+.btn--ghost{ background:#f3f4f6; color:#0b0f19; }
+.btn:focus-visible{ outline:0; box-shadow:0 0 0 3px rgba(37,99,235,.20); }
+
+/* ==== Pasek filtrów ==== */
+.docOrders__bar{ display:grid; gap:8px; margin-bottom:10px; }
+.docOrders__bar .search{ height:40px; border:1px solid #e5e7eb; border-radius:10px; padding:0 10px; }
+.docOrders__barRow{ display:flex; gap:8px; flex-wrap:wrap; }
+.docOrders__empty{ color:#6b7280; border:1px dashed #e5e7eb; border-radius:12px; padding:14px; text-align:center; }
+
+/* ==== Lista zleceń ==== */
+.docOrders__list{ display:grid; gap:10px; }
+.docOrder{ border:1px solid #e5e7eb; border-radius:12px; padding:10px; background:#fff; }
+.docOrder__head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.docOrder__id{ font-weight:800; color:#0b0f19; }
+.docOrder__badges{ display:flex; gap:8px; flex-wrap:wrap; }
+
+.chip{ display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 8px; border-radius:999px; font-size:12px; font-weight:700; border:1px solid #e5e7eb; background:#f3f4f6; color:#374151; }
+.chip--info{ background:#eef2ff; border-color:#dbeafe; color:#1e3a8a; }
+.chip--date{ background:#f1f5f9; border-color:#e2e8f0; color:#334155; }
+.chip--status{ background:#f8fafc; }
+
+.chip.s--w_przygotowaniu{ background:#fff7ed; border-color:#fed7aa; color:#7c2d12; }
+.chip.s--wyslane{ background:#f0f9ff; border-color:#bae6fd; color:#0c4a6e; }
+.chip.s--podpisane{ background:#ecfdf5; border-color:#bbf7d0; color:#065f46; }
+.chip.s--zarejestrowane{ background:#ede9fe; border-color:#ddd6fe; color:#4c1d95; }
+
+.docOrder__row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+.docOrder__cell .lbl{ color:#6b7280; font-size:12px; font-weight:700; }
+.docOrder__cell .val{ font-size:14px; color:#0b0f19; }
+
+.docOrder__notes{ margin-top:8px; font-size:13px; color:#374151; background:#f9fafb; border:1px dashed #e5e7eb; border-radius:10px; padding:8px; }
+
+.docOrder__actions{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:8px; border-top:1px dashed #e5e7eb; padding-top:8px; }
+.docOrder__actions .select{ height:36px; border-radius:10px; }
+
+/* ==== Responsive ==== */
+@media (max-width: 1080px){
+  .docOrders__wrap{ grid-template-columns:1fr; }
+  .docOrderForm .row{ grid-template-columns:1fr; }
+}
+@media (prefers-color-scheme: dark){
+  .panel{ background:#0f1420; border-color:#253452; box-shadow:none; }
+  .docOrders__hint{ background:#0b1020; border-color:#253452; color:#a6afc0; }
+  .inp, .docOrders__bar .search, .select{ background:#0f1420; color:#e8ecf3; border-color:#253452; }
+  .form-err{ background:#3f1d1d; border-color:#7f1d1d; color:#fee2e2; }
+  .docOrder{ background:#0f1420; border-color:#253452; }
+  .chip{ background:#0b1020; border-color:#253452; color:#e8ecf3; }
+  .chip--info{ background:#0b1220; border-color:#3b4a6d; color:#93c5fd; }
+  .docOrders__empty{ border-color:#253452; color:#a6afc0; }
+}

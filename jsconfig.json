@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@lists": ["shared/lists/index.js"],
+      "@lists/*": ["shared/lists/*"],
+      "@shared/*": ["shared/*"],
+      "@shared/modals": ["shared/modals/index.js"]
+    }
+  },
+  "include": ["src"]
+}

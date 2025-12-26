@@ -1,0 +1,108 @@
+/* src/app/layout/core/quick-access/styles/quick-access-settings.css */
+
+/* kontener strony ustawień */
+.qa-settings-page {
+  padding: 0 12px;
+  color: #2b3e50;
+}
+
+/* nagłówek sekcji */
+.qa-settings-header {
+  max-width: 1000px;
+  margin: 0 auto 12px auto;
+}
+
+.qa-settings-subtitle {
+  margin: 0;
+  color: #516273;
+  font-size: 14px;
+}
+
+/* karta z akcentem po lewej – jak w innych widokach */
+.qa-settings-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 14px 14px 18px;
+}
+
+/* === Quick Access w trybie ustawień – pełna szerokość, bez zmiany wyglądu kafelków === */
+.qa-settings-card .quick-access-panel {
+  max-width: 100%;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  box-shadow: none;      /* karta już ma cień */
+  background: transparent;
+}
+
+/* tytuł wewnątrz panelu */
+.qa-settings-card .qa-header h2 {
+  margin: 4px 0 12px;
+  color: #26435e;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* przyciski nawigacji karuzeli – trzymamy w ramie karty */
+.qa-settings-card .quick-access-carousel {
+  overflow: visible;
+  position: relative;
+}
+
+/* ===== usuwanie kafelków tylko w /ustawienia/skroty ===== */
+.qa-settings-card .qa-tile {
+  position: relative;
+}
+.qa-settings-card .qa-btn {
+  position: relative;
+  z-index: 1;
+}
+.qa-settings-card .qa-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(38, 67, 94, 0.9);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+}
+.qa-settings-card .qa-tile:hover .qa-remove,
+.qa-settings-card .qa-remove:focus-visible {
+  opacity: 1;
+}
+.qa-settings-card .qa-remove:hover {
+  filter: brightness(0.95);
+}
+.qa-settings-card .qa-remove:active {
+  transform: scale(0.96);
+}
+
+/* responsywność */
+@media (max-width: 540px) {
+  .qa-settings-card {
+    padding: 12px;
+  }
+  .qa-settings-card .qa-header h2 {
+    margin-bottom: 8px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Uwaga:
+   Poniżej w oryginalnym pliku były OGÓLNE klasy .qa-modal, .qa-form,
+   .qa-suggestions – one wchodziły w konflikt z formularzem w modalu
+   dodawania skrótu. Dlatego tu ich NIE definiujemy. Jeśli chcesz mieć
+   osobny modal w ustawieniach, nazwij go np. .qa-settings-modal ...
+   ------------------------------------------------------------------ */

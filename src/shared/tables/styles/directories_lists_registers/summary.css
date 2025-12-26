@@ -1,0 +1,21 @@
+.list-summary {
+  font-size: 10px;
+  line-height: 1.25;
+  color: #2c4f6e;
+  font-weight: 400;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 27px;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-summary > * {
+  flex: 0 0 auto; /* nie zgniataj elementów przy małej szerokości */
+}
+
+.list-summary .sep {
+  opacity: 0.55;
+  user-select: none;
+}

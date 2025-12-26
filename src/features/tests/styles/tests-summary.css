@@ -1,0 +1,424 @@
+/* ======================================================================
+   TestsSummary — clean dashboard look (spójny z EquipmentSummary)
+   ====================================================================== */
+
+/* -------------------- Variables / Root -------------------- */
+.tests-summary.es-root {
+  --es-bg: #f5f7fb;
+  --es-card: #ffffff;
+  --es-border: #e6ecf5;
+  --es-hair: rgba(0, 0, 0, 0.06);
+  --es-text: #0f172a;
+  --es-muted: #5b6f84;
+  --es-blue: #3a628a;
+  --es-blue-2: #6e9cc5;
+  --es-slate: #334155;
+
+  /* przycisk-ikona */
+  --tss-icon-btn-size: 38px;
+
+  background: var(--es-bg);
+  padding: 16px;
+  color: var(--es-text);
+}
+
+/* -------------------- Section rhythm -------------------- */
+.tests-summary.es-root .es-section {
+  position: relative;
+  margin: 0 0 16px;
+}
+.tests-summary.es-root .es-section + .es-section {
+  margin-top: 18px;
+}
+.tests-summary.es-root .es-section + .es-section::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: -10px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--es-hair), rgba(0, 0, 0, 0.02));
+}
+
+/* -------------------- Card shell -------------------- */
+.tests-summary.es-root .es-card,
+.tests-summary.es-root .ts-card {
+  background: var(--es-card);
+  border: 1px solid var(--es-border);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  padding: 14px;
+}
+
+/* -------------------- Card header (icon + title + actions) -------------------- */
+.tests-summary.es-root .es-card__sectionHead,
+.tests-summary.es-root .es-section__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--es-border);
+}
+
+/* tytuł po lewej (ikonka + tekst) */
+.tests-summary.es-root .es-section__titlewrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+}
+
+/* ikona z lewej (opcjonalna) + ujednolicenie rozmiaru */
+.tests-summary.es-root .es-section__icon,
+.tests-summary.es-root .es-headIcon {
+  color: var(--es-blue);
+  display: inline-flex;
+  line-height: 0;
+  width: 18px;
+  height: 18px;
+}
+.tests-summary.es-root .es-headIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ujednolicone style nagłówków */
+.tests-summary.es-root .es-card__sectionTitle,
+.tests-summary.es-root .es-section__title,
+.tests-summary.es-root .ts-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--es-slate);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* akcje po prawej (np. selecty, przyciski) */
+.tests-summary.es-root .es-headActions {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* podtytuł sekcji */
+.tests-summary.es-root .es-section__sub,
+.tests-summary.es-root .ts-subline,
+.tests-summary.es-root .es-subtitle {
+  margin: -4px 2px 6px;
+  color: var(--es-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* -------------------- Controls / inputs -------------------- */
+.tests-summary.es-root .es-panel-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: end;
+}
+
+.tests-summary.es-root .es-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.tests-summary.es-root .es-col.es-col--actions {
+  margin-left: auto;
+  display: flex;
+  align-items: end;
+}
+
+.tests-summary.es-root .ts-control label,
+.tests-summary.es-root .es-label {
+  color: var(--es-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tests-summary.es-root .tss-input,
+.tests-summary.es-root .tss-select,
+.tests-summary.es-root .tss-input--search,
+.tests-summary.es-root .es-input,
+.tests-summary.es-root .es-select {
+  border: 1px solid var(--es-border);
+  background: #fff;
+  color: var(--es-slate);
+  border-radius: 10px;
+  height: 36px;
+  padding: 0 10px;
+  font-size: 14px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.tests-summary.es-root .tss-input:focus,
+.tests-summary.es-root .tss-select:focus,
+.tests-summary.es-root .es-input:focus,
+.tests-summary.es-root .es-select:focus {
+  border-color: color-mix(in oklab, var(--es-blue) 45%, white);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--es-blue) 18%, transparent);
+  outline: none;
+}
+
+/* reset cross-browser dla selectów */
+.tests-summary.es-root .tss-select,
+.tests-summary.es-root .es-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.tests-summary.es-root .tss-input--date { width: 180px; }
+
+.tests-summary.es-root .ts-inline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tests-summary.es-root .tss-btn {
+  border: 1px solid var(--es-border);
+  background: #fff;
+  border-radius: 10px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--es-slate);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+.tests-summary.es-root .tss-btn:hover {
+  border-color: color-mix(in oklab, var(--es-blue) 45%, white);
+  background: #f8fbff;
+}
+.tests-summary.es-root .tss-btn:disabled { opacity: 0.55; cursor: default; }
+
+/* Kwadratowy przycisk-ikona */
+.tests-summary.es-root .tss-icon-btn,
+.tests-summary.es-root .tss-btn--icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tss-icon-btn-size);
+  min-width: var(--tss-icon-btn-size);
+  height: var(--tss-icon-btn-size);
+  padding: 0;
+  border: 1px solid var(--es-border);
+  background: #fff;
+  color: var(--es-blue);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+.tests-summary.es-root .tss-icon-btn:hover,
+.tests-summary.es-root .tss-btn--icon:hover {
+  border-color: color-mix(in oklab, var(--es-blue) 45%, white);
+  background: #f8fbff;
+  color: color-mix(in oklab, var(--es-blue) 85%, black);
+}
+.tests-summary.es-root .tss-icon-btn i,
+.tests-summary.es-root .tss-btn--icon i {
+  font-size: 16px;
+  line-height: 1;
+}
+.tests-summary.es-root .tss-icon-btn--export i,
+.tests-summary.es-root .tss-btn--export i {
+  transform: translateY(0.5px);
+}
+
+/* search box z lupką */
+.tests-summary.es-root .tss-search { display: flex; align-items: center; }
+.tests-summary.es-root .tss-search__box { position: relative; }
+.tests-summary.es-root .tss-search__box--limit { max-width: 520px; }
+.tests-summary.es-root .tss-search__icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--es-muted);
+}
+.tests-summary.es-root .tss-input--search { padding-left: 32px; }
+
+/* odstęp między filtrami a tabelą */
+.tests-summary.es-root .es-panel-controls + .tss-table-wrap { margin-top: 12px; }
+/* odstęp pod wykresami */
+.tests-summary.es-root .es-chart + .tss-table-wrap { margin-top: 12px; }
+
+/* -------------------- KPI row -------------------- */
+.tests-summary.es-root .tss-card.tss-kpis {
+  border: 1px dashed var(--es-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+}
+.tests-summary.es-root .tss-kpis__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 14px;
+}
+.tests-summary.es-root .tss-kpis__sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: center;
+  font-size: 12px;
+}
+.tests-summary.es-root .tss-sep { opacity: 0.45; }
+
+/* -------------------- Charts -------------------- */
+.tests-summary.es-root .ts-chart { width: 100%; height: 320px; }
+.tests-summary.es-root .ts-chart.big { height: 360px; }
+.tests-summary.es-root .ts-chart.mini { height: 160px; }
+
+.tests-summary.es-root .ts-empty,
+.tests-summary.es-root .es-empty,
+.tests-summary.es-root .tss-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--es-muted);
+}
+
+/* Recharts helpers */
+.tests-summary.es-root .ts-chart .recharts-legend-wrapper,
+.tests-summary.es-root .es-chart .recharts-legend-wrapper {
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+/* -------------------- Tables -------------------- */
+.tests-summary.es-root .tss-table-wrap {
+  background: #fff;
+  border: 1px solid var(--es-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tests-summary.es-root .tss-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tests-summary.es-root .tss-table thead {
+  background-color: color-mix(in oklab, var(--es-blue) 18%, white);
+  color: #17324b;
+}
+.tests-summary.es-root .tss-table thead th {
+  padding: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  user-select: none;
+  white-space: nowrap;
+  text-align: left;
+  border-bottom: 1px solid var(--es-border);
+}
+.tests-summary.es-root .tss-table thead th[title*='Sortuj'] { cursor: pointer; }
+
+.tests-summary.es-root .tss-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid var(--es-border);
+  font-size: 14px;
+  color: var(--es-slate);
+}
+.tests-summary.es-root .tss-table tbody tr:hover td { background: #fafcff; }
+
+/* linki w tabeli */
+.tests-summary.es-root .tss-link {
+  color: var(--es-blue);
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in oklab, var(--es-blue) 40%, white);
+}
+.tests-summary.es-root .tss-link:hover {
+  color: color-mix(in oklab, var(--es-blue) 85%, black);
+  border-bottom-style: solid;
+}
+
+/* akcje pod tabelą */
+.tests-summary.es-root .tss-table-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--es-border);
+  background: #fff;
+}
+
+/* -------------------- Pagination -------------------- */
+.tests-summary.es-root .tss-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+  border-top: 1px solid var(--es-border);
+  background: #fff;
+}
+.tests-summary.es-root .tss-pagination__info {
+  font-size: 12px;
+  color: var(--es-muted);
+}
+.tests-summary.es-root .tss-pagination__controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.tests-summary.es-root .tss-page-indicator {
+  min-width: 64px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* -------------------- Utilities -------------------- */
+.tests-summary.es-root .muted { color: var(--es-muted); }
+.tests-summary.es-root .ts-subtitle {
+  margin: 8px 2px 6px;
+  color: var(--es-slate);
+  font-size: 13px;
+  text-align: left;
+}
+
+/* -------------------- Responsive tweaks -------------------- */
+@media (max-width: 860px) {
+  .tests-summary.es-root .tss-input--date { width: 150px; }
+}
+@media (max-width: 520px) {
+  .tests-summary.es-root .tss-kpis__row { justify-content: center; }
+  .tests-summary.es-root .tss-table thead th { font-size: 12px; }
+  .tests-summary.es-root .tss-table tbody td { font-size: 13px; }
+}
+
+/* ======================================================================
+   Local overrides
+   ====================================================================== */
+.tests-summary.es-root h1,
+.tests-summary.es-root h2,
+.tests-summary.es-root h3,
+.tests-summary.es-root h4,
+.tests-summary.es-root h5,
+.tests-summary.es-root h6 {
+  text-align: left;
+}
+
+/* ======================================================================
+   Label fix — wyrównanie importowanych filtrów (sum-filter / filters-bar)
+   ====================================================================== */
+.tests-summary.es-root .sum-filter,
+.tests-summary.es-root .sum-filter label,
+.tests-summary.es-root .filters-bar label,
+.tests-summary.es-root .filtersbar label {
+  color: var(--es-muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}

@@ -1,0 +1,92 @@
+/* ============================================
+   WSPÓLNE STYLE DLA OBU SIDEBARÓW
+   Zakładamy strukturę:
+   <nav class="sidebar-nav"> … </nav>
+   Prawy sidebar dodaje modyfikator: .is-right
+   ============================================ */
+
+/* Linki (1. poziom) */
+.sidebar-nav .sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color .2s ease;
+  color: black;
+}
+
+/* Stany wspólne */
+.sidebar-nav .sidebar-link:hover   { color: #6e88a2; }
+.sidebar-nav .sidebar-link.active  { color: #d60000; }
+
+/* Ikony wewnątrz linków */
+.sidebar-nav .sidebar-link i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  color: inherit;
+}
+
+/* =============================
+   SUBMENU — WSPÓLNA BAZA
+   ============================= */
+.sidebar-submenu {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInSubmenu .3s ease;
+}
+
+/* Domyślny (lewy) wariant — border po lewej, padding z lewej */
+.sidebar-submenu {
+  margin-left: 15px;
+  border-left: 5px solid #acc2d8;
+}
+
+.sidebar-submenu .sidebar-link {
+  font-size: 14px;
+  color: #555;
+  transition: color .2s ease;
+  position: relative;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 10px 0 0 10px; /* padding z lewej */
+}
+
+.sidebar-submenu .sidebar-link:hover  { color: #d60000; }
+.sidebar-submenu .sidebar-link.active { font-weight: 600; color: #6e88a2; }
+
+/* =============================
+   LUSTRO DLA PRAWEJ STRONY
+   (dodaj klasę .is-right na <nav>)
+   ============================= */
+.is-right.sidebar-nav .sidebar-link {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* Submenu odbite lustrzanie */
+.is-right .sidebar-submenu {
+  margin-left: 0;
+  margin-right: 15px;
+  border-left: 0;
+  border-right: 5px solid #acc2d8;
+}
+
+.is-right .sidebar-submenu .sidebar-link {
+  padding: 10px 10px 0 0; /* padding z prawej */
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* =============================
+   Animacja
+   ============================= */
+@keyframes fadeInSubmenu {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

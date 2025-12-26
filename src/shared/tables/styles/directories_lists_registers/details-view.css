@@ -1,0 +1,294 @@
+/* =========================
+   WIDOKI SZCZEGÓŁÓW (DETAILS)
+   Użycie: dodaj klasę .details-page LUB .details-view na elemencie root
+   ========================= */
+
+:root {
+  --details-bg: #fafafa;
+  --details-card-bg: #fff;
+  --details-border: #e8e8e8;
+  --details-muted: #6b7280;
+  --details-heading: #111827;
+  --details-accent: #64748b;
+  --details-accent-strong: #475569;
+  --details-success: #16a34a;
+  --details-danger: #dc2626;
+  --details-warning: #d97706;
+  --details-pill: #eef2ff;
+  --details-shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 10px rgba(0,0,0,.04);
+}
+
+/* =========================
+   ROOT
+   ========================= */
+.details-page {
+  background: var(--details-bg);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.details-view,
+.details-view * {
+  box-sizing: border-box;
+}
+
+.details-view {
+  width: 100%;
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+  background: transparent;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--details-card-bg);
+  border: 1px solid var(--details-border);
+  box-shadow: var(--details-shadow);
+  margin-bottom: 12px;
+}
+
+.details-header__left,
+.details-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-backbtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--details-border);
+  background: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.details-backbtn:hover { background: #f5f6f8; }
+.details-backbtn:active { transform: translateY(1px); }
+
+.details-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--details-heading);
+  max-width: min(70vw, 980px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.details-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--details-muted);
+  margin-top: 4px;
+}
+
+.details-meta__item,
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  border: 1px solid var(--details-border);
+  font-size: 0.85rem;
+}
+
+/* =========================
+   ACTIONS
+   ========================= */
+.details-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.details-actions .edit-btn,
+.details-actions .delete-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--details-border);
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-actions .delete-btn:hover { color: var(--details-danger); }
+
+/* =========================
+   BASIC TABLE
+   ========================= */
+.details-basic table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--details-card-bg);
+  border: 1px solid var(--details-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--details-shadow);
+}
+
+.details-basic th,
+.details-basic td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--details-border);
+}
+
+.details-basic th {
+  width: 220px;
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+/* =========================
+   GRID + CARDS
+   ========================= */
+.details-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.details-card {
+  background: var(--details-card-bg);
+  border: 1px solid var(--details-border);
+  border-radius: 12px;
+  box-shadow: var(--details-shadow);
+  padding: 10px;
+  display: grid;
+}
+
+.details-card__title,
+.section-title {
+  font-weight: 700;
+  padding: 10px 12px 8px;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   INLINE FORMS
+   ========================= */
+.details-inline-form,
+.form-inline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.details-input,
+.details-inline-form input,
+.details-inline-form select {
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--details-border);
+  padding: 6px 10px;
+  background: #fff;
+}
+
+/* =========================
+   TABLES
+   ========================= */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--details-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.details-table thead th {
+  background: #f8fafc;
+  font-weight: 700;
+  padding: 8px 10px;
+}
+
+.details-table tbody td {
+  padding: 8px 10px;
+  border-top: 1px solid var(--details-border);
+}
+
+.details-table-wrap {
+  overflow-x: auto;
+}
+
+/* =========================
+   STATUS
+   ========================= */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #f1f5f9;
+  border: 1px solid var(--details-border);
+}
+
+.status-badge--ok { background: #ecfdf5; color: var(--details-success); }
+.status-badge--warn { background: #fffbeb; color: var(--details-warning); }
+.status-badge--danger { background: #fef2f2; color: var(--details-danger); }
+
+/* =========================
+   BUTTONS (SCOPED)
+   ========================= */
+.details-page .icon-btn,
+.details-page .edit-btn,
+.details-page .delete-btn,
+.details-page .add-btn,
+.details-view .icon-btn,
+.details-view .edit-btn,
+.details-view .delete-btn,
+.details-view .add-btn {
+  height: 32px;
+  min-width: 32px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+   PRINT
+   ========================= */
+@media print {
+  .details-page {
+    padding: 0;
+    background: #fff;
+  }
+
+  .details-header,
+  .details-card,
+  .details-basic table {
+    box-shadow: none;
+    border-color: #d1d5db;
+  }
+
+  .details-actions,
+  .details-backbtn,
+  .details-inline-add,
+  .details-page .add-btn,
+  .details-view .add-btn {
+    display: none !important;
+  }
+}

@@ -1,0 +1,325 @@
+/* src/components/styles/KnowledgeBase.css */
+/* ==== KnowledgeBase – czysty styl, kolory + spacing, zgodnie z UI ==== */
+
+/* Paleta akcentów (lokalna dla KB) */
+:root{
+  --kb-blue:#2563eb;    --kb-blue-weak:#eef2ff;    --kb-blue-border:#dbeafe;
+  --kb-green:#10b981;   --kb-green-weak:#ecfdf5;   --kb-green-border:#bbf7d0;
+  --kb-amber:#f59e0b;   --kb-amber-weak:#fffbeb;   --kb-amber-border:#fde68a;
+  --kb-red:#ef4444;     --kb-red-weak:#fee2e2;     --kb-red-border:#fecaca;
+  --kb-purple:#7c3aed;  --kb-purple-weak:#ede9fe;  --kb-purple-border:#ddd6fe;
+  --kb-slate:#475569;   --kb-slate-weak:#f1f5f9;   --kb-slate-border:#e2e8f0;
+
+  /* jednolity font przycisków w całej KB */
+  --kb-btn-font: 14px;
+}
+
+/* ===== Layout ===== */
+.kb__wrap{
+  display:grid;
+  grid-template-columns: 320px 1fr;
+  gap:16px;
+  align-items:start;
+}
+
+.kb__side.panel{
+  display:grid;
+  gap:12px;
+  padding:14px;
+  position:sticky;
+  top:calc(var(--nav-offset, 0px) + 12px);
+  max-height: calc(100dvh - var(--nav-offset, 0px) - 24px);
+  overflow:auto;
+  background:#fff;
+  z-index:1;
+}
+
+.kb__main.panel{
+  padding:16px;
+}
+
+/* ===== Filtry ===== */
+.kb__filters{
+  display:grid;
+  gap:10px;
+  padding:10px;
+  border:1px dashed #e5e7eb;
+  border-radius:12px;
+  background:#f9fafb;
+}
+
+.kb__filters-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.kb__filters .search,
+.kb__filters .select{
+  height:40px;
+  min-width:0;
+  border-radius:10px;
+}
+
+.kb__filters-row > .search,
+.kb__filters-row > .select{
+  flex:1 1 160px;
+  min-width:160px;
+}
+
+/* ===== Pusty stan ===== */
+.kb__empty{
+  color:#6b7280;
+  font-size:14px;
+  padding:18px;
+  text-align:center;
+  border:1px dashed #e5e7eb;
+  border-radius:12px;
+  background:#fafafa;
+}
+
+/* ===== Lista / item ===== */
+.kbList__item{
+  border-radius:12px;
+  padding:8px;
+  border:1px solid transparent;
+  transition: background .12s, border-color .12s, box-shadow .12s;
+  text-align:left;
+}
+.kbList__item:hover{
+  background:#f8fafc;
+  border-color:#e5e7eb;
+}
+.kbList__item.is-active{
+  background:var(--kb-blue-weak);
+  border-color:var(--kb-blue-border);
+  box-shadow: inset 0 0 0 1px var(--kb-blue-border);
+}
+.kbList__item:focus-visible{
+  outline:0;
+  box-shadow:0 0 0 3px rgba(37,99,235,.25);
+}
+
+/* ===== Przyciski lokalne KB (nie ruszają globalnych) ===== */
+.kb__btns, .kb__actions{ display:flex; flex-wrap:wrap; gap:10px; }
+
+.kb__wrap .btn{
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  background:#f8fafc;
+  cursor:pointer;
+  font-size:var(--kb-btn-font);
+  font-weight:600;
+  line-height:1.2;
+}
+.kb__wrap .btn--primary{ background:#2563eb; color:#fff; border-color:#1d4ed8; }
+.kb__wrap .btn--ghost{ background:#f3f4f6; color:#0b0f19; }
+.kb__wrap .btn--danger{ background:#fee2e2; color:#7f1d1d; border-color:#fecaca; }
+.kb__wrap .btn--success{ background:#ecfdf5; color:#065f46; border-color:#bbf7d0; }
+.kb__wrap .btn:focus-visible{ outline:0; box-shadow:0 0 0 3px rgba(37,99,235,.20); }
+
+/* ===== Górny pasek akcji w podglądzie (status, ważne do, przyciski) ===== */
+.kb__actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;              /* zawijaj na małej szerokości */
+  min-width:0;
+  margin-bottom:12px;          /* oddech od treści */
+}
+.kb__spacer{ flex:1 1 auto; min-width:12px; }
+
+/* badge: status + ważne do */
+.kb__actions .kb__status,
+.kb__actions .kb__valid{
+  display:inline-flex;
+  align-items:center;
+  height:28px;
+  padding:0 10px;
+  border-radius:999px;
+  font-weight:700;
+  line-height:1;
+  white-space:nowrap;
+  border:1px solid #e5e7eb;
+  background:#f8fafc;
+  color:#0b0f19;
+}
+
+/* przyciski/odnośniki typu "ghost" w pasku akcji */
+.kb__actions .ghost{
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:36px;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  background:#f3f4f6;
+  color:#0b0f19;
+  white-space:nowrap;
+  text-decoration:none;
+  cursor:pointer;
+  font-size:var(--kb-btn-font);
+  font-weight:600;
+  line-height:1.2;
+}
+.kb__actions .ghost:hover{ filter:brightness(.98); }
+.kb__actions a.ghost:hover{ text-decoration:none; }
+
+/* ===== Chipy / statusy / review ===== */
+.kb__chip{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 10px; font-size:12px; font-weight:600;
+  border-radius:999px; border:1px solid #e5e7eb; background:#f3f4f6; color:#374151;
+}
+.kb__chip--blue    { background:var(--kb-blue-weak);   border-color:var(--kb-blue-border);   color:#1e3a8a; }
+.kb__chip--green   { background:var(--kb-green-weak);  border-color:var(--kb-green-border);  color:#065f46; }
+.kb__chip--amber   { background:var(--kb-amber-weak);  border-color:var(--kb-amber-border);  color:#7c2d12; }
+.kb__chip--red     { background:var(--kb-red-weak);    border-color:var(--kb-red-border);    color:#7f1d1d; }
+.kb__chip--purple  { background:var(--kb-purple-weak); border-color:var(--kb-purple-border); color:#4c1d95; }
+.kb__chip--slate   { background:var(--kb-slate-weak);  border-color:var(--kb-slate-border);  color:#334155; }
+
+.kb__status, .kb__review{ font-weight:700; }
+.kb__status--draft    { background:var(--kb-slate-weak);  border:1px solid var(--kb-slate-border);  color:#334155; }
+.kb__status--review   { background:var(--kb-amber-weak);  border:1px solid var(--kb-amber-border);  color:#7c2d12; }
+.kb__status--approved { background:var(--kb-green-weak);  border:1px solid var(--kb-green-border);  color:#065f46; }
+.kb__status--archived { background:var(--kb-purple-weak); border:1px solid var(--kb-purple-border); color:#4c1d95; }
+
+.kb__review--overdue  { background:var(--kb-red-weak);   border:1px solid var(--kb-red-border);   color:#7f1d1d; }
+.kb__review--dueSoon  { background:var(--kb-amber-weak); border:1px solid var(--kb-amber-border); color:#7c2d12; }
+.kb__review--fresh    { background:var(--kb-green-weak); border:1px solid var(--kb-green-border); color:#065f46; }
+
+/* (opcjonalnie) akcent kategorii */
+.kb__cat--procedury   { background:var(--kb-blue-weak);   border:1px solid var(--kb-blue-border);   color:#1e3a8a; }
+.kb__cat--instrukcje  { background:var(--kb-purple-weak); border:1px solid var(--kb-purple-border); color:#4c1d95; }
+.kb__cat--ustalenia   { background:var(--kb-slate-weak);  border:1px solid var(--kb-slate-border);  color:#334155; }
+
+/* ===== Treść artykułu ===== */
+.kb__main h1, .kb__main h2, .kb__main h3{
+  margin:6px 0 8px 0;
+  line-height:1.25;
+}
+.kb__main h1{ font-size:20px; }
+.kb__main h2{ font-size:18px; color:#111827; }
+.kb__main h3{ font-size:16px; color:#1f2937; }
+.kb__main p{ margin:0 0 10px 0; color:#0b0f19; }
+.kb__main ul, .kb__main ol{ margin:6px 0 10px 18px; }
+
+.kb__main code{
+  background:#f3f4f6; border:1px solid #e5e7eb; border-radius:8px; padding:2px 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size:12.5px;
+}
+.kb__main pre{
+  background:#0f1420; color:#e8ecf3; border:1px solid #253452; border-radius:12px; padding:10px 12px;
+  overflow:auto;
+}
+
+/* Tabelki w treści */
+.kb__main table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:14px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  overflow:hidden;
+}
+.kb__main th, .kb__main td{
+  padding:8px 10px; border-bottom:1px solid #e5e7eb;
+}
+.kb__main thead th{
+  background:#f9fafb; color:#374151; text-align:left;
+}
+.kb__main tbody tr:last-child td{ border-bottom:none; }
+
+/* Delikatny divider sekcji */
+.kb__divider{
+  height:1px;
+  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+  margin:10px 0 6px;
+  border-radius:1px;
+}
+
+/* ===== Akcje w nagłówkach kart artykułu (np. przy tytule) ===== */
+.kbCard__actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:flex-start;
+  margin-left:auto;
+  min-width:0;
+}
+.kbCard__actions .btn,
+.kbCard__actions .linky{
+  flex:0 0 auto;
+  white-space:nowrap;
+  height:36px;
+  padding:8px 12px;
+  border-radius:10px;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:var(--kb-btn-font);
+  font-weight:600;
+}
+.kbCard__actions .btn--ghost{ background:#f3f4f6; border:1px solid #e5e7eb; color:#0b0f19; }
+.kbCard__actions .btn--primary{ background:#2563eb; border:1px solid #1d4ed8; color:#fff; }
+.kbCard__actions .btn--edit{ box-shadow:0 1px 1px rgba(0,0,0,.06); font-weight:700; }
+.kbCard__actions .linky{ color:#1d4ed8; text-decoration:none; background:#eef2ff; border:1px solid #dbeafe; }
+
+/* ===== Responsywność ===== */
+@media (max-width:1180px){
+  .kb__wrap{ grid-template-columns: 1fr; }
+  .kb__side.panel{ position:static; max-height:none; overflow:visible; }
+}
+@media (max-width:720px){
+  .kb__actions{ width:100%; justify-content:flex-start; }
+  .kbCard__actions{ width:100%; justify-content:flex-start; margin-left:0; }
+}
+@media (min-width:1400px){
+  .kb__wrap{ grid-template-columns: 360px 1fr; }
+}
+
+/* ===== Dark mode ===== */
+@media (prefers-color-scheme: dark){
+  .kb__side.panel{ background:#0f1420; }
+  .kb__filters{ background:#0b1020; border-color:#253452; }
+  .kb__empty{ background:#0b1020; border-color:#253452; color:#a6afc0; }
+  .kb__main pre{ background:#0b1020; border-color:#253452; }
+  .kb__main table{ border-color:#253452; }
+  .kb__main th, .kb__main td{ border-bottom-color:#253452; }
+  .kb__chip{ background:#0b1020; border-color:#253452; color:#e8ecf3; }
+  .kbList__item:hover{ background:#0b1020; border-color:#253452; }
+  .kbList__item.is-active{
+    background:#0b1220; border-color:#3b4a6d; box-shadow: inset 0 0 0 1px #3b4a6d;
+  }
+  .kbCard__actions .btn{ background:#0f1420; color:#e8ecf3; border-color:#253452; }
+  .kbCard__actions .linky{ color:#93c5fd; }
+}
+
+/* ==== Mikro-dopieszki dla focus/hover i box-sizing ===== */
+.kb__actions .ghost,
+.kb__wrap .btn,
+.kbCard__actions .btn,
+.kbCard__actions .linky {
+  box-sizing: border-box;
+}
+
+.kb__wrap .btn:focus-visible,
+.kb__actions .ghost:focus-visible,
+.kbCard__actions .btn:focus-visible,
+.kbCard__actions .linky:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.25);
+}
+
+.kb__wrap .btn:hover,
+.kbCard__actions .btn:hover,
+.kbCard__actions .linky:hover {
+  filter: brightness(.98);
+}

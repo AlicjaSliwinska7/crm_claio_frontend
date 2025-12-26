@@ -1,0 +1,8 @@
+export { default as Appointment } from './Appointment.js'
+export { default as Appointments } from './AppointmentsRegister.jsx'
+export { default as ContactList } from './ContactList.jsx'
+export { default as Documents } from './DocumentsDirectory.jsx'
+export { default as LabSchedule } from './LabSchedule.jsx'
+export { default as ShoppingList } from './ShoppingList.jsx'
+export { default as Training } from './Training.js'
+export { default as Trainings } from './Trainings.jsx'

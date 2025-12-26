@@ -1,0 +1,89 @@
+/* ==========================================================================
+   SIDEBAR SCROLLBARS (Chrome/Edge/WebKit + Firefox)
+   Docelowy scroller to .scroll-area (musi mieć overflow-y: auto)
+   Prawy pasek po LEWEJ stronie: sztuczka z direction: rtl na kontenerze
+   i przywrócenie direction: ltr na .scroll-area__inner
+   ========================================================================== */
+
+/* ---------- Baza (Firefox + wspólne) ---------- */
+.scroll-area {
+	/* FF: kolor kciuka i brak tła toru */
+	scrollbar-color: var(--sa-thumb, rgba(139, 179, 211, 0.28)) transparent;
+	/* FF: grubość paska (auto | thin | none) */
+	scrollbar-width: var(--sa-width-ff, thin);
+}
+
+/* ---------- WebKit (Chrome/Edge/Safari) ---------- */
+.scroll-area::-webkit-scrollbar {
+	width: var(--sa-width, 8px);
+	height: var(--sa-width, 8px);
+}
+
+.scroll-area::-webkit-scrollbar-track,
+.scroll-area::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+	background: var(--sa-thumb, rgba(0, 0, 0, 0.28));
+	border-radius: var(--sa-radius, 2px);
+	/* „cieńszy” optycznie pasek — przez przezroczystą ramkę */
+	border: 1px solid transparent;
+	background-clip: padding-box;
+}
+
+.scroll-area::-webkit-scrollbar-thumb:hover {
+	background: var(--sa-thumb-hover, rgba(0, 0, 0, 0.36));
+}
+.scroll-area::-webkit-scrollbar-thumb:active {
+	background: var(--sa-thumb-active, rgba(0, 0, 0, 0.46));
+}
+
+/* Niektóre buildy Chrome rysują „czapki” jako fragment toru — wyłącz */
+.scroll-area::-webkit-scrollbar-track-piece,
+.scroll-area::-webkit-scrollbar-track-piece:start,
+.scroll-area::-webkit-scrollbar-track-piece:end {
+	background: transparent !important;
+	border: 0 !important;
+	margin: 0 !important;
+}
+
+/* ---------- Kadrowanie „czapek” w sidebarach + wewnętrzne paddingi ---------- */
+.left-sidebar .scroll-area,
+.right-sidebar .scroll-area {
+	/* Przytnij „czapki” paska na górze i dole, by nie zachodziły pod header/footer sidebara */
+	clip-path: inset(14px 0 14px 0);
+}
+
+.left-sidebar .scroll-area__inner,
+.right-sidebar .scroll-area__inner {
+	padding-block: 14px; /* aby treść nie wchodziła pod przycięte rejony */
+}
+
+/* ---------- Położenie paska: PRAWA w lewym sidebarze, LEWA w prawym ---------- */
+.left-sidebar .scroll-area {
+	direction: ltr;
+} /* scrollbar po PRAWEJ (domyślnie) */
+
+.right-sidebar .scroll-area {
+	direction: rtl;
+} /* przenieś scrollbar na LEWĄ */
+.right-sidebar .scroll-area__inner {
+	direction: ltr;
+} /* treść normalnie LTR */
+
+/* ---------- Cieńszy pasek w sidebarach (nadpisywalne) ---------- */
+.left-sidebar .scroll-area,
+.right-sidebar .scroll-area {
+	--sa-width: 2px; /* zmień na 4px, jeśli chcesz troszkę grubszy */
+	--sa-radius: 6px; /* łagodne zaokrąglenie */
+	--sa-width-ff: thin; /* spójnie dla Firefoxa */
+}
+
+/* OPTIONAL (ciemny motyw) — jeśli chcesz subtelniejsze defaulty
+@media (prefers-color-scheme: dark) {
+  .scroll-area {
+    scrollbar-color: var(--sa-thumb, rgba(140, 171, 207, 0.35)) transparent;
+  }
+}
+*/

@@ -1,0 +1,77 @@
+/* =========================================================
+   Right sidebar — container
+   (scroll robi ScrollArea wewnątrz)
+   ========================================================= */
+
+.right-sidebar {
+  position: fixed;                /* top/height ustawiasz inline w hooku */
+  right: 0;
+  width: var(--right-sidebar-width, 14rem);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;               /* przewija tylko wrapper scrolla */
+
+  background: transparent;
+  padding: 5px 10px 10px;
+  box-sizing: border-box;
+  z-index: var(--right-sidebar-z, 998);
+  font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+/* =========================================================
+   Navigation wrapper
+   (linki/submenu ogarnia sidebar-core.css; dodaj .is-right na <nav>)
+   ========================================================= */
+.right-sidebar-nav {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Opcjonalnie: lekkie odsadzenie kalendarza od menu */
+.right-sidebar-calendar {
+  margin-bottom: 8px;
+}
+
+/* =========================================================
+   Scroll wrapper
+   - przenosi scrollbar na LEWĄ stronę
+   - łączy nasze klasy z „shared” ScrollArea, aby złapać scroll-bars.css
+   ========================================================= */
+
+/* Element przewijany – scrollbar po LEWEJ */
+.rs-scroll,
+.right-sidebar .scroll-area {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  direction: rtl;                     /* pasek przewijania po LEWEJ */
+  /* węższy pasek w sidebarach (spójne ze scroll-bars.css) */
+  --sa-width: 2px;
+  --sa-radius: 6px;
+}
+
+/* Treść wraca do normalnego kierunku */
+.rs-inner,
+.right-sidebar .scroll-area__inner {
+  direction: ltr;
+  height: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+  padding-block: var(--right-sidebar-inner-pad, 14px);
+}
+
+/* Przytnij „czapki” scrolla (spójnie z lewym sidebar) */
+.right-sidebar .scroll-area,
+.right-sidebar .rs-scroll {
+  clip-path: inset(14px 0 14px 0);
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 768px) {
+  .right-sidebar { display: none; }
+}

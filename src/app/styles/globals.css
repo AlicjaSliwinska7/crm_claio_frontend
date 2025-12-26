@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Globals (app/styles/globals.css)
+   - Lekki reset + typografia nagłówków + utilsy o ogólnym zasięgu
+   - BEZ layoutu i BEZ zmiennych kolorów (to w tokens.css)
+   ========================================================================== */
+
+/* Minimalny reset marginesów / typografii */
+* { margin: 0; }
+body { line-height: 1.5; }
+
+/* Nagłówki globalne — jeśli chcesz „wszędzie” */
+:root { --headings: #2a2a2aa0; }
+
+h2 {
+  margin: 0 0 20px;
+  color: var(--headings);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+}
+h3 {
+  margin: 0 0 10px;
+  color: var(--headings);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+}
+
+/* Utilsy dostępności */
+.visually-hidden,
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden; white-space: nowrap;
+}
+
+/* Linki (neutralne, do nadpisania w feature’ach) */
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Obrazy responsywne z sensownym domyślnym zachowaniem */
+img { max-width: 100%; height: auto; display: block; }

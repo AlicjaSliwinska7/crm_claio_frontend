@@ -1,0 +1,237 @@
+/* ==========================================================================
+   Kontrolki nad listami (top bar)
+   ========================================================================== */
+
+.contact-controls,
+.clients-controls,
+.shopping-controls,
+.documents-controls,
+.trainings-controls,
+.appointments-register__controls, /* ✅ było: .appointments-controls */
+.ordersRegister-controls,
+.samplesRegister-controls,
+.samplesLogistics-controls,
+.samplesDisposal-controls,
+.testsSummary-controls,
+.offers-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   Szukajka
+   ========================================================================== */
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  flex-grow: 1;
+  max-width: 500px;
+  min-width: 300px;
+}
+
+.search-bar {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #585a5d;
+  color: #000;
+  outline: none;
+  font-size: 16px;
+  padding: 8px 10px;
+  background: transparent;
+}
+
+.search-bar:focus {
+  border-bottom-color: #d64545;
+}
+
+.search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  line-height: 0;
+  font-size: 18px;
+  color: #585a5d;
+  transition: transform .2s ease, color .2s ease;
+}
+
+.search-icon:hover {
+  color: #d64545;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.search-icon:focus-visible {
+  outline: 2px solid #d64545;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   Przyciski „Dodaj”
+   ========================================================================== */
+
+/* ✅ KWADRATOWY PRZYCISK IKONOWY (dla AddButton.jsx) */
+.add-btn,
+.add-button {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  border: none;
+  background: #585a5d;
+  color: #fff;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.add-btn:hover,
+.add-button:hover {
+  transform: scale(1.08);
+  background: #4a4c4f;
+}
+
+.add-btn:disabled,
+.add-button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* dotychczasowe prostokątne przyciski zostają bez zmian */
+.add-client-btn,
+.add-contact-btn,
+.add-document-btn,
+.add-training-btn,
+.add-appointment-btn,
+.add-ordersRegister-btn,
+.add-samplesRegister-btn,
+.add-samplesLogistics-btn,
+.add-samplesDisposal-btn,
+.add-offer-btn {
+  background: #585a5d;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color .3s ease, transform .2s ease;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  will-change: transform; /* płynniejsza animacja, bez wpływu na layout */
+}
+
+.add-client-btn:hover,
+.add-contact-btn:hover,
+.add-document-btn:hover,
+.add-training-btn:hover,
+.add-appointment-btn:hover,
+.add-ordersRegister-btn:hover,
+.add-samplesRegister-btn:hover,
+.add-samplesLogistics-btn:hover,
+.add-samplesDisposal-btn:hover,
+.add-offer-btn:hover {
+  transform: scale(1.1);
+}
+
+.add-client-btn:focus-visible,
+.add-contact-btn:focus-visible,
+.add-document-btn:focus-visible,
+.add-training-btn:focus-visible,
+.add-appointment-btn:focus-visible,
+.add-ordersRegister-btn:focus-visible,
+.add-samplesRegister-btn:focus-visible,
+.add-samplesLogistics-btn:focus-visible,
+.add-samplesDisposal-btn:focus-visible,
+.add-offer-btn:focus-visible {
+  outline: 2px solid var(--nt-focus, #d64545);
+  outline-offset: 2px;
+}
+
+.add-client-btn:disabled,
+.add-contact-btn:disabled,
+.add-document-btn:disabled,
+.add-training-btn:disabled,
+.add-appointment-btn:disabled,
+.add-ordersRegister-btn:disabled,
+.add-samplesRegister-btn:disabled,
+.add-samplesLogistics-btn:disabled,
+.add-samplesDisposal-btn:disabled,
+.add-offer-btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Selecty / filtry
+   ========================================================================== */
+
+.training-filter-select {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #585a5d;
+  color: rgba(0,0,0,.715);
+  font-size: 16px;
+  padding: 8px 4px;
+  outline: none;
+  transition: border-color .2s ease;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+.training-filter-select:hover {
+  border-bottom-color: #3a628a;
+}
+
+.training-filter-select:focus {
+  border-bottom-color: #d64545;
+}
+
+/* ==========================================================================
+   Reset filtrów – minimalistyczny wariant
+   ========================================================================== */
+
+.reset-filters-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .3rem;
+  color: var(--nt-muted, #585a5d);
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  line-height: 1;
+  transition: transform .2s ease, color .2s ease;
+}
+
+.reset-filters-button:hover {
+  transform: scale(1.2);
+  color: #d64545;
+}
+
+.reset-filters-button:active {
+  transform: translateY(1px);
+}
+
+.reset-filters-button:focus-visible {
+  outline: 2px solid var(--nt-focus, #d64545);
+  outline-offset: 2px;
+  border-radius: 6px;
+}

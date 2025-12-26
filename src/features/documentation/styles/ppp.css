@@ -1,0 +1,28 @@
+/* ===== PPP (Protokół Przyjęcia Próbki) — dodatki do wspólnego stylu ===== */
+
+/* siatka sekcji PPP (zostajemy przy docForm__grid) */
+.ppp .ppp-codes { display: grid; gap: 6px; }
+.ppp .ppp-codes__row { display: grid; grid-template-columns: 1fr 44px; gap: 6px; align-items: center; }
+.ppp .ppp-codes__actions { display: flex; gap: 8px; margin-top: 4px; }
+
+.ppp-refdocs { border: 1px dashed #e5e7eb; }
+.ppp-found { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; flex-wrap: wrap; }
+.ppp-found li .ghost { white-space: nowrap; }
+
+/* drop PDF */
+.ppp-drop{
+  border: 2px dashed #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fafafa;
+  outline: none;
+}
+.ppp-drop:focus{ box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+.ppp-drop__label{ font-weight: 800; margin-bottom: 4px; }
+.ppp-drop__hint{ color: #6b7280; font-size: 12px; }
+
+/* grupy norm/metod */
+.ppp-refdocs__group{ margin: 8px 0; }
+
+/* drobne ujednolicenia */
+code { background: #f3f4f6; padding: 1px 6px; border-radius: 6px; }

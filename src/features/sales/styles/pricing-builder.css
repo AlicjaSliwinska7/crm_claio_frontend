@@ -1,0 +1,330 @@
+/* ==========================================================================
+   PricingBuilder — layout inspirowany modalem (scoped pod .pricing)
+   Plik: src/features/sales/styles/pricing-builder.css
+   ========================================================================== */
+
+.pricing,
+.pricing * {
+	box-sizing: border-box;
+}
+
+/* ---- Tokeny kolorów (pod modal: #eef3f8 / #26435e) -------------------- */
+:root {
+	--pb-bg: #ffffff;
+	--pb-surface: #f7faff; /* jasna karta */
+	--pb-surface-2: #f2f6fb; /* header gradient */
+	--pb-overlay: #eef3f8; /* tła akcentowe */
+	--pb-border: #ccd6e0; /* jak w modal content */
+	--pb-border-soft: #e3eaf2;
+	--pb-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 1px 0 rgba(0, 0, 0, 0.02);
+
+	--pb-text: #26435e;
+	--pb-muted: #627891;
+
+	--pb-primary: #2b5b8d; /* primary jak w modalu */
+	--pb-primary-900: #244e79;
+
+	--pb-chip-bd: #cfe0ef;
+	--pb-chip-bg: #ffffff;
+	--pb-chip-hover-bg: #f0f6ff;
+	--pb-chip-hover-bd: #bcd1e6;
+
+	--pb-pill-bg: #e7eef7;
+	--pb-pill-text: #2d4f71;
+
+	--pb-danger: #b91c1c;
+	--pb-danger-bg: #fff5f5;
+	--pb-danger-bd: #fecaca;
+
+	--pb-radius: 12px;
+	--pb-radius-sm: 10px;
+
+	--pb-gap: 16px;
+	--pb-sticky-top: var(--app-sticky-top, 14px);
+}
+
+/* ==========================================================================
+   Layout główny
+   ========================================================================== */
+.pricing {
+	width: 100%;
+	min-width: 0;
+	display: grid;
+	/* prawa kolumna płynna i węższa; modyfikator też dziedziczy (patrz niżej) */
+	grid-template-columns: minmax(0, 1fr) clamp(280px, 30vw, 340px);
+	gap: var(--pb-gap);
+	align-items: start;
+	color: var(--pb-text);
+}
+.pricing .pricing__left,
+.pricing .pricing__right {
+	min-width: 0;
+}
+
+.pricing .sticky-wrap {
+	position: sticky;
+	top: var(--pb-sticky-top);
+	will-change: transform;
+	z-index: 1; /* ponad sąsiadami z cieniami */
+}
+
+@media (max-width: 1000px) {
+	.pricing {
+		grid-template-columns: 1fr;
+	}
+	.pricing .sticky-wrap {
+		position: static;
+		top: auto;
+	}
+}
+
+/* Modyfikator: „cennik w sidebarze” — zachowujemy clamp */
+.pricing.pricing--catalog-in-aside {
+	grid-template-columns: minmax(0, 1fr) clamp(280px, 30vw, 340px);
+}
+
+@media (max-width: 1100px) {
+	.pricing.pricing--catalog-in-aside {
+		grid-template-columns: minmax(0, 1fr) clamp(260px, 28vw, 300px);
+	}
+}
+
+/* ==========================================================================
+   Karty i nagłówki (modal vibe)
+   ========================================================================== */
+.pricing .card {
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius);
+	box-shadow: var(--pb-shadow);
+	padding: 14px;
+	overflow: hidden;
+}
+.pricing .card * {
+	min-width: 0;
+} /* ochronka przed overflowem */
+
+.pricing > .card:first-child .card-head {
+	background: linear-gradient(180deg, var(--pb-surface), var(--pb-surface-2));
+	margin: -14px -14px 12px -14px;
+	padding: 16px 18px;
+	border-bottom: 1px solid var(--pb-border-soft);
+}
+.pricing .card-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	border-bottom: 1px solid var(--pb-border-soft);
+	padding-bottom: 10px;
+	margin-bottom: 12px;
+}
+.pricing .card__h3 {
+	margin: 0;
+	font-size: 18px;
+	letter-spacing: 0.2px;
+	color: var(--pb-text);
+}
+.pricing .small {
+	font-size: 12px;
+	color: var(--pb-muted);
+}
+
+/* „Sekcje” po lewej kolumnie jako stos kart */
+.pricing .pricing__left .card + .card {
+	margin-top: var(--pb-gap);
+}
+
+/* ==========================================================================
+   Quick chips / linki sekcji
+   ========================================================================== */
+.pricing nav.card {
+	padding: 8px 12px;
+}
+.pricing nav.card .row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+.pricing .pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	border: 1px solid var(--pb-chip-bd);
+	background: var(--pb-chip-bg);
+	color: var(--pb-text);
+	padding: 6px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease, transform 0.06s ease;
+}
+.pricing .pill:hover {
+	background: var(--pb-chip-hover-bg);
+	border-color: var(--pb-chip-hover-bd);
+	transform: translateY(-1px);
+}
+.pricing .pill.weak {
+	background: #f9fbfe;
+	border-style: dashed;
+}
+
+/* ==========================================================================
+   Przyciski (spójne z modalem)
+   ========================================================================== */
+.pricing .btn {
+	border: 1px solid var(--pb-chip-bd);
+	background: #fff;
+	color: var(--pb-text);
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-size: 13px;
+	cursor: pointer;
+	transition: background 0.12s ease, border-color 0.12s ease, transform 0.06s ease;
+}
+.pricing .btn:hover {
+	background: #f1f6fc;
+	border-color: var(--pb-chip-hover-bd);
+	transform: translateY(-1px);
+}
+.pricing .btn.primary {
+	background: var(--pb-primary);
+	border-color: var(--pb-primary);
+	color: #fff;
+}
+.pricing .btn.primary:hover {
+	background: var(--pb-primary-900);
+	border-color: var(--pb-primary-900);
+}
+.pricing .btn--export {
+	background: #0f172a;
+	border-color: #0f172a;
+	color: #fff;
+}
+.pricing .btn--export:hover {
+	filter: brightness(1.05);
+}
+
+/* Widoczny focus (a11y) */
+.pricing .btn:focus-visible,
+.pricing .pill:focus-visible,
+.pricing a:focus-visible {
+	outline: 2px solid #97b4d4;
+	outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Utility
+   ========================================================================== */
+.pricing .row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+.pricing .muted {
+	color: var(--pb-muted);
+}
+.pricing .ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.pricing .pricing__right .card {
+	border-color: var(--pb-border);
+}
+
+/* ==========================================================================
+   Prawy sidebar: bloki
+   ========================================================================== */
+.pricing .aside-block + .aside-block {
+	margin-top: 14px;
+}
+
+/* ==========================================================================
+   PriceCatalog — wariant „aside” (kompakt w bocznym pasku)
+   ========================================================================== */
+/* Upewnij się, że komponent nadaje .catalog.catalog--aside lub data-variant="aside" */
+.pricing .card .catalog {
+	/* wariant szeroki (domyślny) — brak zmian */
+}
+
+.pricing .card .catalog.catalog--aside,
+.pricing .card .catalog[data-variant='aside'] {
+	display: grid;
+	grid-template-columns: 1fr; /* jedna kolumna */
+	gap: 10px;
+}
+.pricing .card .catalog.catalog--aside .catalog__left,
+.pricing .card .catalog[data-variant='aside'] .catalog__left {
+	display: none;
+} /* chowamy filtry */
+.pricing .card .catalog.catalog--aside .catalog__right,
+.pricing .card .catalog[data-variant='aside'] .catalog__right {
+	display: none;
+} /* chowamy legendę */
+.pricing .card .catalog.catalog--aside .catalog__body,
+.pricing .card .catalog[data-variant='aside'] .catalog__body {
+	min-width: 0;
+}
+
+.pricing .card .catalog.catalog--aside .method-grid,
+.pricing .card .catalog[data-variant='aside'] .method-grid {
+	display: grid;
+	grid-template-columns: 1fr; /* pojedyncza kolumna */
+	gap: 10px;
+	max-height: 420px; /* przewijalny katalog w sidebarze */
+	overflow: auto;
+}
+
+/* karty metod — kompakt */
+.pricing .card .catalog .method-card {
+	padding: 10px;
+	border-radius: 10px;
+}
+.pricing .card .catalog .method-spec {
+	grid-template-columns: 1fr 1fr; /* mniej kolumn */
+}
+
+@media (max-width: 980px) {
+	.pricing .card .catalog[data-variant='aside'] .method-grid {
+		max-height: none;
+	}
+}
+
+/* ==========================================================================
+   Linki
+   ========================================================================== */
+.pricing a {
+	color: #1f4c80;
+	text-decoration: none;
+}
+.pricing a:hover {
+	text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pricing * {
+		transition: none !important;
+	}
+}
+
+/* ==========================================================================
+   Print — NA KOŃCU pliku, nadpisuje układ
+   ========================================================================== */
+@media print {
+	.pricing,
+	.pricing.pricing--catalog-in-aside {
+		grid-template-columns: 1fr !important;
+		gap: 12px;
+	}
+	.pricing .sticky-wrap {
+		position: static !important;
+		top: auto !important;
+	}
+	.pricing .btn {
+		display: none !important;
+	}
+}

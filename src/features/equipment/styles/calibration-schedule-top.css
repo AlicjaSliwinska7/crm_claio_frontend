@@ -1,0 +1,351 @@
+/* ==========================================================================
+   HARMONOGRAM WZORCOWANIA (prefiks: csx-)
+   - Filtry, Tabela, Paginacja, Toggle, Scrollbar, Responsywność
+   ========================================================================== */
+
+/* === Zmienne statusów (łatwa zmiana kolorów) === */
+:root {
+	/* Spójne z utils: STATUS_COLOR */
+	--csx-st-overdue: #b91c1c; /* Po terminie */
+	--csx-st-due-soon: #3a628a; /* Do wzorcowania (zbliża się termin) */
+	--csx-st-in-progress: #6a7f96; /* W toku */
+}
+
+/* === WRAPPER CAŁEJ SEKCJI === */
+.csx-list {
+	display: grid;
+	gap: 12px;
+}
+
+/* ==========================================================================
+   FILTRY
+   ========================================================================== */
+.csx-controls {
+	background: #fff;
+	border: 1px solid #e6eef6;
+	border-radius: 14px;
+	box-shadow: 0 1px 2px rgba(24, 34, 49, 0.04), 0 6px 24px rgba(24, 34, 49, 0.05);
+	padding: 12px;
+}
+
+.csx-controls .csx-row {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.csx-pagesize {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-right: 6px;
+}
+.csx-muted {
+	color: #6a7f96;
+	font-size: 13px;
+}
+.csx-select {
+	background: #fff;
+	border: 1px solid #cfe0ef;
+	border-radius: 10px;
+	padding: 6px 10px;
+	min-height: 34px;
+	color: #294a68;
+	outline: none;
+}
+.csx-select:focus {
+	border-color: #9ec0df;
+	box-shadow: 0 0 0 3px rgba(158, 192, 223, 0.25);
+}
+.csx-select[type='date'] {
+	min-width: 180px;
+}
+.csx-export {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+}
+.csx-export-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	padding: 0;
+	border-radius: 10px;
+	background: transparent;
+	color: #2f6fb2;
+	cursor: pointer;
+	border: none;
+}
+.csx-export-btn i {
+	font-size: 1.15rem;
+	line-height: 1;
+}
+.csx-export-btn:hover {
+	background: #f1f6fc;
+	border-color: #bcd1e6;
+	color: #2a63a0;
+	transform: translateY(-1px);
+	box-shadow: 0 2px 6px rgba(24, 34, 49, 0.06);
+}
+.csx-export-btn:active {
+	transform: translateY(0);
+}
+.csx-export-btn:focus-visible {
+	outline: 3px solid rgba(158, 192, 223, 0.35);
+	outline-offset: 2px;
+}
+
+/* ==========================================================================
+   TABELA
+   ========================================================================== */
+.csx-table {
+	background: #fff;
+	border: 1px solid #e6eef6;
+	border-radius: 14px;
+	box-shadow: 0 1px 2px rgba(24, 34, 49, 0.04), 0 6px 24px rgba(24, 34, 49, 0.05);
+	overflow: hidden;
+}
+.csx-table-scroll {
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+	width: 100%;
+}
+.csx-table-inner {
+	min-width: 1040px;
+}
+.csx-table table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+/* Nagłówki */
+.csx-th {
+	background: #f5f9ff;
+	color: #2b4b6b;
+	font-weight: 700;
+	text-align: left;
+	padding: 8px 10px;
+	border-bottom: 1px solid #e6eef6;
+	user-select: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 13px; /* mniejsza czcionka */
+}
+.csx-th:hover {
+	background: #eef5ff;
+}
+.csx-th--center {
+	text-align: center;
+}
+.csx-th__label {
+	display: inline-block;
+	pointer-events: none;
+}
+
+/* Komórki */
+.csx-td {
+	padding: 8px 10px;
+	color: #294a68;
+	border-top: 1px solid #eef3f8;
+	white-space: nowrap; /* brak zawijania */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 13px; /* mniejsza czcionka */
+}
+.csx-td--center {
+	text-align: center;
+}
+.csx-td--clip {
+	text-align: left;
+} /* nazwa: lewa + elipsa */
+.csx-table tbody tr:hover {
+	background: #f8fbfe;
+}
+.csx-td--empty {
+	text-align: center;
+	color: #6a7f96;
+}
+
+/* Badge / lista kodów */
+.csx-codes {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	justify-content: center;
+}
+.csx-code {
+	padding: 2px 8px;
+	border-radius: 999px;
+	border: 1px solid #dbe4ec;
+	background: #f6f9fc;
+	font-size: 12px;
+	color: #26435e;
+	font-weight: 700;
+}
+
+/* Status (kolor przez klasy + wsparcie dla --status-accent) */
+.csx-status {
+	/* Komponent może podać --status-accent inline; tu fallback do root */
+	--_status-accent: var(--status-accent, currentColor);
+	font-weight: 700;
+	color: var(--_status-accent);
+	position: relative;
+}
+
+/* Modyfikatory spójne z utils: due_soon / overdue / in_progress */
+.csx-status.is-overdue {
+	--_status-accent: var(--status-accent, var(--csx-st-overdue));
+	color: var(--_status-accent);
+}
+.csx-status.is-due-soon {
+	--_status-accent: var(--status-accent, var(--csx-st-due-soon));
+	color: var(--_status-accent);
+}
+.csx-status.is-in-progress {
+	--_status-accent: var(--status-accent, var(--csx-st-in-progress));
+	color: var(--_status-accent);
+}
+
+/* Opcjonalny tryb „kompaktowy” (dodaj klasę na .csx-table) */
+.csx-table--compact .csx-th,
+.csx-table--compact .csx-td {
+	font-size: 12.5px;
+	padding: 7px 8px;
+}
+
+/* ==========================================================================
+   PAGINACJA
+   ========================================================================== */
+.pagination-bar-wrap {
+	display: flex;
+	justify-content: center;
+}
+.pagination-bar,
+.csx-pager {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 6px;
+}
+.csx-indicator {
+	min-width: 72px;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+	color: #294a68;
+}
+.csx-btn {
+	background: #fff;
+	border: 1px solid #cfe0ef;
+	border-radius: 8px;
+	padding: 4px 10px;
+	cursor: pointer;
+	color: #294a68;
+	font-size: 12px;
+	transition: background 0.12s, border-color 0.12s, transform 0.06s, opacity 0.12s;
+}
+.csx-btn:hover {
+	background: #f1f6fc;
+	border-color: #bcd1e6;
+	transform: translateY(-1px);
+}
+.csx-btn:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+	transform: none;
+}
+
+/* ==========================================================================
+   TOGGLE (skin)
+   ========================================================================== */
+.toggle-with-tip {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+.toggle {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+.toggle-ui {
+	--tgl-width: 44px;
+	--tgl-height: 24px;
+	--tgl-pad: 2px;
+	--tgl-dot: calc(var(--tgl-height) - 2 * var(--tgl-pad));
+	--tgl-off: #b9c7da;
+	--tgl-on: #3a628a;
+	display: inline-block;
+	width: var(--tgl-width);
+	height: var(--tgl-height);
+	border-radius: 999px;
+	background: var(--tgl-off);
+	position: relative;
+	cursor: pointer;
+	transition: background-color 0.18s;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+.toggle-ui::after {
+	content: '';
+	position: absolute;
+	top: var(--tgl-pad);
+	left: var(--tgl-pad);
+	width: var(--tgl-dot);
+	height: var(--tgl-dot);
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+	transition: transform 0.18s;
+}
+.toggle:checked + .toggle-ui {
+	background: var(--tgl-on);
+}
+.toggle:checked + .toggle-ui::after {
+	transform: translateX(calc(var(--tgl-width) - var(--tgl-height)));
+}
+.toggle:focus-visible + .toggle-ui {
+	outline: 2px solid rgba(58, 98, 138, 0.35);
+	outline-offset: 2px;
+}
+.toggle-tip {
+	font-size: 0.9rem;
+	color: #58708a;
+}
+@media (prefers-reduced-motion: reduce) {
+	.toggle-ui,
+	.toggle-ui::after {
+		transition: none;
+	}
+}
+
+/* ==========================================================================
+   SCROLLBAR
+   ========================================================================== */
+.csx-table-scroll::-webkit-scrollbar {
+	height: 10px;
+}
+.csx-table-scroll::-webkit-scrollbar-thumb {
+	background: #cfe0ef;
+	border-radius: 999px;
+}
+.csx-table-scroll::-webkit-scrollbar-track {
+	background: #f3f7fb;
+	border-radius: 999px;
+}
+
+/* ==========================================================================
+   RESPONSYWNOŚĆ
+   ========================================================================== */
+@media (max-width: 720px) {
+	.csx-indicator {
+		min-width: 56px;
+	}
+	.csx-export {
+		width: 100%;
+		margin-left: 0;
+		justify-content: flex-start;
+	}
+}

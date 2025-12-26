@@ -1,0 +1,492 @@
+/* ==== KARTA (compact) ==== */
+.ts {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+	color: #0f172a;
+	padding: 10px 12px;
+}
+
+/* ==== TOOLBAR (compact; grupowanie + sort obok siebie) ==== */
+.ts .ts__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 10px;
+	background: linear-gradient(180deg, #f7faff 0%, #f4f7ff 100%);
+	border: 1px solid #e6ecfb;
+	border-radius: 10px;
+	padding: 8px 10px;
+}
+
+/* kolejność w wierszu */
+.ts .ts__toolbar-presets {
+	order: 1;
+	flex: 1 1 520px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+.ts .ts__toolbar-group {
+	order: 2;
+	flex: 0 1 auto;
+}
+.ts .ts__toolbar-sort {
+	order: 3;
+	flex: 0 1 auto;
+}
+.ts .btn.btn--clear {
+	order: 4;
+	margin-left: auto;
+}
+
+/* segmenty (pills) – niższe */
+.ts .seg {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 3px;
+	box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+}
+.ts .seg > span {
+	font-size: 12px;
+	color: #475569;
+	margin: 0 6px;
+}
+.ts .seg button {
+	appearance: none;
+	background: transparent;
+	border: 0;
+	border-radius: 8px;
+	padding: 6px 10px;
+	cursor: pointer;
+	font-size: 12.5px;
+	color: #0f172a;
+}
+.ts .seg button:hover {
+	background: #f3f6ff;
+}
+.ts .seg button.is-active {
+	background: #2563eb;
+	color: #fff;
+	box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18);
+}
+
+/* warianty tła segmentów */
+.ts .seg--group {
+	background: #eaf3ff;
+	border-color: #d6e8ff;
+}
+.ts .seg--sort {
+	background: #eef2ff;
+	border-color: #e0e7ff;
+}
+
+/* zakres dat (gdy „Niestandardowy”) – niżej */
+.ts .ts__range {
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 4px 6px;
+}
+.ts .ts__range label {
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	font-size: 12px;
+	color: #334155;
+}
+
+/* przycisk czyszczenia – kompakt */
+.ts .btn.btn--clear {
+	appearance: none;
+	border: 1px solid #fecaca;
+	color: #b91c1c;
+	background: #fff7f7;
+	border-radius: 10px;
+	padding: 8px 12px;
+	font-size: 13px;
+	cursor: pointer;
+}
+.ts .btn.btn--clear:hover {
+	background: #fee2e2;
+}
+
+/* ==== FILTRY (rozwijane) – kompakt ==== */
+.ts .ts__section-title {
+	margin-top: 10px;
+	font-weight: 800;
+	font-size: 11.5px;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+.ts .ts__filters {
+	display: grid;
+	gap: 8px;
+	margin-top: 4px;
+}
+.ts .ts__group {
+	display: grid;
+	gap: 6px;
+}
+
+.ts .collapsible {
+	position: relative;
+	padding: 8px 10px 8px 26px;
+	cursor: pointer;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	font-weight: 700;
+	color: #0f172a;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+.ts .collapsible::before {
+	content: '▸';
+	position: absolute;
+	left: 9px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #64748b;
+	transition: transform 0.15s ease;
+}
+.ts .collapsible.is-open::before {
+	transform: translateY(-50%) rotate(90deg);
+}
+.ts .collapsible .muted {
+	color: #64748b;
+	font-weight: 600;
+	margin-left: 6px;
+	font-size: 11.5px;
+}
+
+.ts .ts__collapse-body {
+	border-left: 2px solid #e5e7eb;
+	margin-left: 6px;
+	padding: 8px 8px 2px;
+}
+
+.ts .chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.ts .chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 999px;
+	padding: 5px 9px;
+	font-size: 12px;
+	color: #0f172a;
+	cursor: pointer;
+	user-select: none;
+}
+.ts .chip input {
+	display: none;
+}
+.ts .chip.is-on {
+	background: #eef2ff;
+	border-color: #c7d2fe;
+}
+
+/* ==== WYKRES ==== */
+.ts .ts__chart {
+	position: relative;
+	margin-top: 8px;
+	background: #fbfdff;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 8px;
+	overflow: visible;
+}
+.ts .ts__chart .empty {
+	padding: 8px 10px;
+	font-size: 13px;
+	color: #475569;
+}
+
+/* dodatkowa mini-legenda */
+.ts .ts__legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	margin-top: 8px;
+	font-size: 12px;
+	color: #475569;
+}
+.ts .ts__legend > strong {
+	margin-right: 4px;
+}
+.ts .ts__legend .pill {
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	padding: 3px 7px;
+	border-radius: 999px;
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	color: #0f172a;
+}
+.ts .ts__legend .dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 2px;
+	display: inline-block;
+}
+
+/* ==== RESPONSYWNOŚĆ ==== */
+@media (max-width: 820px) {
+	/* na węższych ekranach grupowanie i sort zostają obok siebie, aż zabraknie miejsca */
+	.ts .ts__toolbar-presets {
+		flex: 1 1 100%;
+	}
+}
+@media (max-width: 560px) {
+	.ts .btn.btn--clear {
+		width: 100%;
+		order: 5;
+	}
+	.ts .ts__toolbar-group {
+		order: 2;
+	}
+	.ts .ts__toolbar-sort {
+		order: 3;
+	}
+}
+/* === UKŁAD z obrazka: lewa kolumna (presety), prawa: [grupowanie | sort] + clear === */
+.ts .t2{
+  display: grid;
+  grid-template-columns: 1fr auto;     /* lewa elastyczna, prawa tak szeroka jak potrzeba */
+  align-items: start;
+  gap: 10px 12px;
+  background: linear-gradient(180deg,#f7faff 0%,#f4f7ff 100%);
+  border: 1px solid #e6ecfb;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+.ts .t2__left{
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  min-width: 0;
+}
+.ts .t2__right{
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+.ts .t2__row{
+  display: flex; align-items: center; gap: 10px;  /* <<< grupowanie i sort w JEDNEJ linii */
+  white-space: nowrap;
+}
+
+/* responsywność: na wąskich ekranach elementy kulturalnie się zawiną */
+@media (max-width: 900px){
+  .ts .t2{ grid-template-columns: 1fr; }
+  .ts .t2__right{ align-items: stretch; }
+  .ts .t2__row{ flex-wrap: wrap; }
+  .ts .t2 .btn.btn--clear{ align-self: flex-end; }
+}
+/* --- UŁOŻENIE JAK NA SCREENIE ---
+   1) Presety po lewej (rozciągają się)
+   2) Po prawej w TYM SAMYM WIERSZU: [Grupowanie] [Sortuj]
+   3) "Wyczyść wszystkie filtry" w następnym wierszu przy prawej krawędzi
+*/
+.ts .ts__toolbar { display:flex; flex-wrap:wrap; }
+
+/* presety: elastyczne wiersz 1, lewa strona */
+.ts .ts__toolbar-presets{
+  order:1;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* wrapper dla (grupowanie + sort) = ostatni DIV w toolbarnie */
+.ts .ts__toolbar > div:last-of-type{
+  order:2;                          /* idzie do pierwszego wiersza, na prawo od presetów */
+  display:flex;                     /* GRUPOWANIE i SORT W JEDNEJ LINII */
+  align-items:center;
+  gap:10px;
+  white-space:nowrap;               /* nie łam przycisków w środku */
+}
+
+/* przycisk "Wyczyść..." – drugi wiersz, prawa krawędź */
+.ts .ts__toolbar > .btn.btn--clear{
+  order:3;                          /* po wrapperze (czyli w 2. wierszu) */
+  margin-left:auto;                 /* trzymaj prawą krawędź */
+}
+
+/* Responsywnie pozwól się zawijać poniżej ~900px */
+@media (max-width: 900px){
+  .ts .ts__toolbar > div:last-of-type{ flex-wrap:wrap; }
+  .ts .ts__toolbar > .btn.btn--clear{ order:4; width:auto; align-self:flex-end; }
+}
+/* ==== MINI-KPI (nowe) ==== */
+.ts .ts__kpi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+  background: linear-gradient(180deg, #f8fbff 0%, #f6faff 100%);
+  border: 1px solid #e6ecfb;
+  border-radius: 10px;
+  padding: 8px;
+}
+.ts .ts__kpi > div {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12.5px;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+}
+.ts .ts__kpi > div strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* pionowy separator między grupami KPI (używany jako .sep) */
+.ts .ts__kpi .sep {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-width: 1px;
+  width: 1px;
+  margin: 0 4px;
+  background-image: linear-gradient(#e2e8f0, #e2e8f0);
+  background-size: 1px 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0;
+}
+@media (max-width: 680px) {
+  /* na wąskich ekranach separator nie ma sensu */
+  .ts .ts__kpi .sep { display: none; }
+}
+
+/* ==== CHART HEAD (opis + eksporty) ==== */
+.ts .ts__chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.ts .ts__chart-head .muted {
+  font-size: 12px;
+}
+.ts .ts__chart-head .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ==== PRZYCISKI EKSPORTU ==== */
+.ts .btn.btn--export {
+  appearance: none;
+  border: 1px solid #c7d2fe;
+  background: #eef2ff;
+  color: #1e3a8a;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12.5px;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+}
+.ts .btn.btn--export:hover {
+  background: #e0e7ff;
+}
+.ts .btn.btn--export:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* ogólna, delikatna typografia pomocnicza */
+.ts .muted {
+  color: #64748b;
+}
+
+/* drobne: gdy dużo przycisków eksportu, nie wypychaj grafu w dół na małych szerokościach */
+@media (max-width: 560px) {
+  .ts .ts__chart-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ts .ts__chart-head .actions {
+    justify-content: flex-start;
+  }
+}
+
+/* opcjonalnie: delikatny podgląd, że czerwony obrys = zaległe (gdy dorobisz legendę z kropką) */
+.ts .legend--overdue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #7f1d1d;
+  font-size: 12px;
+}
+.ts .legend--overdue .dot {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ef4444; /* taki sam kolor jak obrys słupka */
+  border-radius: 2px;
+  background: #fff;
+}
+/* ==== KPI: fade-in przy każdej zmianie ==== */
+@keyframes tsKpiFadeIn {
+  from { opacity: 0; transform: translateY(2px) scale(0.995); }
+  to   { opacity: 1; transform: none; }
+}
+.ts .ts__kpi.kpi-animate {
+  animation: tsKpiFadeIn 180ms ease-out;
+}
+
+/* ==== Sticky toolbar ==== */
+.ts .ts__toolbar {
+  position: sticky;
+  top: var(--ts-sticky-top, 0px); /* możesz nadpisać z zewnątrz */
+  z-index: 5;
+  backdrop-filter: blur(2px);
+}
+.ts .ts__toolbar.is-stuck {
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+  border-color: #d7e2ff;
+}
+.ts .ts__sticky-sentinel {
+  position: relative; /* nic nie rysuje; służy do IntersectionObservera */
+  height: 1px;
+  width: 100%;
+}
+
+/* ==== Legenda skali "zaległe" (opcjonalna etykieta) ==== */
+.ts .legend--overdue-scale {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 7px; border-radius: 999px;
+  background: #fff1f2; border: 1px solid #fecdd3; color: #7f1d1d;
+  font-size: 12px;
+}
+.ts .legend--overdue-scale .swatch {
+  width: 12px; height: 12px; border-radius: 3px; border: 2px solid transparent;
+}
+.ts .swatch--low    { border-color: #f59e0b; background: #fff; }
+.ts .swatch--mid    { border-color: #f97316; background: #fff; }
+.ts .swatch--high   { border-color: #ef4444; background: #fff; }

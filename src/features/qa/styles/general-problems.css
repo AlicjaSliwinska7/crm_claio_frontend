@@ -1,0 +1,163 @@
+/* ========= General Problems Form (gpf-*) ========= */
+:root{
+  --gpf-text:#0b0f19; --gpf-muted:#6b7280; --gpf-border:#e5e7eb; --gpf-primary:#2563eb;
+  --gpf-ring: rgba(37,99,235,.18); --gpf-danger:#ef4444; --gpf-danger-weak:#fee2e2; --gpf-danger-border:#fecaca;
+}
+
+/* Karta */
+.gpf.gpf--card{ padding:14px; border-radius:14px; max-width:980px; margin:0 auto; background:transparent; }
+
+/* Siatka */
+.gpf__grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.gpf__field--full{ grid-column:1 / -1; }
+.gpf__field--placeholder{ visibility:hidden; }
+
+/* Pole */
+.gpf__field{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+
+/* Etykieta (spójna wysokość, baseline) */
+.gpf__label{
+  font-size:12px; color:var(--gpf-muted); font-weight:800; line-height:1.2;
+  min-height:32px; display:flex; align-items:flex-end; margin:0 0 4px;
+}
+.gpf__label em{ color:var(--gpf-danger); font-style:normal; transform:translateY(-1px); }
+
+/* Kontrolki */
+.gpf__input, .gpf__select, .gpf__file{
+  height:40px; width:100%; border:1px solid var(--gpf-border); border-radius:12px;
+  background:#fff; color:var(--gpf-text); font-size:14px; padding:9px 12px; box-sizing:border-box;
+  transition:border-color .15s, box-shadow .15s;
+}
+.gpf__textarea{
+  width:100%; min-height:120px; border:1px solid var(--gpf-border); border-radius:12px;
+  background:#fff; color:var(--gpf-text); font-size:14px; padding:10px 12px; line-height:1.35; resize:vertical;
+}
+.gpf__input:focus, .gpf__select:focus, .gpf__textarea:focus{
+  outline:none; border-color:var(--gpf-primary); box-shadow:0 0 0 4px var(--gpf-ring);
+}
+
+/* Select caret */
+.gpf__select{
+  -webkit-appearance:none; -moz-appearance:none; appearance:none; padding-right:38px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path d='M6 8l4 4 4-4' stroke='%23677' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat; background-position:right 10px center; background-size:20px 20px;
+}
+
+/* Risk row */
+.gpf__risk{ grid-column:1 / -1; margin-top:2px; }
+.gpf__riskRow{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; gap:14px; align-items:end; }
+.gpf__riskBadge{
+  height:40px; min-width:200px; border:1px solid var(--gpf-border); border-radius:12px; padding:0 12px;
+  display:grid; place-items:center; font-weight:800; white-space:nowrap;
+  background:linear-gradient(90deg,#ecfeff 0%,#d1fae5 25%,#fef3c7 60%,#fee2e2 100%); color:#111827;
+}
+.gpf__riskBadge b{ margin:0 4px; }
+
+/* Divider nad opisem */
+.gpf__divider{
+  grid-column:1 / -1; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gpf-border),transparent);
+  margin:2px 0 6px;
+}
+
+/* Switch (anonimowo) */
+.gpf__switch{ display:inline-flex; align-items:center; gap:10px; height:40px; user-select:none; }
+.gpf__switch input[type="checkbox"]{
+  width:48px; height:26px; appearance:none; background:#e5e7eb; border-radius:999px; border:1px solid var(--gpf-border); position:relative; cursor:pointer;
+}
+.gpf__switch input[type="checkbox"]::after{
+  content:""; position:absolute; left:2px; top:2px; width:22px; height:22px; background:#fff; border-radius:999px; box-shadow:0 1px 2px rgba(0,0,0,.12); transition:transform .15s ease;
+}
+.gpf__switch input[type="checkbox"]:checked{ background:var(--gpf-primary); border-color:var(--gpf-primary); }
+.gpf__switch input[type="checkbox"]:checked::after{ transform:translateX(22px); }
+
+/* Files */
+.gpf__files{ list-style:none; margin:8px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+.gpf__files li{
+  display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:10px; background:#f8fafc;
+  border:1px solid var(--gpf-border); font-size:12px; color:#1f2937;
+}
+.gpf__fileName{ font-weight:600; }
+.gpf__fileMeta{ color:#6b7280; }
+
+/* Actions */
+.gpf__actions{ margin-top:10px; display:flex; justify-content:flex-end; gap:8px; border-top:1px dashed var(--gpf-border); padding-top:10px; }
+
+/* Responsive */
+@media (max-width:980px){
+  .gpf__grid{ grid-template-columns:1fr; }
+  .gpf__riskRow{ grid-template-columns:1fr; }
+  .gpf__riskBadge{ width:100%; min-width:0; }
+}
+
+/* Dark (opcjonalnie) */
+@media (prefers-color-scheme: dark){
+  :root{ --gpf-text:#e8ecf3; --gpf-muted:#a6afc0; --gpf-border:#253452; --gpf-ring:rgba(106,161,255,.22); }
+  .gpf__input,.gpf__select,.gpf__textarea{ background:#0f1420; color:#e8ecf3; }
+}
+
+/* ------- Bridge (tymczasowe aliasy dla starych klas gp-*) ------- */
+.gp-form.panel{ padding:14px; border-radius:14px; max-width:980px; margin:0 auto; }
+.gp-form__grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.gp-field{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+.gp-field--full{ grid-column:1 / -1; }
+.gp-label{ font-size:12px; color:var(--gpf-muted); font-weight:800; line-height:1.2; min-height:32px; display:flex; align-items:flex-end; margin:0 0 4px; }
+.gp-label em{ color:var(--gpf-danger); font-style:normal; transform:translateY(-1px); }
+.gp-input, .gp-select, .gp-file{ height:40px; width:100%; border:1px solid var(--gpf-border); border-radius:12px; background:#fff; color:var(--gpf-text); font-size:14px; padding:9px 12px; box-sizing:border-box; }
+.gp-textarea{ width:100%; min-height:120px; border:1px solid var(--gpf-border); border-radius:12px; background:#fff; color:var(--gpf-text); font-size:14px; padding:10px 12px; line-height:1.35; resize:vertical; }
+.gp-input:focus, .gp-select:focus, .gp-textarea:focus{ outline:none; border-color:var(--gpf-primary); box-shadow:0 0 0 4px var(--gpf-ring); }
+.gp-risk{ grid-column:1 / -1; margin-top:2px; }
+.gp-risk-row{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; gap:14px; align-items:end; }
+.gp-risk-score{ height:40px; min-width:200px; border:1px solid var(--gpf-border); border-radius:12px; padding:0 12px; display:grid; place-items:center; font-weight:800; white-space:nowrap; background:linear-gradient(90deg,#ecfeff 0%,#d1fae5 25%,#fef3c7 60%,#fee2e2 100%); color:#111827; }
+.form-err{ font-size:12px; color:#7f1d1d; background:var(--gpf-danger-weak); border:1px solid var(--gpf-danger-border); padding:6px 8px; border-radius:10px; }
+@media (max-width:980px){ .gp-form__grid{ grid-template-columns:1fr; } .gp-risk-row{ grid-template-columns:1fr; } .gp-risk-score{ width:100%; min-width:0; } }
+/* === 1) Wyrównanie pierwszego rzędu: Tytuł / Domena === */
+.gpf__grid > .gpf__field { align-self: start; }          /* każdy „box” zaczyna się od tej samej linii */
+.gpf__label{ min-height: 28px; display:flex; align-items:flex-end; margin-bottom: 6px; }
+.gpf__input, .gpf__select{ height: 40px; line-height: 1.3; }
+.gpf__select{ padding-right: 38px; }                      /* żeby strzałka nie zawyżała wysokości */
+
+/* jeśli masz globalną .select – wygaszamy jej wpływ tylko tu */
+.gpf__select.select { all: unset; }                       /* zeruje obce style */
+.gpf__select.select {
+  display:block; width:100%; height:40px; box-sizing:border-box;
+  border:1px solid var(--gpf-border); border-radius:12px; padding:9px 12px 9px 12px;
+  background:#fff no-repeat right 10px center;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path d='M6 8l4 4 4-4' stroke='%23677' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  color:var(--gpf-text); font-size:14px;
+}
+
+/* === 2) Wiersz ryzyka: nic nie wystaje i nie nachodzi === */
+.gpf__risk { grid-column: 1 / -1; }
+.gpf__riskRow{
+  display:grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(140px, 220px); /* badge elastyczny, ale ma widełki */
+  gap:14px;
+  align-items:end;
+}
+.gpf__riskRow > * { min-width: 0; }                       /* pozwól elementom się kurczyć */
+.gpf__riskBadge{
+  width: 100%;            /* wypełnia swoją kolumnę */
+  min-width: 0;           /* może się zmniejszyć gdy ciasno */
+  height: 40px;
+  white-space: nowrap;
+  display:grid; place-items:center;
+  border:1px solid var(--gpf-border); border-radius:12px; padding:0 12px;
+  background:linear-gradient(90deg,#ecfeff 0%,#d1fae5 25%,#fef3c7 60%,#fee2e2 100%);
+  font-weight:800; color:#111827;
+}
+
+/* Mobile – jedna kolumna, badge pod spodem na pełną szerokość */
+@media (max-width: 980px){
+  .gpf__grid{ grid-template-columns: 1fr; }
+  .gpf__riskRow{ grid-template-columns: 1fr; }
+  .gpf__riskBadge{ width: 100%; }
+}
+
+/* === 3) Subtelny divider nad „Opis” (czytelna separacja) === */
+.gpf__divider{
+  grid-column: 1 / -1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gpf-border), transparent);
+  margin: 6px 0 8px;
+}

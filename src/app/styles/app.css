@@ -1,0 +1,56 @@
+/* ==========================================================================
+   App layout utilities (app/styles/app.css)
+   - TYLKO klasy układu aplikacji (shell, main, stopka, overflow helpers)
+   - Zero globalnych resetów/typografii tutaj!
+   ========================================================================== */
+
+/* Root shell aplikacji */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* pełna wysokość */
+}
+
+/* Główne ciało layoutu (obszar z sidebarem i main) */
+.layout-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;     /* żeby wewnętrzne scrolle działały poprawnie */
+  overflow: hidden;  /* domyślnie ucinamy overflow, by kontrolować scrolle */
+}
+
+/* Alternatywna nazwa — jeśli masz gdzieś w kodzie użycie, możesz zostawić
+   na czas migracji; docelowo ujednolić na .layout-body */
+.content-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Główna kolumna z treścią (wewnętrzny scroller) */
+.main-area {
+  flex: 1;
+  min-width: 0;      /* ważne dla flex + overflow */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+/* Stopka doklejona do dołu (push footer down) */
+.footer {
+  margin-top: auto;
+}
+
+/* Helper: pozwala wyjąć dropdowny / popovery poza kontener gdy potrzeba */
+.allow-overflow {
+  overflow: visible !important;
+}
+
+/* (opcjonalnie) Ogólny kontener strony */
+.page-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: 16px;
+}

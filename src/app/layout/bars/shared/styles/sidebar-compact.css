@@ -1,0 +1,45 @@
+/* ============================================
+   Sidebar — COMPACT VARIANT
+   Zmniejsza typografię, paddingi i odstępy.
+   Działa zarówno dla lewego, jak i prawego panelu.
+   ============================================ */
+
+.sidebar-nav.is-compact .sidebar-link {
+	font-size: 15px; /* było 17px */
+	padding: 8px 0; /* było 10px 0 */
+	gap: 8px; /* było 9px */
+}
+
+.sidebar-nav.is-compact .sidebar-link i,
+.sidebar-nav.is-compact .sidebar-link svg {
+	font-size: 16px; /* było 18px */
+	width: 18px; /* było 20px */
+}
+
+/* Submenu: ciaśniejsze marginesy i cieńsze obramowanie */
+.sidebar-nav.is-compact .sidebar-submenu {
+	margin-bottom: 16px; /* było 22-25px */
+	border-left-width: 3px; /* było 4px (lewy wariant) */
+}
+
+/* Linki w submenu ciaśniej i mniejsze */
+.sidebar-nav.is-compact .sidebar-submenu .sidebar-link {
+	font-size: 13px; /* było 14px */
+	padding: 8px 0 0 8px; /* było 10px ... 10px */
+}
+
+/* Prawy panel (mirroring) — odbite wartości */
+.sidebar-nav.is-right.is-compact .sidebar-submenu {
+	margin-bottom: 16px;
+	border-left-width: 0;
+	border-right-width: 3px;
+}
+
+.sidebar-nav.is-right.is-compact .sidebar-submenu .sidebar-link {
+	padding: 8px 8px 0 0; /* zamiast 10px 10px 0 0 */
+}
+
+/* Opcjonalnie: ciaśniejszy odstęp między grupami linków */
+.sidebar-nav.is-compact .sidebar-group + .sidebar-group {
+	margin-top: 8px; /* jeśli używasz .sidebar-group */
+}

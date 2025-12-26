@@ -1,0 +1,131 @@
+/* =======================================================================
+   methodsDetails.css — styl dla widoku szczegółów metody badawczej
+   Zakłada wrapper: <div class="clients-list method-details"> … </div>
+   ======================================================================= */
+
+/* ----------- Layout & typografia ----------- */
+.method-details {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 4px 0 16px;
+}
+
+.method-details h1 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin: 0 0 2px 0;
+}
+
+.method-details h3 {
+  font-size: 1.05rem;
+  margin: 10px 0 8px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent, #2684ff);
+}
+
+/* Delikatnie przytłumiony tekst opisowy */
+.method-details .muted {
+  opacity: 0.8;
+}
+
+/* Odstępy sekcji */
+.method-details section + section {
+  margin-top: 14px;
+}
+
+/* ----------- Badges / „chip-y” ----------- */
+.method-details .status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  line-height: 1;
+  background: var(--badge-bg, #f2f4f7);
+  color: var(--badge-fg, #111827);
+  border: 1px solid var(--badge-border, #e5e7eb);
+}
+
+.method-details .status-badge + .status-badge {
+  margin-left: 6px;
+}
+
+/* ----------- Tabele w sekcjach ----------- */
+.method-details .table-container {
+  margin-top: 6px;
+  overflow: auto;
+}
+
+.method-details .table-container > table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px; /* przewijanie poziome na małych ekranach */
+}
+
+.method-details table thead th {
+  text-align: left;
+  font-weight: 600;
+  background: var(--tbl-head-bg, #f9fafb);
+  border-bottom: 1px solid var(--tbl-border, #e5e7eb);
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+
+.method-details table tbody td {
+  border-bottom: 1px solid var(--tbl-border, #f0f1f3);
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+/* Wyrównanie kolumn liczbowych/skrótów (2 i 3 kol.) */
+.method-details section table tbody td:nth-child(2),
+.method-details section table tbody td:nth-child(3) {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* „Zakres / tolerancja” może być dłuższy – pozwól zawijać */
+.method-details section table tbody td:nth-child(4) {
+  white-space: normal;
+}
+
+/* ----------- Link powrotny ----------- */
+.method-details .link-like {
+  display: inline-block;
+  margin-top: 12px;
+  text-decoration: none;
+  color: var(--link, #2563eb);
+}
+.method-details .link-like:hover {
+  text-decoration: underline;
+}
+
+/* ----------- Responsywność ----------- */
+@media (max-width: 720px) {
+  .method-details {
+    padding: 4px 8px 16px;
+  }
+  .method-details h1 {
+    font-size: 1.35rem;
+  }
+  .method-details h3 {
+    font-size: 1rem;
+  }
+}
+
+/* ----------- Tryb wydruku ----------- */
+@media print {
+  .method-details {
+    max-width: none;
+    padding: 0;
+  }
+  .method-details .table-container {
+    overflow: visible;
+  }
+  .method-details .status-badge {
+    border: 1px solid #999;
+    background: #fff;
+    color: #000;
+  }
+}

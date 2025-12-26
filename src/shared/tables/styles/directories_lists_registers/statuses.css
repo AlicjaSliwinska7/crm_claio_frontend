@@ -1,0 +1,121 @@
+/* ======================================================================
+   DIRECTORY / REGISTER — statusy, etapy (pille / badge)
+   ====================================================================== */
+
+/* -------------------- Pille / badge bazowe -------------------- */
+
+.label-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+/* fallback, gdy nie ma dedykowanej klasy */
+.label-pill--status {
+  background: #e5f2ff;
+  color: #1d4ed8;
+  border-color: rgba(29, 78, 216, 0.18);
+}
+
+.label-pill--stage {
+  background: #eef2ff;
+  color: #4c1d95;
+  border-color: rgba(76, 29, 149, 0.16);
+}
+
+/* (opcjonalnie) bazowy wygląd status-badge jeśli gdzieś jeszcze używasz tej klasy */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  min-width: 80px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 1.6;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+}
+
+/* ======================================================================
+   ZAKUPY (shopping.config → STATUSES)
+   keys: todo, ordered, received, cancelled
+   ====================================================================== */
+
+.label-pill.label-pill--status.label-pill--status-todo {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: rgba(3, 105, 161, 0.18);
+}
+
+.label-pill.label-pill--status.label-pill--status-ordered {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: rgba(146, 64, 14, 0.22);
+}
+
+.label-pill.label-pill--status.label-pill--status-received {
+  background: #dcfce7;
+  color: #166534;
+  border-color: rgba(22, 101, 52, 0.22);
+}
+
+.label-pill.label-pill--status.label-pill--status-cancelled {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: rgba(185, 28, 28, 0.25);
+}
+
+/* ======================================================================
+   SPOTKANIA / SZKOLENIA (appointments.config / trainings.config)
+   keys: planowane, wtrakcie, zakonczone, odwolane
+   ====================================================================== */
+
+.label-pill.label-pill--status.label-pill--status-planowane {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: rgba(3, 105, 161, 0.18);
+}
+
+.label-pill.label-pill--status.label-pill--status-wtrakcie {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: rgba(146, 64, 14, 0.22);
+}
+
+.label-pill.label-pill--status.label-pill--status-zakonczone {
+  background: #dcfce7;
+  color: #166534;
+  border-color: rgba(22, 101, 52, 0.22);
+}
+
+.label-pill.label-pill--status.label-pill--status-odwolane {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: rgba(185, 28, 28, 0.25);
+}
+
+/* ======================================================================
+   LABORATORIA WZORCOWANIA (calibration.config → LAB_STATUSES)
+   keys: active, inactive
+   ====================================================================== */
+
+.label-pill.label-pill--status.label-pill--status-active {
+  background: #dcfce7;
+  color: #166534;
+  border-color: rgba(22, 101, 52, 0.22);
+}
+
+.label-pill.label-pill--status.label-pill--status-inactive {
+  background: #e2e8f0;
+  color: #334155;
+  border-color: rgba(51, 65, 85, 0.18);
+}

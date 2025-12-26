@@ -1,0 +1,252 @@
+/* =========================
+   SEARCH PAGE — clean skin
+   ========================= */
+
+/* Paleta (możesz nadpisać w globalu) */
+:root {
+	--sp-bg: #ffffff;
+	--sp-text: #111827;
+	--sp-muted: #6b7280;
+
+	--sp-accent: #2c3e50; /* granat (registers vibe) */
+	--sp-accent-strong: #1f2c45; /* hover/focus */
+	--sp-border: rgba(0, 0, 0, 0.08);
+	--sp-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+	--sp-pill-bg: #f3f4f6;
+}
+
+/* Layout ogólny */
+.search-page {
+	display: grid;
+	gap: 16px;
+	color: var(--sp-text);
+}
+
+/* Header */
+.search-header {
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+	padding-bottom: 6px;
+	border-bottom: 2.5px solid color-mix(in oklab, var(--sp-accent) 30%, #cbd5e1 70%);
+}
+.search-header h1 {
+	margin: 0;
+	font-size: 20px;
+	line-height: 1.25;
+	letter-spacing: 0.2px;
+	color: var(--sp-accent);
+}
+.search-header .meta {
+	color: var(--sp-muted);
+	font-size: 14px;
+}
+
+/* Główny grid */
+.search-content {
+	display: grid;
+	grid-template-columns: 280px 1fr;
+	gap: 16px;
+	align-items: start;
+}
+
+/* =========================
+   FILTRY (sticky card)
+   ========================= */
+.search-filters {
+	position: sticky;
+	top: 12px;
+	background: var(--sp-bg);
+	border: 1px solid var(--sp-border);
+	border-radius: 12px;
+	padding: 12px;
+	box-shadow: var(--sp-shadow);
+}
+
+/* Sekcje filtrów */
+.filters {
+	display: grid;
+	gap: 12px;
+}
+.filters h3 {
+	margin: 4px 0 8px;
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--sp-accent);
+	border-bottom: 2.5px solid color-mix(in oklab, var(--sp-accent) 20%, #dbe3f1 80%);
+	padding-bottom: 6px;
+}
+
+/* Listy checkboxów */
+.filters .checklist {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	gap: 8px;
+}
+.filters label {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	cursor: pointer;
+	font-size: 14px;
+	color: var(--sp-text);
+}
+.filters input[type='checkbox'] {
+	width: 16px;
+	height: 16px;
+	accent-color: var(--sp-accent-strong);
+}
+
+/* Wspólne pola (select/input) — „gruba dolna linia” */
+.search-filters .fld,
+.search-filters select,
+.search-filters input[type='text'],
+.search-filters input[type='search'],
+.search-filters input[type='number'] {
+	width: 100%;
+	background: transparent;
+	border: none;
+	padding: 6px 4px 6px 2px;
+	border-radius: 0;
+	font: inherit;
+	color: var(--sp-text);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.search-filters .fld::placeholder {
+	color: #9ca3af;
+}
+.search-filters .fld:focus,
+.search-filters select:focus,
+.search-filters input:focus {
+	outline: none;
+	box-shadow: 0 2px 0 0 var(--sp-accent-strong);
+}
+
+/* =========================
+   WYNIKI (cards)
+   ========================= */
+.search-results .results-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	gap: 12px;
+}
+.result-item {
+	background: #fff;
+	border: 1px solid var(--sp-border);
+	border-radius: 12px;
+	padding: 12px;
+	box-shadow: var(--sp-shadow);
+	transition: transform 0.08s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.result-item:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+	border-color: color-mix(in oklab, var(--sp-accent) 14%, var(--sp-border) 86%);
+}
+
+/* Tytuł jako link „pełnej szerokości” */
+.result-title {
+	font-weight: 700;
+	text-decoration: none;
+	color: var(--sp-accent);
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	line-height: 1.25;
+}
+.result-title:hover {
+	text-decoration: underline;
+}
+
+/* Subinfo / metadane */
+.result-sub {
+	margin-top: 6px;
+	font-size: 13px;
+	color: var(--sp-muted);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+/* PILLs */
+.pill {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 12px;
+	background: var(--sp-pill-bg);
+}
+.pill--client {
+	background: #eef2ff;
+}
+.pill--offer {
+	background: #ecfeff;
+}
+.pill--order {
+	background: #fef9c3;
+}
+.pill--sample {
+	background: #e0f2fe;
+}
+.pill--document {
+	background: #f1f5f9;
+}
+.pill--equipment {
+	background: #e2e8f0;
+}
+.pill--training {
+	background: #fce7f3;
+}
+.pill--post {
+	background: #f4f4f5;
+}
+.pill--message {
+	background: #ffe4e6;
+}
+
+/* PAGER */
+.pager {
+	margin-top: 16px;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.pager button,
+.pager select {
+	padding: 8px 12px;
+	border-radius: 10px;
+	border: 1px solid var(--sp-border);
+	background: #fff;
+	font: inherit;
+	cursor: pointer;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.06s ease;
+}
+.pager button:hover,
+.pager select:hover {
+	border-color: color-mix(in oklab, var(--sp-accent) 16%, var(--sp-border) 84%);
+}
+.pager button:active {
+	transform: translateY(1px);
+}
+.pager button:focus-visible,
+.pager select:focus-visible {
+	outline: 2px solid color-mix(in oklab, var(--sp-accent) 35%, #bcd0ea 65%);
+	outline-offset: 2px;
+}
+
+/* Responsywność */
+@media (max-width: 960px) {
+	.search-content {
+		grid-template-columns: 1fr;
+	}
+	.search-filters {
+		position: static;
+		order: 2;
+	}
+}

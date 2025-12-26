@@ -1,0 +1,129 @@
+/* =========================================================
+   List Filters (FilterSelect, ControlsRow, etc.)
+   ========================================================= */
+
+/* Pasek filtrów – wyrównany do lewej jak searchbar */
+.list-controls-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* =========================================================
+   Pole filtra (label + select)
+   ========================================================= */
+.rg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  /* SSOT szerokości pola */
+  flex: 0 0 200px;
+  max-width: 200px;
+}
+
+.rg-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+  margin-left: 2px;
+}
+
+/* =========================================================
+   Select (FilterSelect)
+   ========================================================= */
+.rg-input.rg-select {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #585a5d;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 15px;
+  padding: 6px 4px 4px;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+/* stany */
+.rg-input.rg-select:hover {
+  border-bottom-color: #3a628a;
+}
+
+.rg-input.rg-select:focus {
+  border-bottom-color: #d64545;
+}
+
+/* opcje w selectach */
+.rg-input.rg-select option {
+  font-size: 15px;
+  padding: 4px 6px;
+}
+
+/* =========================================================
+   Responsywność
+   ========================================================= */
+@media (max-width: 768px) {
+  .list-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rg-field {
+    width: 100%;
+    max-width: none;
+    flex: 1 1 auto;
+  }
+}
+/* =========================================================
+   Registers / Directory – Filters
+   ========================================================= */
+
+.list-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-top: 6px;
+}
+
+.rg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+}
+
+.rg-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.rg-input {
+  border: none;
+  border-bottom: 2px solid #64748b;
+  background: transparent;
+  padding: 6px 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+.rg-input:focus {
+  border-bottom-color: #3a628a;
+}
+
+@media (max-width: 768px) {
+  .list-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rg-field {
+    width: 100%;
+  }
+}

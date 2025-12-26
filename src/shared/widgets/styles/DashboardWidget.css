@@ -1,0 +1,37 @@
+.dashboard-widget {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	background-color: #f9f9fb;
+	padding: 15px 20px;
+	border-radius: 12px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-widget:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.widget-icon {
+	font-size: 28px;
+	color: #3a6073;
+}
+
+.widget-content {
+	display: flex;
+	flex-direction: column;
+}
+
+.widget-title {
+	font-size: 14px;
+	color: #666;
+}
+
+.widget-value {
+	font-size: 20px;
+	font-weight: bold;
+	color: #222;
+}

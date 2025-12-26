@@ -1,0 +1,144 @@
+/* Prosty, neutralny styl bez żadnych zewnętrznych bibliotek */
+
+.offers-wrap {
+  padding: 16px;
+}
+
+.offers-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.offers-header p {
+  margin: 0;
+  color: #6b7280; /* zinc-500 */
+  font-size: 12px;
+}
+
+.offers-toolbar {
+  margin: 12px 0 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb; /* zinc-200 */
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.offers-input {
+  position: relative;
+  width: 280px;
+  max-width: 100%;
+}
+
+.offers-input input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px 8px 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.offers-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.offers-select select {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: #000;
+  color: #fff;
+}
+
+.btn.outline {
+  background: #fff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+}
+
+.btn.icon {
+  padding: 6px;
+  background: transparent;
+  color: inherit;
+  border: 1px solid #e5e7eb;
+}
+
+.table-card {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+}
+
+.table-head {
+  display: grid;
+  grid-template-columns: 2fr 3fr 4fr 1fr 1fr 1fr;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.table-sep { height: 1px; background: #e5e7eb; }
+
+.row {
+  display: grid;
+  grid-template-columns: 2fr 3fr 4fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.row .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: #374151; }
+.row .right { text-align: right; padding-right: 8px; }
+.row .center { text-align: center; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.draft { background: #f4f4f5; color: #3f3f46; }
+.badge.sent { background: #dbeafe; color: #1d4ed8; }
+.badge.accepted { background: #d1fae5; color: #047857; }
+.badge.rejected { background: #ffe4e6; color: #be123c; }
+
+/* Proste menu wiersza */
+.row-menu { position: relative; }
+.row-menu .menu {
+  position: absolute; right: 0; margin-top: 4px;
+  width: 180px; background: #fff; border: 1px solid #e5e7eb;
+  border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+.row-menu .menu button {
+  display: block; width: 100%; text-align: left; font-size: 14px;
+  padding: 8px 10px; background: #fff; border: 0; cursor: pointer;
+}
+.row-menu .menu button:hover { background: #f9fafb; }
+.row-menu .menu .sep { height: 1px; background: #e5e7eb; }

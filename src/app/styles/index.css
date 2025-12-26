@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Global entry CSS (app/styles/index.css)
+   - Import vendor + Twoje warstwy
+   - Globalne box-sizing, tło body, root mounting, z-index dla modali
+   ========================================================================== */
+
+/* 1) Vendor (fontawesome – jeśli używasz) */
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+/* 2) Twoje warstwy (zmienne → reset/global → layout aplikacji) */
+@import './tokens.css';
+@import './globals.css';
+@import './app.css';
+
+/* ===== Box sizing / preferencje kolorów ===== */
+html {
+  box-sizing: border-box;
+  color-scheme: light dark;
+  height: 100%;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+/* ===== Montowanie aplikacji (rooty) ===== */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* ===== Body / tło / fonty globalne ===== */
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* delikatny gradient tła */
+  background: linear-gradient(270deg, #f4f4f4, #e6e6e6, #f4f4f4);
+  background-size: 400% 400%;
+}
+@media (prefers-reduced-motion: reduce) {
+  body { background-size: auto; }
+}
+
+/* ===== monospace dla <code> (globalnie) ===== */
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* ===== Globalne zmienne aplikacji (jeśli potrzebne „wszędzie”) ===== */
+:root{
+  --sidebar-gap-left: 17px;
+}
+
+/* ===== Gdy otwarty modal — z-indexy (ShiftDrawer / Overlay) ===== */
+body[data-modal-open] {
+  --shift-z-root: 9000;
+  --shift-z-base: 9100;
+  --shift-z-panel: 9200;
+}

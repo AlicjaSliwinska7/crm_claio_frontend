@@ -1,0 +1,68 @@
+/* =========================================================
+   Registers – Base (typografia i aliasy layoutu list)
+   ========================================================= */
+
+/* offset dla elementów sticky (np. gdy masz górny pasek) */
+:root {
+  --list-sticky-offset: 0px;
+}
+
+.list {
+  width: 100%;
+}
+
+/* Wspólna typografia i aliasy layoutu list */
+.list,
+.clients-list,
+.shopping-list,
+.contact-list,
+.documents-list,
+.trainings-list,
+.appointments-register,   /* ✅ było: .appointments-list */
+.ordersRegister-list,
+.samplesRegister-list,
+.samplesLogistics-list,
+.samplesDisposal-list,
+.testsSummary-list,
+.offers-list {
+  font-family: Arial, sans-serif;
+  line-height: 1.4; /* stabilna wysokość wierszy bez zmiany wyglądu */
+}
+
+.list-page {}
+
+.list-header {
+  margin-bottom: 12px;
+}
+
+.list-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.list-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap; /* bezpiecznie na węższych widokach */
+}
+
+/* sticky pasek filtrów/narzędzi nad tabelą */
+.list-controls--sticky {
+  position: sticky;
+  /* jeśli masz navbar/fixed header, ustaw gdzieś globalnie:
+     :root { --list-sticky-offset: 56px; } */
+  top: var(--list-sticky-offset, 0);
+  background: var(--bg, #fff);
+  z-index: 10;
+  padding-top: 8px;
+}
+
+.list-controls__left,
+.list-controls__right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

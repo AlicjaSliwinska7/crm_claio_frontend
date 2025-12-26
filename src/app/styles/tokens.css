@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Tokens (app/styles/tokens.css)
+   - Paleta i podstawowe zmienne (light/dark)
+   ========================================================================== */
+
+:root {
+  /* Kolory bazowe */
+  --bg-app: #eef3f8;
+  --bg-card: #ffffff;
+  --text: #0f172a;
+  --muted: #5f7186;
+  --hair: #e6edf3;
+  --border: #ccd6e0;
+
+  /* Primary */
+  --pri: #3a628a;
+  --pri-strong: #2e4f70;
+  --pri-soft: #d7e4f2;
+  --pri-very-soft: #edf3f9;
+
+  /* Status */
+  --ok: #16a34a;
+  --warn: #eab308;
+  --danger: #dc2626;
+
+  /* >>> Red accent for sidebars / links (nowe) */
+  --red: #d60000;
+  --red-strong: #b80000;
+  --red-soft: #ffe5e5;
+
+  /* Bubbles (chat) */
+  --bubble: #f3f6f9;
+  --bubble-own: #dcefff;
+  --bubble-text: #1f2937;
+  --bubble-own-text: #0f2a45;
+
+  /* Cienie */
+  --shadow-xs: 0 1px 1px rgba(16, 24, 40, 0.04);
+  --shadow-sm: 0 1px 2px rgba(24, 34, 49, 0.06);
+  --shadow-md: 0 6px 18px rgba(24, 34, 49, 0.10);
+  --shadow-lg: 0 10px 24px rgba(24, 34, 49, 0.16);
+
+  /* Promienie */
+  --r-xs: 6px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-xl: 18px;
+
+  /* Scrollbar */
+  --sb-thumb: rgba(96, 125, 159, 0.34);
+  --sb-thumb-hover: rgba(96, 125, 159, 0.58);
+
+  /* Ikony */
+  --icon-lg: clamp(22px, 2.2vw, 26px);
+}
+
+/* Tryb dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-app: #0f172a;
+    --bg-card: #0c1424;
+    --text: #e5e7eb;
+    --muted: #9bb0c9;
+    --hair: #1d2a42;
+    --border: #1a2740;
+
+    --pri: #5ea4ee;
+    --pri-strong: #3b6fa9;
+    --pri-soft: #11243b;
+    --pri-very-soft: #0b1a2e;
+
+    --bubble: #0f1b2c;
+    --bubble-own: #0c2744;
+    --bubble-text: #ced8e7;
+    --bubble-own-text: #e9f3ff;
+
+    --sb-thumb: rgba(140, 171, 207, 0.35);
+    --sb-thumb-hover: rgba(140, 171, 207, 0.6);
+
+    /* Red accent (dark toning) */
+    --red: #ff5151;
+    --red-strong: #ff2d2d;
+    --red-soft: #3a1212;
+  }
+}

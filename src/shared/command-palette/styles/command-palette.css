@@ -1,0 +1,4 @@
+/* Minimalne klasy – dostosuj do swojego systemu designu */
+.cmdp__card { backdrop-filter: saturate(1.2); }
+.cmdp__input { outline: none; }
+.cmdp__item.is-active { background: #eff6ff; }

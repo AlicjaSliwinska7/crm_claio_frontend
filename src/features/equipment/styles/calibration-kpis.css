@@ -1,0 +1,150 @@
+/* =========================
+   KPI cards – compact, responsive (utils-driven)
+   ========================= */
+
+:root {
+	--kpi-surface: var(--cc-surface, #fff);
+	--kpi-border: var(--cc-border, #e6edf5);
+	--kpi-text: #2c3e50;
+	--kpi-muted: #6a7f96;
+	/* global akcent, nadpisywany inline przez komponent */
+	--kpi-accent: var(--cc-accent, #3a628a);
+
+	/* Fallbacki tonów (gdy komponent nie poda --kpi-accent) */
+	--kpi-soon: #3a628a; /* Do wzorcowania – niebieski */
+	--kpi-overdue: #b91c1c; /* Po terminie – czerwony */
+	--kpi-progress: #6a7f96; /* W toku – szary */
+
+	/* Planowane (jeśli używasz w drugiej linii KPI) */
+	--kpi-send: #7e57c2;
+	--kpi-return: #26a69a;
+
+	--kpi-soft-bg: #f7fbff;
+}
+
+.kpi-section {
+	margin-top: 12px;
+	display: grid;
+	gap: 12px;
+}
+
+.kpi-grid {
+	display: grid;
+	gap: 12px;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.kpi-grid--secondary {
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+/* Card */
+.kpi-card {
+	background: var(--kpi-surface);
+	border: 1px solid var(--kpi-border);
+	border-radius: 12px;
+	padding: 14px 16px;
+	display: grid;
+	gap: 6px;
+	align-content: start;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+	transition: box-shadow 0.18s ease, transform 0.04s ease, border-color 0.18s ease;
+}
+
+/* Akcent po lewej – przez zmienną (inline > fallback na tone) */
+.kpi-card {
+	/* domyślnie brak akcentu – pojawi się w wariantach niżej */
+}
+
+.kpi-card:hover {
+	box-shadow: 0 6px 20px rgba(25, 43, 77, 0.08);
+	transform: translateY(-1px);
+	border-color: color-mix(in srgb, var(--kpi-border) 70%, var(--kpi-accent, #3a628a) 30%);
+}
+
+.kpi-card__value {
+	font: 800 24px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	color: var(--kpi-text);
+	letter-spacing: 0.2px;
+}
+
+.kpi-card__label {
+	font: 600 12.5px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	color: var(--kpi-muted);
+}
+
+/* =========================
+   Accents per tone
+   – korzystają z --kpi-accent jeśli podany z komponentu,
+     inaczej z fallbacków (soon/overdue/progress/send/return)
+   ========================= */
+.kpi-card--soon {
+	--_accent: var(--kpi-accent, var(--kpi-soon));
+	border-left: 6px solid var(--_accent);
+}
+.kpi-card--soon .kpi-card__label {
+	color: color-mix(in srgb, var(--_accent) 55%, var(--kpi-muted) 45%);
+}
+
+.kpi-card--overdue {
+	--_accent: var(--kpi-accent, var(--kpi-overdue));
+	border-left: 6px solid var(--_accent);
+}
+.kpi-card--overdue .kpi-card__label {
+	color: color-mix(in srgb, var(--_accent) 55%, var(--kpi-muted) 45%);
+}
+
+.kpi-card--progress {
+	--_accent: var(--kpi-accent, var(--kpi-progress));
+	border-left: 6px solid var(--_accent);
+}
+.kpi-card--progress .kpi-card__label {
+	color: color-mix(in srgb, var(--_accent) 60%, var(--kpi-muted) 40%);
+}
+
+/* Soft variant (druga linia) – delikatne tło z akcentem */
+.kpi-card--soft {
+	background: var(--kpi-soft-bg);
+	border-style: dashed;
+}
+.kpi-card--soft {
+	/* fallback na stały kolor */
+	background: var(--kpi-soft-bg);
+}
+
+/* Range pill */
+.kpi-range {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+	padding: 10px 12px;
+	border: 1px solid var(--kpi-border);
+	border-radius: 12px;
+	background: var(--kpi-surface);
+}
+
+.kpi-range__label {
+	font: 700 13px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	color: var(--kpi-accent);
+}
+
+.kpi-range__chip {
+	font: 700 12.5px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	color: var(--kpi-text);
+	background: #eef4fb;
+	border: 1px solid color-mix(in srgb, var(--kpi-accent, #3a628a) 25%, #fff 75%);
+	padding: 6px 10px;
+	border-radius: 999px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	.kpi-card {
+		transition: none;
+	}
+	.kpi-card:hover {
+		transform: none;
+		box-shadow: none;
+	}
+}

@@ -1,0 +1,318 @@
+/* =========================================================
+   HOME / DASHBOARD — LAYOUT & UI (page-scoped)
+   ========================================================= */
+
+.home-page {
+  /* jeśli chcesz, możesz dodać padding/overflow tylko tu */
+}
+
+/* -------------------- Layout siatki strony -------------------- */
+.home-page .home-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.home-page .home-widgets {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.home-page .home-sections {
+  display: grid;
+  gap: 20px;
+}
+
+/* separator tylko na home */
+.home-page .home-hr {
+  border: 0;
+  border-bottom: 1px solid rgba(44, 62, 80, 0.09);
+}
+.home-page .home-hr--soft {
+  opacity: 0.9;
+}
+.home-page .home-hr--xl {
+  margin: 0;
+}
+
+/* -------------------- Nagłówki sekcji -------------------- */
+.home-page .home-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--hair);
+  padding-bottom: 6px;
+}
+.home-page .home-header h2 {
+  margin: 0;
+  color: var(--pri-strong);
+  font-size: 20px;
+}
+.home-page .home-date {
+  font-size: 13px;
+  color: color-mix(in oklab, var(--text) 55%, #6a7f96 45%);
+}
+
+/* -------------------- Kolumny -------------------- */
+.home-page .home-columns {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+@media (min-width: 1100px) {
+  .home-page .home-columns {
+    background: linear-gradient(var(--hair), var(--hair)) 50% 0 / 1px 100% no-repeat;
+  }
+}
+
+/* -------------------- Karty -------------------- */
+.home-page .home-card {
+  background: #2e4f7015;
+  border: 1px solid #2e4f7067;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  padding: 12px;
+}
+.home-page .home-card--wide {
+  grid-column: 1 / -1;
+}
+
+.home-page .home-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px dashed color-mix(in oklab, var(--hair) 85%, #fff 15%);
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+.home-page .home-card-head h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--pri-strong);
+}
+
+/* -------------------- Przyciski tylko na home -------------------- */
+.home-page .home-btn {
+  border: 1px solid rgba(46, 79, 112, 0.25);
+  background: #fff;
+  border-radius: 4px;
+  padding: 3px 10px 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.home-page .home-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1;
+}
+.home-page .home-btn:hover {
+  background: rgba(46, 79, 112, 0.06);
+}
+
+/* -------------------- Listy -------------------- */
+.home-page .home-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.home-page .home-list__item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.home-page .home-list__main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.home-page .home-list__meta {
+  font-size: 12px;
+  color: rgba(26, 38, 49, 0.55);
+}
+.home-page .home-list__text {
+  display: inline-block;
+}
+.home-page .home-empty {
+  font-size: 13px;
+  color: rgba(26, 38, 49, 0.45);
+}
+
+/* -------------------- Status / badge / dot -------------------- */
+.home-page .home-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #d1d5db;
+}
+.home-page .home-status--finished,
+.home-page .home-status--done {
+  background: #22c55e;
+}
+.home-page .home-status--inprogress,
+.home-page .home-status--wtrakcie {
+  background: #f97316;
+}
+.home-page .home-dot {
+  width: 6px;
+  height: 6px;
+  background: #1f2937;
+  border-radius: 999px;
+}
+.home-page .home-badge {
+  background: #fff;
+  border: 1px solid rgba(46, 79, 112, 0.35);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2e4f70;
+}
+.home-page .home-badge--soft {
+  background: rgba(46, 79, 112, 0.08);
+}
+
+/* link-like */
+.home-page .home-linklike {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: color-mix(in oklab, var(--pri-strong) 90%, #274a6c 10%);
+  cursor: pointer;
+}
+.home-page .home-linklike:hover {
+  text-decoration: underline;
+}
+
+/* separator sekcji w gridzie */
+.home-page .home-section-rule {
+  height: 1px;
+  background: rgba(46, 79, 112, 0.09);
+}
+
+/* -------------------- Meetingi -------------------- */
+.home-page .home-meetings {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.home-page .home-meeting-item {
+  border: 1px solid color-mix(in oklab, var(--border) 90%, #fff 10%);
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+}
+.home-page .home-meeting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.home-page .home-meeting-title {
+  font-weight: 400;
+  color: color-mix(in oklab, var(--pri-strong) 80%, #274a6c 20%);
+  cursor: pointer;
+}
+.home-page .home-meeting-title:hover {
+  text-decoration: underline;
+}
+.home-page .home-meeting-date {
+  font-size: 12px;
+  color: color-mix(in oklab, var(--text) 55%, #6a7f96 45%);
+}
+.home-page .home-decisions {
+  margin: 6px 0 0 0;
+  padding-left: 16px;
+  color: color-mix(in oklab, var(--pri-strong) 70%, #2b4b6b 30%);
+}
+.home-page .home-muted {
+  color: rgba(26, 38, 49, 0.4);
+  font-size: 12px;
+}
+/* -------------------- Buttony na Home -------------------- */
+.home-page .home-btn {
+  border: 1px solid rgba(46, 79, 112, 0.2);
+  background: #fff;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 13px;
+  line-height: 1.1;
+  color: #2e4f70;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 1px 0 rgba(46, 79, 112, 0.03);
+}
+
+.home-page .home-btn:hover {
+  background: rgba(46, 79, 112, 0.05);
+  border-color: rgba(46, 79, 112, 0.35);
+  box-shadow: 0 2px 4px rgba(46, 79, 112, 0.12);
+}
+
+.home-page .home-btn:active {
+  transform: translateY(1px);
+}
+
+/* wariant “+” w nagłówkach kart */
+.home-page .home-btn.home-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: #2e4f70;
+  padding: 0 4px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
+  box-shadow: none;
+}
+.home-page .home-btn.home-btn--ghost:hover {
+  background: rgba(46, 79, 112, 0.05);
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 4px;
+}
+
+/* -------------------- Separator pod widgetami -------------------- */
+.home-page .home-hr {
+  border: 0;
+  height: 3px; /* było 1px */
+  background: linear-gradient(
+    90deg,
+    rgba(46, 79, 112, 0) 0%,
+    rgba(46, 79, 112, 0.28) 12%,
+    rgba(46, 79, 112, 0.28) 88%,
+    rgba(46, 79, 112, 0) 100%
+  );
+  border-radius: 999px;
+  margin-top: 2px;
+}
+.home-page .home-hr--xl {
+  margin-bottom: 4px;
+}
+/* licznik w nagłówku karty */
+.home-page .home-card-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0 6px;
+  background: rgba(46, 79, 112, 0.08);
+  border: 1px solid rgba(46, 79, 112, 0.12);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2e4f70;
+  line-height: 1;
+}

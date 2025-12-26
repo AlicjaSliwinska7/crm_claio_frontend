@@ -1,0 +1,163 @@
+/* Documents – pasek dodawania (prosty, kanciasty; zgodny z registers-*) */
+
+/* Pasek */
+.documents-list .form-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin: 8px auto 14px;
+  padding: 0 8px;
+}
+
+/* Select kategorii */
+.documents-list .form-row .training-filter-select {
+  height: 34px;
+  line-height: 34px;
+  border-radius: 0;
+  border-bottom: 2px solid #585a5d;
+  background: transparent;
+  padding: 0 10px;
+  color: #2f3b45;
+}
+.documents-list .form-row .training-filter-select:focus {
+  outline: none;
+}
+
+/* Nazwa dokumentu – podkreślany input */
+.documents-list .form-row .doc-name {
+  max-width: 420px;
+}
+.documents-list .form-row .doc-name input[type="text"] {
+  width: 100%;
+  height: 34px;
+  padding: 0 8px;
+  font-size: 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #585a5d;
+  color: #2f3b45;
+  outline: none;
+}
+.documents-list .form-row .doc-name input[type="text"]:focus {
+  border-bottom-color: #585a5d;
+}
+
+/* Błędy */
+.documents-list .form-row .field-error {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+  margin-top: 4px;
+  color: #d64545;
+}
+
+/* Uploader */
+.documents-list .form-row .file-uploader { min-width: 280px; }
+.documents-list .file-uploader .upload-dropzone {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  border: 1px dashed #cfd4da;
+  border-radius: 0;
+  background: #fafbfc;
+  transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+}
+.documents-list .file-uploader .upload-dropzone:hover {
+  border-color: #b9c2cc;
+  background: transparent;
+}
+.documents-list .file-uploader .upload-dropzone.is-dragover {
+  border-color: #3a628a;
+  box-shadow: inset 0 0 0 2px rgba(58, 98, 138, .12);
+}
+
+/* Prawdziwy input file */
+.documents-list .file-uploader .input-file {
+  width: 100%;
+  padding: 0 8px;
+  background: transparent;
+  border: 0;
+  color: #2f3b45;
+}
+.documents-list .file-uploader .input-file::file-selector-button,
+.documents-list .file-uploader .input-file::-webkit-file-upload-button {
+  height: 30px;
+  margin-right: 8px;
+  padding: 0 10px;
+  border: 1px solid #cfd4da;
+  border-radius: 0;
+  background: #ffffff;
+  color: #2f3b45;
+  cursor: pointer;
+  transition: transform .12s ease, background-color .12s ease, border-color .12s ease;
+}
+.documents-list .file-uploader .input-file::file-selector-button:hover,
+.documents-list .file-uploader .input-file::-webkit-file-upload-button:hover {
+  transform: scale(1.04);
+  background: #f3f6fb;
+  border-color: #b9c2cc;
+}
+
+/* Wybrany plik */
+.documents-list .upload-list {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.documents-list .upload-item {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid #e6eaef;
+  border-radius: 0;
+  background: #fff;
+}
+.documents-list .upload-item__thumb {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 1px solid #dfe5ec;
+  border-radius: 0;
+  font-size: 10px; color: #64748b;
+  background: #f7f9fc;
+}
+.documents-list .upload-item__name {
+  font-size: 13px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.documents-list .upload-item__details {
+  font-size: 12px; color: #6b7785;
+}
+.documents-list .upload-remove {
+  background: transparent; border: 0; cursor: pointer;
+  color: #d64545; font-size: 16px; line-height: 1;
+  padding: 4px 6px; border-radius: 0;
+  transition: transform .12s ease, color .12s ease, background-color .12s ease;
+}
+.documents-list .upload-remove:hover {
+  transform: scale(1.12);
+  color: #b93838;
+  background: rgba(214, 69, 69, .08);
+}
+
+
+
+/* Responsywność */
+@media (max-width: 820px) {
+  .documents-list .form-row {
+    grid-auto-flow: row;
+    grid-auto-columns: 100%;
+    justify-items: stretch;
+  }
+  .documents-list .form-row .doc-name,
+  .documents-list .form-row .file-uploader,
+  .documents-list .form-row .training-filter-select {
+    width: 100%;
+    min-width: 0;
+  }
+}

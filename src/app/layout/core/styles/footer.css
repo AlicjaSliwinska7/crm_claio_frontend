@@ -1,0 +1,77 @@
+.footer {
+	background: linear-gradient(145deg, #838c96d0 0%, #dadada 50%, #8f969c75 100%);
+	color: #2b3e50;
+	text-align: center;
+	padding: 25px 20px;
+	font-size: 14px;
+	line-height: 1.6;
+	border-top: 1px solid #9bb2c54e;
+	box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.2), 0 -1px 5px rgba(0, 0, 0, 0.1);
+	font-family: 'Arial', sans-serif;
+	position:initial;
+	z-index: 2;
+	margin-top: 50px;
+	
+}
+.footer::before {
+	content: '';
+	position: absolute;
+	top: -30px;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	background: linear-gradient(to bottom, rgba(244, 244, 244, 0.6), transparent);
+	z-index: -1;
+}
+
+.footer-info {
+	color: #2b3e50;
+	font-weight: 400;
+	margin-bottom: 8px;
+}
+
+.footer-info p {
+	margin: 0;
+	color: #3f5c74;
+	font-size: 13px;
+}
+
+.footer-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 40px;
+	justify-content: center;
+	color: #2b3e50;
+	font-weight: 500;
+}
+
+.footer-links p {
+	margin: 4px 0;
+	color: #3a4f63;
+	font-size: 13px;
+}
+.footer-links a {
+	color: #2b3e50;
+	text-decoration: none;
+	font-weight: 500;
+	transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+	color: #1c3147;
+	text-decoration: underline;
+}
+
+
+/* Responsywność */
+@media (max-width: 600px) {
+	.footer {
+		font-size: 12px;
+		padding: 15px 10px;
+	}
+
+	.footer-links {
+		flex-direction: column;
+		gap: 8px;
+	}
+}
