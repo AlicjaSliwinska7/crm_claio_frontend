@@ -33,10 +33,8 @@
 .sp-planner .chip__deadline{
   /* geometria */
   min-width: 64px;
-  height: 32px;                   /* ✅ stała wysokość = stabilne centrowanie */
-  padding: 0 10px;                /* ✅ bez pionowego paddingu */
-  border-radius: 8px;
-
+  height: 17px;                   /* ✅ stała wysokość = stabilne centrowanie */
+border:none;
   /* centrowanie */
   display: inline-flex;           /* ✅ KLUCZ: zamiast inline/inline-block */
   align-items: center;            /* ✅ pion */
@@ -54,8 +52,6 @@
 
   /* wygląd */
   color: var(--text-dim);
-  background: #152032;
-  border: 1px solid #253452;
   white-space: nowrap;
 }
 
@@ -66,3 +62,19 @@
   transform: translateY(0.5px);
 }
 */
+/* =========================================================
+   TS TOOLTIP — ALWAYS ON TOP
+   ========================================================= */
+
+.tasksschedule .ts-tooltip {
+  position: fixed !important;     /* klucz: koordynaty są viewportowe */
+  z-index: 99999 !important;      /* nad wszystkim (modal, header, grid) */
+
+  pointer-events: none;           /* nie blokuje hover/klików */
+  transform: translateX(-50%);    /* bo tip.x liczysz jako "mid", centrowanie */
+}
+
+/* jeśli masz strzałkę/animacje — zostają, ale dopnij warstwę */
+.tasksschedule .ts-tooltip * {
+  pointer-events: none;
+}

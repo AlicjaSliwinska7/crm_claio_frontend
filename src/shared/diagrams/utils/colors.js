@@ -1,4 +1,4 @@
-// src/shared/diagrams/summary/utils/colors.js
+// src/shared/diagrams/utils/colors.js
 
 export const NEUTRAL = '#94a3b8'
 export const ACCENT = '#3a628a'
@@ -30,30 +30,23 @@ export function withAlpha(color, alpha = 1) {
   }
 
   // hex
-  let h = String(color || '').trim()
-  if (!h) return `rgba(0,0,0,${a})`
-  if (h[0] !== '#') h = `#${h}`
+  let h = String(color || '').trim().replace('#', '')
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('')
+  if (h.length !== 6) return `rgba(0,0,0,${a})`
 
-  // #RGB -> #RRGGBB
-  if (/^#([0-9a-f]{3})$/i.test(h)) {
-    h = `#${h[1]}${h[1]}${h[2]}${h[2]}${h[3]}${h[3]}`
-  }
-
-  const m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(h)
-  if (!m) return `rgba(0,0,0,${a})`
-
-  const r = parseInt(m[1], 16)
-  const g = parseInt(m[2], 16)
-  const b = parseInt(m[3], 16)
+  const r = parseInt(h.slice(0, 2), 16)
+  const g = parseInt(h.slice(2, 4), 16)
+  const b = parseInt(h.slice(4, 6), 16)
   return `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
 /**
- * Stabilny kolor serii:
- * - jeśli key pasuje do mapy “specjalnej” -> użyj mapy
- * - inaczej z palety po indeksie
+ * ✅ Public API expected by configs:
+ * getSeriesColors(keys) -> array of colors aligned with keys
  */
-export function colorFor(key, idx = 0, specialMap = null) {
-  if (specialMap && typeof specialMap === 'object' && typeof specialMap[key] === 'string') return specialMap[key]
-  return palette[idx % palette.length]
+export function getSeriesColors(keys = [], pal = palette) {
+  const safeKeys = Array.isArray(keys) ? keys : []
+  const out = []
+  for (let i = 0; i < safeKeys.length; i++) out.push(pal[i % pal.length])
+  return out
 }

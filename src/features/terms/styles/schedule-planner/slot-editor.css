@@ -1,0 +1,55 @@
+/* =========================================================
+   SLOT EDITOR MODAL
+   ========================================================= */
+.sp-planner .sloteditor__backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  backdrop-filter:saturate(120%) blur(2px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:200;
+}
+.sp-planner .sloteditor__panel{
+  width:min(820px,92vw);
+  max-height:80vh;
+  overflow:auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+}
+.sp-planner .sloteditor__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+}
+.sp-planner .sloteditor__sub{color:var(--text-dim)}
+.sp-planner .sloteditor__actions{display:flex;gap:8px}
+.sp-planner .sloteditor__body{padding:12px;display:grid;gap:8px}
+.sp-planner .se-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:center;
+  background:#0f1420;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+}
+.sp-planner .se-title{display:flex;gap:8px;align-items:center;cursor:pointer}
+.sp-planner .se-title__txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-planner .se-controls{display:flex;gap:8px;align-items:center}
+.sp-planner .se-controls select,
+.sp-planner .se-controls input[type="date"]{
+  background:#0f1420;
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:8px;
+  padding:6px 8px;
+}

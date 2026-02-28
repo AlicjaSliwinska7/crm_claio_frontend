@@ -119,30 +119,22 @@
   min-height: 0;
 }
 
-/* jeśli w schedule-planner.css masz height:100% na .sp-planner – to jest OK,
-   bo i tak jesteśmy w kontenerze, który przewija całość.
-   Ważne: nie rób overflow:hidden na .sp-planner jako całości, bo zabije scroll modala. */
-
 /* =========================================================
    COMPACT MODE
    Scope: .ui-modal.spm-modal + .spm
    Cel: mniej wysokości / mniej scrolla, bez zmiany układu i logiki
    ========================================================= */
 
-/* 1) Sam kontener modala – mniej marginesów i niższa maks. wysokość */
 .ui-modal.spm-modal {
-  /* jeśli masz w modal.css duże paddingi – to je “ściągamy” */
   padding: 0 !important;
 }
 
-/* 2) Ciało modala: mniej paddingu, niższe nagłówki */
 .spm-modal .spm {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-/* Header (ten Twój dolny) – mniejszy */
 .spm-modal .spm__header {
   padding: 10px 14px !important;
   min-height: 44px !important;
@@ -162,25 +154,27 @@
   font-size: 18px !important;
 }
 
-/* 3) Body – mniej paddingu, lepsze wykorzystanie wysokości */
+/* Body – mniej paddingu */
 .spm-modal .spm__body {
   padding: 10px 12px 12px !important;
+  min-height: 0;
 }
 
-/* 4) SchedulePlanner wewnątrz – “globalne” ściśnięcie typografii i gapów (bez przebudowy komponentów) */
+/* delikatnie mniejsze fonty w całym plannerze */
 .spm-modal .spm__body * {
-  /* delikatnie mniejsze fonty w całym plannerze */
   font-size: 0.96em;
 }
 
-/* 5) Sekcja "Szczegóły dnia" – mniej miejsca */
+/* =========================================================
+   Drobne ściśnięcia sekcji
+   ========================================================= */
+
 .spm-modal .day-details,
 .spm-modal .day-details-bar,
 .spm-modal .planner-day-details {
   padding: 10px 12px !important;
 }
 
-/* Nagłówek daty (np. "środa, 25 lut 2026") */
 .spm-modal .day-details__title,
 .spm-modal .planner-day-title,
 .spm-modal .day-details-bar__title {
@@ -188,14 +182,12 @@
   line-height: 1.2 !important;
 }
 
-/* Podtytuł / zmiana */
 .spm-modal .day-details__meta,
 .spm-modal .planner-day-meta {
   font-size: 12px !important;
   opacity: 0.9;
 }
 
-/* 6) Kafelki (Spotkania / Powiadomienia / Inne) – niższe i ciaśniejsze */
 .spm-modal .day-card,
 .spm-modal .planner-card,
 .spm-modal .mini-panel {
@@ -220,7 +212,6 @@
   border-radius: 10px !important;
 }
 
-/* Pigułki z godziną */
 .spm-modal .time-pill,
 .spm-modal .chip-time,
 .spm-modal .planner-pill {
@@ -229,13 +220,11 @@
   border-radius: 999px !important;
 }
 
-/* 7) Lista elementów w kafelkach – mniejszy odstęp */
 .spm-modal .day-card__list,
 .spm-modal .planner-card__list {
   gap: 6px !important;
 }
 
-/* 8) Sekcja "Zadania" – mniejszy padding i odstępy */
 .spm-modal .tasks-panel,
 .spm-modal .planner-tasks,
 .spm-modal .day-tasks {
@@ -249,7 +238,6 @@
   margin-bottom: 8px !important;
 }
 
-/* Sloty Rano/Popołudnie/... – mniejsze odstępy i nagłówki */
 .spm-modal .task-slot,
 .spm-modal .slot-block {
   margin-top: 8px !important;
@@ -261,44 +249,25 @@
   margin-bottom: 4px !important;
 }
 
-/* Tekst "Brak" */
 .spm-modal .task-empty,
 .spm-modal .slot-empty {
   font-size: 12px !important;
   opacity: 0.85;
 }
 
-/* 9) Jeśli masz w plannerze duże “separatory”/linie – ściśnij */
 .spm-modal hr,
 .spm-modal .divider {
   margin: 10px 0 !important;
 }
 
-/* 10) Dodatkowo: ogranicz max-height dla dużych paneli, żeby scroll był bardziej “lokalny” */
-.spm-modal .spm__body {
-  max-height: calc(100vh - 120px);
-  overflow: auto;
-}
-
 /* =========================================================
-   GRID COMPACT (ONLY)
-   Scope: .spm-modal (tylko w modalu)
-   Cel: zmniejszyć „grafik ze slotami” bez zmian reszty UI
+   GRID COMPACT (ONLY) — zmniejszamy "grafik ze slotami"
    ========================================================= */
-
-.spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) {
-  /* nic nie zmieniamy globalnie – tylko nadpisy w środku */
-}
-
-/* header grida */
-.spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.grid__header, .grid-header) {
-  /* jeśli header ma duże paddings */
-}
 
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.grid__corner, .grid-corner) {
   padding: 6px 8px !important;
   font-size: 11px !important;
-  letter-spacing: .35px !important;
+  letter-spacing: 0.35px !important;
 }
 
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.grid__slothead, .grid-slothead, .slot-head) {
@@ -310,12 +279,10 @@
   line-height: 1 !important;
 }
 
-/* wiersze grida (największa oszczędność miejsca) */
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.grid__row, .grid-row) {
-  min-height: 58px !important; /* było zwykle 80–90 */
+  min-height: 58px !important;
 }
 
-/* kolumna „dzień” */
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.grid__day, .grid-day) {
   padding: 7px 8px !important;
   gap: 2px !important;
@@ -344,13 +311,12 @@
   bottom: -5px !important;
 }
 
-/* komórki slotów */
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.grid__cell, .grid-cell) {
   padding: 6px 8px !important;
 }
 
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.slot__items, .slot-items) {
-  min-height: 38px !important; /* było zwykle 56–64 */
+  min-height: 38px !important;
 }
 
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.slot__summary, .slot-summary) {
@@ -365,73 +331,44 @@
 }
 
 .spm-modal :is(.plan-grid, .schedule-grid, .planner-grid, .slots-grid) :is(.slot__placeholder, .slot-placeholder) {
-  height: 30px !important; /* było zwykle ~44–46 */
+  height: 30px !important;
   border-radius: 10px !important;
   font-size: 11px !important;
 }
 
 /* =========================================================
    WIDER BACKLOG COLUMN (ONLY)
-   Scope: .spm-modal (tylko w modalu)
-   Cel: poszerzyć lewy panel "Do zaplanowania"
    ========================================================= */
 
-/* 1) Jeśli dock jest GRID-em (najczęstsze) */
+/* Jeśli dock jest GRID-em */
 .spm-modal .sp-planner > .planner__dock {
-  grid-template-columns: 500px 1fr !important; /* było np. 300/340 */
+  display: grid;
+  grid-template-columns: minmax(500px, 600px) 1fr !important;
 }
 
-/* 2) Jeśli dock jest FLEX-em (fallback) */
-.spm-modal .sp-planner > .planner__dock {
-  display: grid; /* nie zaszkodzi, jeśli już jest grid; jeśli flex - wymusi grid */
-}
-
-/* 3) Sama kolumna (aside) – trzymaj szerokość i nie pozwól się ścisnąć */
+/* Sama kolumna backlog */
 .spm-modal .plan-zone.zone--backlog {
-  width: 500px !important;
+  width: auto !important;
   min-width: 500px !important;
   flex: 0 0 500px !important;
 }
 
-/* 4) Opcjonalnie: żeby input i chipy lepiej się łamały przy większej szerokości */
+/* inputy w filtrach backlogu */
 .spm-modal .plan-zone.zone--backlog .zone__filters .input-with-icon input {
   width: 100%;
 }
 
-/* (kolejne nadpisy, jak w Twojej aktualnej wersji) */
-.spm-modal .sp-planner > .planner__dock {
-  grid-template-columns: minmax(500px, 600px) 1fr !important;
-}
-
-.spm-modal .plan-zone.zone--backlog {
-  width: auto !important;
-  min-width: 500px !important;
-}
-
-/* =========================================================
-   (jak w Twojej aktualnej wersji)
-   ========================================================= */
-
-.chip chip--normal {
-  padding: 0;
-  min-height: 1px;
-}
-
 /* =========================================================
    COMPACT BACKLOG CHIPS
-   Scope: .spm-modal
-   Cel: realnie zmniejszyć wysokość <button class="chip">
    ========================================================= */
 
-/* sam chip */
 .spm-modal .plan-zone.zone--backlog .chip {
-  min-height: 0px !important; /* było zwykle ~48–52 */
-  padding: 0px !important; /* było np. 10–12 */
+  min-height: 0px !important;
+  padding: 0px !important;
   gap: 8px !important;
   align-items: center;
 }
 
-/* kropki statusów */
 .spm-modal .plan-zone.zone--backlog .chip__dots {
   gap: 6px !important;
 }
@@ -441,46 +378,36 @@
   height: 10px !important;
 }
 
-/* data */
 .spm-modal .plan-zone.zone--backlog .chip__deadline {
   font-size: 11px !important;
   line-height: 1.1 !important;
   margin-right: 6px !important;
 }
 
-/* tytuł – najważniejsze */
 .spm-modal .plan-zone.zone--backlog .chip__title {
   font-size: 12px !important;
   line-height: 1.2 !important;
-  white-space: nowrap; /* opcjonalnie – 1 linia */
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* tooltip-card (żeby nie pompował wysokości hoverem) */
-.spm-modal .plan-zone.zone--backlog .tipcard {
-  font-size: 11px !important;
-}
 /* =========================================================
-   Schedule Planner Modal – SCROLL TASKS LIST (ONLY)
-   Scope: .spm-modal
+   SCROLL TASKS LIST (ONLY)
    Cel: scrolluje się tylko .zone__list w backlogu
    ========================================================= */
 
-/* 1) Upewniamy się, że prawa/lewa kolumna może się “zwinąć” i oddać wysokość liście */
 .spm-modal .sp-planner,
 .spm-modal .sp-planner > .planner__dock,
 .spm-modal .plan-zone.zone--backlog {
   min-height: 0;
 }
 
-/* 2) Backlog jako layout kolumnowy: head + filters + list(scroll) + pagination */
 .spm-modal .plan-zone.zone--backlog {
   display: flex;
   flex-direction: column;
 }
 
-/* 3) Lista dostaje scroll */
 .spm-modal .plan-zone.zone--backlog .zone__list {
   flex: 1 1 auto;
   min-height: 0;
@@ -488,21 +415,127 @@
   overscroll-behavior: contain;
 }
 
-/* 4) Opcjonalnie: pager zostaje na dole i nie “wjeżdża” na listę */
 .spm-modal .plan-zone.zone--backlog .zone__pagination {
   flex: 0 0 auto;
 }
 
-/* 5) Scrollbar tylko dla listy zadań (spójny z resztą) */
 .spm-modal .plan-zone.zone--backlog .zone__list::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
+
 .spm-modal .plan-zone.zone--backlog .zone__list::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.14);
   border-radius: 10px;
 }
+
 .spm-modal .plan-zone.zone--backlog .zone__list::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.15);
 }
-.spm-modal .spm__body { min-height: 0; }
+
+/* =========================================================
+   TOOLTIP / TIPCARD — NAD INNYMI KOMPONENTAMI MODALU
+   Cel: tooltipy od "kropek" nie wchodzą pod grid/sekcje
+   ========================================================= */
+
+/* Tworzymy kontrolowany stacking context wewnątrz modala */
+.spm-modal .spm {
+  position: relative;
+  isolation: isolate; /* ✅ daje nam pewność, że z-index wygrywa w obrębie modala */
+}
+
+/* Warstwy bazowe */
+.spm-modal .spm__header {
+  position: relative;
+  z-index: 2;
+}
+
+.spm-modal .spm__body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Backlog jako punkt odniesienia */
+.spm-modal .plan-zone.zone--backlog,
+.spm-modal .plan-zone.zone--backlog .zone__list {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sam tooltip */
+.spm-modal .tipcard {
+  position: absolute;
+  z-index: 999; /* ✅ zawsze nad resztą w .spm */
+
+  max-width: min(360px, calc(100vw - 80px));
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  background: rgba(14, 18, 28, 0.96);
+  color: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    0 2px 0 rgba(255, 255, 255, 0.06) inset;
+
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+
+  pointer-events: none; /* ✅ tooltip nie blokuje interakcji */
+}
+
+/* opcjonalna strzałka (nie psuje, jeśli tooltip jest pozycjonowany inaczej) */
+.spm-modal .tipcard::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 14px;
+  top: -5px;
+  transform: rotate(45deg);
+  background: rgba(14, 18, 28, 0.96);
+  border-left: 1px solid rgba(255, 255, 255, 0.10);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+/* =========================================================
+   TOOLTIP / TIPCARD — FIXED (OMIJA zone__filters)
+   Powód: tooltip jest dzieckiem .zone__list,
+   a .zone__filters siedzi wyżej w DOM.
+   ========================================================= */
+
+.spm-modal .tipcard {
+  position: fixed !important;   /* 🔥 KLUCZ */
+  z-index: 1000 !important;
+
+  max-width: min(360px, calc(100vw - 80px));
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  background: rgba(14, 18, 28, 0.96);
+  color: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    0 2px 0 rgba(255, 255, 255, 0.06) inset;
+
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+
+  pointer-events: none; /* nie blokuje interakcji */
+}
+
+/* strzałka – opcjonalna */
+.spm-modal .tipcard::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 14px;
+  top: -5px;
+  transform: rotate(45deg);
+  background: rgba(14, 18, 28, 0.96);
+  border-left: 1px solid rgba(255, 255, 255, 0.10);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}

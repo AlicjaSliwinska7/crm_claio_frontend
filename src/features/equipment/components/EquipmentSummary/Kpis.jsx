@@ -1,61 +1,33 @@
-import React from 'react'
+import React, { memo, useMemo } from 'react'
+import PropTypes from 'prop-types'
+import { Wrench } from 'lucide-react'
 
-export default function Kpis({ kpis }) {
-	return (
-		<div className='es-card es-section'>
-			{/* Ujednolicony nagłówek karty */}
-			<div className='es-card__sectionHead'>
-				<i className='fa-solid fa-gauge-high' aria-hidden='true' />
-				<h3 className='es-card__sectionTitle'>Podsumowanie</h3>
-			</div>
+import {
+  SummarySection,
+  SummaryCard,
+  SummaryHeader,
+  SummaryKpiGrid,
+  getKpiItems,
+} from '../../../../shared/summaries'
 
-			{/* Grid KPI */}
-			<div className='es-kpi-grid'>
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.calCount}</div>
-					<div className='es-kpi__label'>Wzorcowania</div>
-				</div>
+function Kpis({ kpis, fmtPLN }) {
+  const ctx = useMemo(() => ({ totals: kpis || {}, fmtPLN }), [kpis, fmtPLN])
+  const items = useMemo(() => getKpiItems('equipment', ctx), [ctx])
 
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.devices}</div>
-					<div className='es-kpi__label'>Urządzenia</div>
-				</div>
-
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.labs}</div>
-					<div className='es-kpi__label'>Laboratoria</div>
-				</div>
-
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.calCostFormatted}</div>
-					<div className='es-kpi__label'>Koszt wzorcowań</div>
-				</div>
-
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.calAvgDaysFormatted}</div>
-					<div className='es-kpi__label'>Śr. czas [dni]</div>
-				</div>
-
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.failCount}</div>
-					<div className='es-kpi__label'>Awarie</div>
-				</div>
-
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.downSumFormatted}</div>
-					<div className='es-kpi__label'>Przestój łącznie</div>
-				</div>
-
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.downAvgFormatted}</div>
-					<div className='es-kpi__label'>Śr. przestój</div>
-				</div>
-
-				<div className='es-kpi'>
-					<div className='es-kpi__value'>{kpis.repairSumFormatted}</div>
-					<div className='es-kpi__label'>Koszt napraw</div>
-				</div>
-			</div>
-		</div>
-	)
+  return (
+    <SummarySection className="es-section">
+      <SummaryCard className="es-card">
+        <SummaryHeader title="Podsumowanie" icon={<Wrench className="es-headIcon" aria-hidden="true" />} />
+        {/* 9 kafelków => 5 w 1 rzędzie, 4 w 2 */}
+        <SummaryKpiGrid items={items} columns={5} />
+      </SummaryCard>
+    </SummarySection>
+  )
 }
+
+Kpis.propTypes = {
+  kpis: PropTypes.object,
+  fmtPLN: PropTypes.func,
+}
+
+export default memo(Kpis)

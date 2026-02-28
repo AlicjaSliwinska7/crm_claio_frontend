@@ -1,0 +1,57 @@
+/* src/shared/summaries/styles/summary-kpi-grid.css */
+
+.sum-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--sum-kpi-cols, 5), minmax(160px, 1fr));
+  gap: 14px;
+  padding-top: 4px;
+}
+
+.sum-kpi-tile {
+  border: 1px solid var(--es-border, #e6ecf5);
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+}
+
+.sum-kpi-value {
+  font-size: 26px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+  color: var(--es-text, #0f172a);
+  line-height: 1.05;
+}
+
+.sum-kpi-underline {
+  width: 26px;
+  height: 3px;
+  margin: 8px auto 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--es-blue, #3a628a) 22%, white);
+}
+
+.sum-kpi-label {
+  font-size: 13px;
+  color: var(--es-muted, #5b6f84);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.sum-kpi-sub {
+  margin-top: 6px;
+  font-size: 12px;
+  color: color-mix(in oklab, var(--es-muted, #5b6f84) 85%, white);
+}
+
+@media (max-width: 1100px) {
+  .sum-kpi-grid {
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .sum-kpi-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}

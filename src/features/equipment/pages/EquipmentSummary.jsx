@@ -2,25 +2,25 @@
 import React, { useMemo, useState } from 'react'
 import '../styles/equipment-summary.css'
 
-// komponenty sekcyjne (na razie zostają feature-specific)
-import RangeControls from '../components/EquipmentSummary/RangeControls'
+import EquipmentFilters from '../components/EquipmentSummary/EquipmentFilters'
 import Kpis from '../components/EquipmentSummary/Kpis'
+import SummaryChartBlock from '../components/EquipmentSummary/SummaryChartBlock'
 
-// shared: mock + utils
 import equipmentSummaryMock from '../components/EquipmentSummary/equipmentSummary.mock'
-import { toTs, fmtDate } from '../components/EquipmentSummary/time.js'
+import { fmtDate } from '../components/EquipmentSummary/time.js'
 import { computePresetRange } from '../components/EquipmentSummary/range'
 
-// ✅ config (pipeline normalize/filter/kpis/sections)
 import { equipmentSummaryConfig } from '../config/equipmentSummary.config'
-
-// ✅ wspólny blok wykresu (UI + registry renderery)
-import SummaryChartBlock from '../components/EquipmentSummary/SummaryChartBlock'
 
 const { sampleCalibrations, sampleFailures } = equipmentSummaryMock
 
-export default function EquipmentSummary({ calibrations = sampleCalibrations, failures = sampleFailures }) {
-  // === filtry / zakres ===
+export default function EquipmentSummary({
+  calibrations = sampleCalibrations,
+  failures = sampleFailures,
+}) {
+  // ─────────────────────────────────────────────
+  // STATE: filtry / zakres
+  // ─────────────────────────────────────────────
   const [preset, setPreset] = useState('all')
   const [customFrom, setCustomFrom] = useState('')
   const [customTo, setCustomTo] = useState('')
@@ -29,26 +29,42 @@ export default function EquipmentSummary({ calibrations = sampleCalibrations, fa
   const [kind, setKind] = useState('all')
   const [selectedLabs, setSelectedLabs] = useState([])
 
-  // zakres czasu (obiekt + [fromTs, toTs])
-  const { from, to } = useMemo(
+  // ─────────────────────────────────────────────
+  // RANGE: { from, to } + { fromTs, toTs }
+  // ─────────────────────────────────────────────
+  const range = useMemo(
     () => computePresetRange(preset, { today: new Date(), customFrom, customTo }),
     [preset, customFrom, customTo]
   )
 
-  const rangeTs = useMemo(() => {
-    const f = from ? toTs(from) : null
-    const t = to ? toTs(to) : null
-    return f != null && t != null ? [f, t] : null
-  }, [from, to])
-
   const rangeObj = useMemo(() => {
-    const [fromTs, toTsVal] = rangeTs || []
-    return { fromTs: fromTs ?? null, toTs: toTsVal ?? null }
-  }, [rangeTs])
+    const fromTs = range?.from ? Number(range.from) : null
+    const toTsVal = range?.to ? Number(range.to) : null
 
-  // ─────────────────────────────────────────────────────────────
-  // ✅ pipeline z configu (normalize -> filter -> kpis -> sections)
-  // ─────────────────────────────────────────────────────────────
+    // computePresetRange w Twoim przypadku zwraca zwykle Date/string,
+    // ale część helperów w projekcie używała toTs() - tu trzymamy się tego,
+    // co już w praktyce działa: fmtDate dostaje TS.
+    // Jeśli range.from/to są Date -> Number(Date) = ts.
+    const f = Number.isFinite(fromTs) ? fromTs : null
+    const t = Number.isFinite(toTsVal) ? toTsVal : null
+
+    return { fromTs: f, toTs: t }
+  }, [range])
+
+  const hasCustomMissing =
+    preset === 'custom' && (!customFrom || !customTo)
+
+  const activeRangeText = useMemo(() => {
+    if (hasCustomMissing) return 'Aktywny zakres: wszystkie'
+    if (rangeObj?.fromTs && rangeObj?.toTs) {
+      return `Aktywny zakres: ${fmtDate(rangeObj.fromTs)} – ${fmtDate(rangeObj.toTs)}`
+    }
+    return 'Aktywny zakres: wszystkie'
+  }, [hasCustomMissing, rangeObj])
+
+  // ─────────────────────────────────────────────
+  // PIPELINE: normalize -> filter -> kpis -> sections
+  // ─────────────────────────────────────────────
   const normalized = useMemo(() => {
     return equipmentSummaryConfig.compute.normalize({
       sources: { calibrations, failures },
@@ -63,7 +79,9 @@ export default function EquipmentSummary({ calibrations = sampleCalibrations, fa
     })
   }, [normalized, rangeObj, category, kind, selectedLabs])
 
-  const kpis = useMemo(() => equipmentSummaryConfig.compute.kpis({ filtered }), [filtered])
+  const kpis = useMemo(() => {
+    return equipmentSummaryConfig.compute.kpis({ filtered })
+  }, [filtered])
 
   const sectionData = useMemo(() => {
     return equipmentSummaryConfig.compute.sections({
@@ -72,7 +90,9 @@ export default function EquipmentSummary({ calibrations = sampleCalibrations, fa
     })
   }, [filtered, rangeObj])
 
-  // === zasilenie listy laboratoriów do filtra ===
+  // ─────────────────────────────────────────────
+  // LABS: options for filter
+  // ─────────────────────────────────────────────
   const labsAll = useMemo(() => {
     const cal = Array.isArray(normalized?.calibrations) ? normalized.calibrations : []
     const set = new Set()
@@ -80,55 +100,39 @@ export default function EquipmentSummary({ calibrations = sampleCalibrations, fa
     return Array.from(set).sort((a, b) => a.localeCompare(b, 'pl'))
   }, [normalized])
 
-  const activeRangeText =
-    preset === 'custom' && (!customFrom || !customTo)
-      ? 'Aktywny zakres: wszystkie'
-      : rangeTs
-      ? `Aktywny zakres: ${fmtDate(rangeTs[0])} – ${fmtDate(rangeTs[1])}`
-      : 'Aktywny zakres: wszystkie'
-
-  // ✅ sekcje chartBlock z configu
-  const ganttSection = useMemo(() => equipmentSummaryConfig.sections.find(s => s.id === 'gantt'), [])
-  const costsSection = useMemo(() => equipmentSummaryConfig.sections.find(s => s.id === 'costs'), [])
-  const failuresSection = useMemo(() => equipmentSummaryConfig.sections.find(s => s.id === 'failures'), [])
+  // ─────────────────────────────────────────────
+  // SECTIONS: pick once from config
+  // ─────────────────────────────────────────────
+  const ganttSection = equipmentSummaryConfig.sections.find((s) => s.id === 'gantt') || null
+  const costsSection = equipmentSummaryConfig.sections.find((s) => s.id === 'costs') || null
+  const failuresSection = equipmentSummaryConfig.sections.find((s) => s.id === 'failures') || null
 
   return (
-    <div className='es-root'>
+    <div className="equipment-summary es-root">
       {/* -------- FILTRY & ZAKRES -------- */}
-      <div className='es-card es-section'>
-        <div className='es-card__sectionHead'>
-          <i className='fa-solid fa-sliders' aria-hidden='true' />
-          <h3 className='es-card__sectionTitle'>Filtry & Zakres</h3>
-        </div>
-
-        <RangeControls
-          preset={preset}
-          setPreset={setPreset}
-          customFrom={customFrom}
-          setCustomFrom={setCustomFrom}
-          customTo={customTo}
-          setCustomTo={setCustomTo}
-          category={category}
-          setCategory={setCategory}
-          kind={kind}
-          setKind={setKind}
-          labsAll={labsAll}
-          selectedLabs={selectedLabs}
-          setSelectedLabs={setSelectedLabs}
-          activeRangeText={activeRangeText}
-        />
-      </div>
+      <EquipmentFilters
+        preset={preset}
+        setPreset={setPreset}
+        customFrom={customFrom}
+        setCustomFrom={setCustomFrom}
+        customTo={customTo}
+        setCustomTo={setCustomTo}
+        category={category}
+        setCategory={setCategory}
+        kind={kind}
+        setKind={setKind}
+        labsAll={labsAll}
+        selectedLabs={selectedLabs}
+        setSelectedLabs={setSelectedLabs}
+        activeRangeText={activeRangeText}
+      />
 
       {/* -------- PODSUMOWANIE / KPI -------- */}
       <Kpis kpis={kpis} />
 
-      {/* -------- GANTT (shared/diagrams) -------- */}
+      {/* -------- WYKRESY (chartBlock) -------- */}
       <SummaryChartBlock section={ganttSection} sectionData={sectionData} />
-
-      {/* -------- KOSZTY (shared/diagrams) -------- */}
       <SummaryChartBlock section={costsSection} sectionData={sectionData} />
-
-      {/* -------- AWARYJNOŚĆ (shared/diagrams) -------- */}
       <SummaryChartBlock section={failuresSection} sectionData={sectionData} />
     </div>
   )

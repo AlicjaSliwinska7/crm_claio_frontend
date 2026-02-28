@@ -1,0 +1,225 @@
+/* =========================================================
+   DOCK LAYOUT
+   ========================================================= */
+.sp-planner .planner__dock{
+  display:grid;
+  grid-template-columns:340px 1fr;
+  gap:16px;
+}
+
+/* =========================================================
+   BACKLOG (LEFT)
+   ========================================================= */
+.sp-planner .plan-zone{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+.sp-planner .zone__head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  font-weight:700;
+}
+.sp-planner .zone__filters{
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  display:grid;
+  gap:12px;
+  position:relative;
+  z-index:1;
+}
+
+/* search */
+.sp-planner .input-with-icon{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.sp-planner .input-with-icon svg{
+  position:absolute;
+  left:10px;
+  pointer-events:none;
+}
+.sp-planner .input-with-icon input{
+  width:100%;
+  padding:10px 12px 10px 32px;
+  background:#0f1420;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+
+/* legendy/filtry */
+.sp-planner .legend-filters{display:grid;gap:10px}
+.sp-planner .legend-group{
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#0f1420;
+  overflow:hidden;
+}
+.sp-planner .legend-group summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 10px;
+  cursor:pointer;
+  list-style:none;
+  user-select:none;
+  color:var(--text-dim);
+  font-weight:700;
+  font-size:12px;
+}
+.sp-planner .legend-group summary::-webkit-details-marker{display:none}
+.sp-planner .legend-group .chev{transition:transform .15s}
+.sp-planner .legend-group[open] .chev{transform:rotate(180deg)}
+.sp-planner .legend-group__chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:8px 10px 10px;
+}
+.sp-planner .legend-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:2px 7px;
+  border:none;
+  color:var(--text-dim);
+  cursor:pointer;
+  user-select:none;
+  font-size:12px;
+}
+.sp-planner .legend-chip.is-on{
+  background:var(--primary-weak);
+  border-color:var(--primary);
+  color:var(--text);
+}
+.sp-planner .legend-dot{
+  width:10px;height:10px;border-radius:50%;
+  box-shadow:0 0 0 2px rgba(255,255,255,.05) inset;
+}
+
+/* backlog list */
+.sp-planner .zone__list{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding:12px;
+  overflow:auto;
+  max-height:70vh;
+  position:relative;
+  z-index:2;
+}
+.sp-planner .zone__list .tipcard{z-index:4}
+
+.sp-planner .empty{
+  color:var(--muted);
+  font-size:14px;
+  text-align:center;
+  padding:18px 10px;
+  background:#0f1420;
+  border:1px dashed var(--border);
+  border-radius:12px;
+}
+
+/* chip (kafelek zadania) */
+.sp-planner .chip{
+  display:grid;
+  grid-template-columns:auto auto 1fr;
+  align-items:center;
+  gap:10px;
+  min-height:48px;
+  padding:8px 10px;
+  background:var(--chip);
+  border:1px solid #22283a;
+  border-radius:12px;
+  cursor:grab;
+  user-select:none;
+  font-size:14px;
+}
+.sp-planner .chip:active{cursor:grabbing}
+.sp-planner .chip__dots{display:inline-flex;gap:6px}
+.sp-planner .chip__title{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  min-width:0;
+}
+
+/* deadline pill (SSOT) */
+.sp-planner .chip__deadline{
+  min-width:64px;
+  height:32px;
+  padding:0 10px;
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  align-self:center;
+  text-align:center;
+  font-weight:800;
+  font-size:12px;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+  letter-spacing:.2px;
+  color:var(--text-dim);
+  background:#152032;
+  border:1px solid #253452;
+  white-space:nowrap;
+}
+
+/* doty (kolory) */
+.sp-planner .dot{
+  width:10px;height:10px;border-radius:50%;
+  opacity:.95;
+  display:inline-block;
+  flex:0 0 10px;
+  box-shadow:0 0 0 1px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.08);
+  filter:saturate(1.12) brightness(1.05);
+}
+.dot--type-admin{background:var(--c-type-admin)}
+.dot--type-client{background:var(--c-type-client)}
+.dot--type-tech{background:var(--c-type-tech)}
+.dot--type-other{background:var(--c-type-other)}
+.dot--status-assigned{background:var(--c-status-assigned)}
+.dot--status-progress{background:var(--c-status-progress)}
+.dot--status-blocked{background:var(--c-status-blocked)}
+.dot--status-done{background:var(--c-status-done)}
+.dot--diff-easy{background:var(--c-diff-easy)}
+.dot--diff-medium{background:var(--c-diff-medium)}
+.dot--diff-hard{background:var(--c-diff-hard)}
+.dot--prio-high{background:var(--c-prio-high)}
+.dot--prio-normal{background:var(--c-prio-normal)}
+.dot--prio-low{background:var(--c-prio-low)}
+
+/* podbijamy specyficzność (zebrane) */
+.sp-planner .chip .dot--type-admin{background:var(--c-type-admin)!important}
+.sp-planner .chip .dot--type-client{background:var(--c-type-client)!important}
+.sp-planner .chip .dot--type-tech{background:var(--c-type-tech)!important}
+.sp-planner .chip .dot--type-other{background:var(--c-type-other)!important}
+.sp-planner .chip .dot--status-assigned{background:var(--c-status-assigned)!important}
+.sp-planner .chip .dot--status-progress{background:var(--c-status-progress)!important}
+.sp-planner .chip .dot--status-blocked{background:var(--c-status-blocked)!important}
+.sp-planner .chip .dot--status-done{background:var(--c-status-done)!important}
+.sp-planner .chip .dot--diff-easy{background:var(--c-diff-easy)!important}
+.sp-planner .chip .dot--diff-medium{background:var(--c-diff-medium)!important}
+.sp-planner .chip .dot--diff-hard{background:var(--c-diff-hard)!important}
+.sp-planner .chip .dot--prio-high{background:var(--c-prio-high)!important}
+.sp-planner .chip .dot--prio-normal{background:var(--c-prio-normal)!important}
+.sp-planner .chip .dot--prio-low{background:var(--c-prio-low)!important}
+
+/* drop highlight */
+.sp-planner .zone--backlog.is-over{
+  outline:2px solid var(--primary);
+  outline-offset:-2px;
+  box-shadow:0 0 0 3px var(--primary-weak) inset;
+}

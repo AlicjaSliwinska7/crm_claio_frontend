@@ -1,0 +1,12 @@
+/* =========================================================
+   TASKS SCHEDULE — TOOLTIP (PORTAL / ALWAYS ON TOP)
+   Tooltip renderowany do document.body, więc selektor GLOBALNY.
+   ========================================================= */
+.ts-tooltip{
+  position:fixed !important;
+  z-index:2147483647 !important;
+  pointer-events:none;
+  transform:translateX(-50%);
+  max-width:min(520px, calc(100vw - 24px));
+}
+.ts-tooltip *{pointer-events:none}

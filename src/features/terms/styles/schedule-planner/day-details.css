@@ -1,0 +1,223 @@
+/* =========================================================
+   DAY DETAILS BAR
+   ========================================================= */
+.sp-planner .daydetails.daydetails--bar{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  display:grid;
+  grid-template-rows:auto 1fr;
+}
+.sp-planner .daydetails__head{
+  display:grid;
+  gap:4px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+}
+.sp-planner .daydetails__date{font-weight:800}
+.sp-planner .daydetails__meta{color:var(--text-dim);font-size:12px}
+
+.sp-planner .daydetails__body.daydetails__body--bar{
+  padding:12px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.sp-planner .detail--meetings{grid-column:1/2}
+.sp-planner .detail--alerts{grid-column:2/3}
+.sp-planner .detail--other{grid-column:3/4}
+.sp-planner .detail--tasks{grid-column:1/-1}
+
+@media (max-width:1200px){
+  .sp-planner .daydetails__body.daydetails__body--bar{grid-template-columns:1fr 1fr}
+  .sp-planner .detail--other{grid-column:1/-1}
+}
+@media (max-width:720px){
+  .sp-planner .daydetails__body.daydetails__body--bar{grid-template-columns:1fr}
+}
+
+.sp-planner .detail-section{
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#0f1420;
+  padding:10px;
+  display:grid;
+  gap:8px;
+}
+.sp-planner .detail-section__head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:var(--text-dim);
+  font-weight:700;
+}
+.sp-planner .addbtn{
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text-dim);
+  padding:6px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.sp-planner .addbtn:hover{background:#151b28;color:var(--text)}
+.sp-planner .detail-item{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:8px;
+  font-size:14px;
+}
+.sp-planner .detail-empty{color:var(--muted);font-size:13px}
+/* ===== TASKS – 4 kolumny ===== */
+
+.detail--tasks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Nagłówek ma zajmować całą szerokość */
+.detail--tasks .detail-section__head {
+  grid-column: 1 / -1;
+}
+
+/* Subslot jako karta */
+.detail--tasks .detail-subslot {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Tytuł */
+.detail--tasks .detail-subslot__title {
+  font-weight: 600;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* Brak */
+.detail--tasks .detail-empty {
+  font-size: 13px;
+  opacity: 0.5;
+}
+@media (max-width: 1100px) {
+  .detail--tasks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .detail--tasks {
+    grid-template-columns: 1fr;
+  }
+}
+/* =========================================================
+   DETAIL TASKS – 4-kolumnowy mini-kanban
+   ========================================================= */
+
+.detail-section.detail--tasks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-section.detail--tasks .detail-section__head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-section.detail--tasks .detail-subslot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  min-height: 140px;
+  padding: 12px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.03)
+  );
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+
+  transition: transform .16s ease, box-shadow .2s ease;
+}
+
+.detail-section.detail--tasks .detail-subslot:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+}
+
+.detail-section.detail--tasks .detail-subslot__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.detail-section.detail--tasks .detail-subslot__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+}
+
+.detail-section.detail--tasks .detail-empty {
+  font-size: 13px;
+  opacity: 0.55;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.02);
+}
+
+/* badge */
+.detail-badge {
+  min-width: 22px;
+  height: 18px;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* responsywność */
+@media (max-width: 1100px) {
+  .detail-section.detail--tasks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .detail-section.detail--tasks {
+    grid-template-columns: 1fr;
+  }
+}

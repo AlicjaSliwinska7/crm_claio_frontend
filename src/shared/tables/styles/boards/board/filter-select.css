@@ -1,0 +1,25 @@
+/* Toolbar dla FilterSelect (rg-field wrapper) */
+.preview-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end; /* ważne, bo rg-field potrafi mieć label spacing */
+}
+
+/* Każdy filtr to rg-field */
+.preview-filters .preview-filter.rg-field {
+  margin: 0;              /* rg-field czasem ma margin */
+  min-width: 170px;       /* możesz dopasować */
+}
+
+/* Trigger ma być równy wysokością jak inne inputy */
+.preview-filters .preview-filter .rg-select__trigger {
+  height: 36px;
+}
+
+/* Wartość w triggerze – ładne ucięcie */
+.preview-filters .preview-filter .rg-select__value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,15 +1,25 @@
 // src/features/terms/pages/SchedulePlanner.jsx
 import React from 'react'
 import { useModal } from '../../../app/providers/GlobalModalProvider'
-import '../styles/schedule-planner.css'
+import '../styles/schedule-planner/index.css'
 
-import { useSchedulePlanner, MOCK_TASKS, MOCK_MEETINGS, MOCK_ALERTS, MOCK_OTHER, MOCK_SHIFTS } from '../hooks/useSchedulePlanner'
+import {
+  useSchedulePlanner,
+  MOCK_TASKS,
+  MOCK_MEETINGS,
+  MOCK_ALERTS,
+  MOCK_OTHER,
+  MOCK_SHIFTS,
+} from '../hooks/schedulePlanner/useSchedulePlanner'
 
-import DayDetailsBar from '../components/planner/DayDetailsBar'
-import BacklogPanel from '../components/planner/BacklogPanel'
-import PlannerToolbar from '../components/planner/PlannerToolbar'
-import CalendarGrid from '../components/planner/CalendarGrid'
-import SlotEditorOverlay from '../components/planner/SlotEditorOverlay'
+import DayDetailsBar from '../components/SchedulePlanner/DayDetailsBar'
+import BacklogPanel from '../components/SchedulePlanner/BacklogPanel'
+import PlannerToolbar from '../components/SchedulePlanner/PlannerToolbar'
+import CalendarGrid from '../components/SchedulePlanner/CalendarGrid'
+import SlotEditorOverlay from '../components/SchedulePlanner/SlotEditorOverlay'
+
+import PlannerDock from '../components/SchedulePlanner/PlannerDock'
+import PlannerCalendarColumn from '../components/SchedulePlanner/PlannerCalendarColumn'
 
 export default function SchedulePlanner({
   initialDate = new Date(),
@@ -35,7 +45,6 @@ export default function SchedulePlanner({
 
   return (
     <div className="sp-planner">
-      {/* ✅ Kafelek / pasek podsumowania dnia (nie gubimy) */}
       <DayDetailsBar
         selectedDay={sp.selectedDay}
         userShifts={sp.userShifts}
@@ -46,8 +55,7 @@ export default function SchedulePlanner({
         onTaskOpenRoute={sp.onTaskOpenRoute}
       />
 
-      {/* BACKLOG + KALENDARZ */}
-      <section className="planner__dock">
+      <PlannerDock>
         <BacklogPanel
           dragKey={sp.dragKey}
           allow={sp.allow}
@@ -67,8 +75,7 @@ export default function SchedulePlanner({
           onTaskOpenRoute={sp.onTaskOpenRoute}
         />
 
-        {/* KALENDARZ */}
-        <div className="planner__calendar-col">
+        <PlannerCalendarColumn>
           <PlannerToolbar
             days={sp.days}
             goPrevWeek={sp.goPrevWeek}
@@ -100,10 +107,9 @@ export default function SchedulePlanner({
             onDropSlot={sp.onDropSlot}
             setEditor={sp.setEditor}
           />
-        </div>
-      </section>
+        </PlannerCalendarColumn>
+      </PlannerDock>
 
-      {/* MODAL EDYCJI SLOTU */}
       <SlotEditorOverlay
         editor={sp.editor}
         setEditor={sp.setEditor}

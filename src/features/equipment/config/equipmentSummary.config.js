@@ -1,16 +1,27 @@
 // src/features/equipment/config/equipmentSummary.config.js
+
 import { toTs, DAY } from '../components/EquipmentSummary/time'
 
-const intPL = new Intl.NumberFormat('pl-PL')
-const plnPL = new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 })
+// ✅ PAGE BUILDER (w tym samym pliku – zgodnie z Twoją decyzją)
+import { summaryPage, summarySections } from '../../../shared/summaries'
+import EquipmentFilters from '../components/EquipmentSummary/EquipmentFilters'
+import Kpis from '../components/EquipmentSummary/Kpis'
+import SummaryChartBlock from '../components/EquipmentSummary/SummaryChartBlock'
 
-const makeFormatters = injected => ({
-  int: injected?.int || (v => intPL.format(Number(v) || 0)),
-  pln: injected?.pln || (v => plnPL.format(Number(v) || 0)),
-  float1: injected?.float1 || (v => (Number(v) || 0).toFixed(1)),
+const intPL = new Intl.NumberFormat('pl-PL')
+const plnPL = new Intl.NumberFormat('pl-PL', {
+  style: 'currency',
+  currency: 'PLN',
+  maximumFractionDigits: 0,
 })
 
-const defaultColorByIndex = idx => {
+const makeFormatters = (injected) => ({
+  int: injected?.int || ((v) => intPL.format(Number(v) || 0)),
+  pln: injected?.pln || ((v) => plnPL.format(Number(v) || 0)),
+  float1: injected?.float1 || ((v) => (Number(v) || 0).toFixed(1)),
+})
+
+const defaultColorByIndex = (idx) => {
   const palette = [
     'rgba(58, 98, 138, 0.85)',
     'rgba(46, 125, 80, 0.85)',
@@ -23,13 +34,13 @@ const defaultColorByIndex = idx => {
 }
 
 const uniqSorted = (arr, locale = 'pl') =>
-  Array.from(new Set(arr.filter(v => v != null && String(v).trim() !== ''))).sort((a, b) =>
+  Array.from(new Set(arr.filter((v) => v != null && String(v).trim() !== ''))).sort((a, b) =>
     String(a).localeCompare(String(b), locale)
   )
 
-const pad2 = n => String(n).padStart(2, '0')
+const pad2 = (n) => String(n).padStart(2, '0')
 
-const monthKeyFromTs = ts => {
+const monthKeyFromTs = (ts) => {
   const d = new Date(ts)
   if (!Number.isFinite(d.getTime())) return null
   return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}`
@@ -55,10 +66,10 @@ const monthRangeKeys = (fromTs, toTsVal) => {
   return out
 }
 
-// model pod Gantt renderer (dokładnie jak w usuwanym komponencie)
-const buildGanttModelFromRanges = rowsLike => {
+// model pod Gantt renderer
+const buildGanttModelFromRanges = (rowsLike) => {
   const rowsClean = (Array.isArray(rowsLike) ? rowsLike : [])
-    .map(r => {
+    .map((r) => {
       const s = Number(r.startTs)
       const e = Number(r.endTs)
       if (!Number.isFinite(s) || !Number.isFinite(e) || e < s) return null
@@ -68,12 +79,12 @@ const buildGanttModelFromRanges = rowsLike => {
 
   if (!rowsClean.length) return { rows: [], domainMin: 0, span: 0, pad: 0 }
 
-  const domainMin = Math.min(...rowsClean.map(r => r.startTs))
-  const domainMax = Math.max(...rowsClean.map(r => r.endTs))
+  const domainMin = Math.min(...rowsClean.map((r) => r.startTs))
+  const domainMax = Math.max(...rowsClean.map((r) => r.endTs))
   const span = Math.max(1, domainMax - domainMin)
   const pad = Math.round(span * 0.05)
 
-  const rows = rowsClean.map(r => ({
+  const rows = rowsClean.map((r) => ({
     ...r,
     offset: r.startTs - domainMin,
     duration: r.endTs - r.startTs,
@@ -154,7 +165,6 @@ export const equipmentSummaryConfig = {
     { id: 'filters', type: 'filters', title: 'Filtry & Zakres' },
     { id: 'kpis', type: 'kpis', title: 'Podsumowanie' },
 
-    // ✅ GANTT → SummaryChartBlock (zamiast feature/GanttCalibrations.jsx)
     {
       id: 'gantt',
       type: 'chartBlock',
@@ -179,7 +189,6 @@ export const equipmentSummaryConfig = {
       },
     },
 
-    // ✅ KOSZTY
     {
       id: 'costs',
       type: 'chartBlock',
@@ -217,7 +226,6 @@ export const equipmentSummaryConfig = {
       },
     },
 
-    // ✅ AWARYJNOŚĆ (zamiast feature/FailuresChart.jsx)
     {
       id: 'failures',
       type: 'chartBlock',
@@ -261,7 +269,7 @@ export const equipmentSummaryConfig = {
       const rawFail = Array.isArray(sources?.failures) ? sources.failures : []
 
       const calibrations = rawCal
-        .map(c => {
+        .map((c) => {
           const startTs = toTs(c.start ?? c.startDate ?? c.from)
           const endTs = toTs(c.end ?? c.endDate ?? c.to)
           const costNum = Number(c.cost ?? c.costPLN ?? 0) || 0
@@ -278,7 +286,7 @@ export const equipmentSummaryConfig = {
         .filter(Boolean)
 
       const failures = rawFail
-        .map(f => {
+        .map((f) => {
           const dateTs = toTs(f.date ?? f.day ?? f.when)
           if (!dateTs) return null
 
@@ -301,7 +309,7 @@ export const equipmentSummaryConfig = {
       const fromTs = range?.fromTs ?? null
       const toTsVal = range?.toTs ?? null
 
-      const inPointRange = ts => {
+      const inPointRange = (ts) => {
         if (!fromTs || !toTsVal) return true
         return ts >= fromTs && ts <= toTsVal
       }
@@ -316,7 +324,7 @@ export const equipmentSummaryConfig = {
       const labs = Array.isArray(filters?.labs) ? filters.labs : []
       const hasLabs = labs.length > 0
 
-      const filteredCalibrations = cal.filter(c => {
+      const filteredCalibrations = cal.filter((c) => {
         if (!overlapsRange(c.startTs, c.endTs)) return false
         if (category !== 'all' && c.category !== category) return false
         if (kind !== 'all' && c.kind !== kind) return false
@@ -324,7 +332,7 @@ export const equipmentSummaryConfig = {
         return true
       })
 
-      const filteredFailures = fail.filter(f => inPointRange(f.dateTs))
+      const filteredFailures = fail.filter((f) => inPointRange(f.dateTs))
       return { calibrations: filteredCalibrations, failures: filteredFailures }
     },
 
@@ -335,8 +343,8 @@ export const equipmentSummaryConfig = {
       const failures = Array.isArray(filtered?.failures) ? filtered.failures : []
 
       const calCount = calibrations.length
-      const devices = new Set(calibrations.map(c => c.device ?? '—')).size
-      const labs = new Set(calibrations.map(c => c.lab ?? '—')).size
+      const devices = new Set(calibrations.map((c) => c.device ?? '—')).size
+      const labs = new Set(calibrations.map((c) => c.lab ?? '—')).size
 
       const calCost = calibrations.reduce((s, c) => s + (c.costNum || 0), 0)
       const calAvgDays = calCount
@@ -367,9 +375,7 @@ export const equipmentSummaryConfig = {
 
       const colorByIndex = utils?.colorByIndex || defaultColorByIndex
 
-      // ─────────────────────────────────────────────
       // COSTS / labs (ranking)
-      // ─────────────────────────────────────────────
       const byLab = new Map()
       for (const c of calibrations) {
         const lab = c.lab ?? '—'
@@ -379,15 +385,13 @@ export const equipmentSummaryConfig = {
         .map(([lab, cost], idx) => ({ lab, cost, color: colorByIndex(idx) }))
         .sort((a, b) => b.cost - a.cost)
 
-      // ─────────────────────────────────────────────
       // COSTS / time (stack by lab per month)
-      // ─────────────────────────────────────────────
-      const labsSorted = uniqSorted(calibrations.map(c => c.lab ?? '—'), 'pl')
+      const labsSorted = uniqSorted(calibrations.map((c) => c.lab ?? '—'), 'pl')
       const keys = labsSorted
 
       let months = monthRangeKeys(range?.fromTs, range?.toTs)
       if (!months.length) {
-        months = uniqSorted(calibrations.map(c => monthKeyFromTs(c.startTs)).filter(Boolean), 'pl')
+        months = uniqSorted(calibrations.map((c) => monthKeyFromTs(c.startTs)).filter(Boolean), 'pl')
       }
 
       const rowsMap = new Map()
@@ -412,24 +416,22 @@ export const equipmentSummaryConfig = {
         rowsMap.get(mk)[lab] += Number(c.costNum || 0)
       }
 
-      const rows = Array.from(rowsMap.values()).sort((a, b) => String(a.label).localeCompare(String(b.label), 'pl'))
+      const rows = Array.from(rowsMap.values()).sort((a, b) =>
+        String(a.label).localeCompare(String(b.label), 'pl')
+      )
       const meta = keys.map((key, idx) => ({ key, label: key, color: colorByIndex(idx) }))
 
       const costsStackedByMonth = { rows, meta, keys }
 
-      // ─────────────────────────────────────────────
-      // GANTT (model pod renderer)
-      // ─────────────────────────────────────────────
-      const ganttLike = calibrations.map(c => ({
+      // GANTT
+      const ganttLike = calibrations.map((c) => ({
         code: c.code ?? c.device ?? '—',
         startTs: c.startTs,
         endTs: c.endTs,
       }))
       const ganttCalibrations = buildGanttModelFromRanges(ganttLike)
 
-      // ─────────────────────────────────────────────
       // FAILURES / monthly aggregation
-      // ─────────────────────────────────────────────
       const failuresMonthlyMap = new Map()
       for (const f of failures) {
         const mk = monthKeyFromTs(f.dateTs)
@@ -450,11 +452,54 @@ export const equipmentSummaryConfig = {
         costsRankingVertical,
         ganttCalibrations,
         failuresMonthlyRows,
-
-        // (opcjonalnie) surowe — do innych sekcji kiedy będziemy migrować dalej
         calibrations,
         failures,
       }
     },
   },
+}
+
+// ─────────────────────────────────────────────────────────────
+// ✅ Page config builder (w tym samym pliku)
+// ─────────────────────────────────────────────────────────────
+
+export function buildEquipmentSummaryPageConfig(ctx) {
+  return summaryPage.summaryPage('equipment-summary es-root', [
+    summarySections.filtersSection('filters', EquipmentFilters, {
+      preset: ctx.preset,
+      setPreset: ctx.setPreset,
+      customFrom: ctx.customFrom,
+      setCustomFrom: ctx.setCustomFrom,
+      customTo: ctx.customTo,
+      setCustomTo: ctx.setCustomTo,
+      category: ctx.category,
+      setCategory: ctx.setCategory,
+      kind: ctx.kind,
+      setKind: ctx.setKind,
+      labsAll: ctx.labsAll,
+      selectedLabs: ctx.selectedLabs,
+      setSelectedLabs: ctx.setSelectedLabs,
+      activeRangeText: ctx.activeRangeText,
+    }),
+
+    summarySections.kpiSection('kpis', Kpis, {
+      kpis: ctx.kpis,
+      fmtPLN: ctx.fmtPLN || null,
+    }),
+
+    summarySections.chartSection('gantt', SummaryChartBlock, {
+      section: ctx.ganttSection,
+      sectionData: ctx.sectionData,
+    }),
+
+    summarySections.chartSection('costs', SummaryChartBlock, {
+      section: ctx.costsSection,
+      sectionData: ctx.sectionData,
+    }),
+
+    summarySections.chartSection('failures', SummaryChartBlock, {
+      section: ctx.failuresSection,
+      sectionData: ctx.sectionData,
+    }),
+  ])
 }

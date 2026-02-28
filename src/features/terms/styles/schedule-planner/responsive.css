@@ -1,0 +1,23 @@
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width:1200px){
+  .sp-planner .planner__dock{grid-template-columns:300px 1fr}
+  .sp-planner .grid__header,
+  .sp-planner .grid__row{grid-template-columns:170px repeat(4,minmax(0,1fr))}
+}
+@media (max-width:960px){
+  .sp-planner .planner__dock{grid-template-columns:1fr}
+  .sp-planner .zone__list{max-height:none}
+}
+@media (max-width: 1100px) {
+  .detail--tasks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .detail--tasks {
+    grid-template-columns: 1fr;
+  }
+}

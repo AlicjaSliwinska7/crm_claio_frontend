@@ -122,11 +122,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: bold;
   cursor: pointer;
   z-index: 5100; /* ⬅️ ponad navbar i sidebar */
 }
 .user-button {
+  font-weight: bold;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -149,8 +149,8 @@
   position: absolute;
   top: 110%;
   right: 0;
-  min-width: 80%;
-  background-color: rgba(0, 0, 0, 0.26);
+  min-width: 84%;
+  background-color:#2f2f2f8f;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -171,10 +171,10 @@
 
 .user-dropdown a,
 .user-dropdown button {
-  padding: 8px 10px;
+  padding: 5px 7px;
   width: 100%;
   text-align: left;
-  font-size: 14px;
+  font-size: 12px;
   color: #edededc9;
   background: transparent;
   border: none;
@@ -256,8 +256,8 @@
 }
 
 .opt-label {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   text-align: left;
 }
 .opt-meta {

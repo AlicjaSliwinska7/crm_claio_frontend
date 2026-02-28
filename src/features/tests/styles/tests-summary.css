@@ -422,3 +422,124 @@
   font-weight: 600;
   line-height: 1.2;
 }
+/* =========================================================
+   KPI tiles (empty state still looks good) — TestsSummary
+   ========================================================= */
+
+.tests-summary.es-root .tss-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
+  gap: 14px;
+  padding-top: 4px;
+}
+
+.tests-summary.es-root .tss-kpi-tile {
+  border: 1px solid var(--es-border);
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.tests-summary.es-root .tss-kpi-value {
+  font-size: 26px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+  color: #0f172a;
+  line-height: 1.05;
+}
+
+.tests-summary.es-root .tss-kpi-underline {
+  width: 26px;
+  height: 3px;
+  margin: 8px auto 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--es-blue) 25%, white);
+}
+
+.tests-summary.es-root .tss-kpi-label {
+  font-size: 13px;
+  color: var(--es-muted);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .tests-summary.es-root .tss-kpi-grid {
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .tests-summary.es-root .tss-kpi-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+/* =========================================================
+   KPI tiles — TestsSummary (empty state looks like cards)
+   ========================================================= */
+
+.tests-summary.es-root .tss-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
+  gap: 14px;
+  padding-top: 4px;
+}
+
+.tests-summary.es-root .tss-kpi-tile {
+  border: 1px solid var(--es-border);
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+}
+
+.tests-summary.es-root .tss-kpi-top {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4px;
+  min-height: 18px;
+}
+
+.tests-summary.es-root .tss-kpi-icon {
+  display: inline-flex;
+  color: var(--es-blue);
+  line-height: 0;
+}
+
+.tests-summary.es-root .tss-kpi-value {
+  font-size: 26px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+  color: #0f172a;
+  line-height: 1.05;
+}
+
+.tests-summary.es-root .tss-kpi-underline {
+  width: 26px;
+  height: 3px;
+  margin: 8px auto 8px;
+  border-radius: 999px;
+  background: rgba(160, 178, 198, 0.55);
+}
+
+.tests-summary.es-root .tss-kpi-label {
+  font-size: 13px;
+  color: var(--es-muted);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .tests-summary.es-root .tss-kpi-grid {
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .tests-summary.es-root .tss-kpi-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}

@@ -38,3 +38,6 @@ export function kpiSection(id, Component, props = {}) {
   return { id, Component, props }
 }
 export * as summaryTime from './utils/time.js'
+export { default as SummaryKpiGrid } from './components/SummaryKpiGrid'
+export * as summaryKpiFmt from './utils/kpiFormatters'
+export { getKpiItems, kpiRegistry } from './kpi/kpiRegistry'

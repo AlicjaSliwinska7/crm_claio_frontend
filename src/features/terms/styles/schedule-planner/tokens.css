@@ -1,0 +1,15 @@
+/* =========================================================
+   TOKENS (zostawiamy globalnie jak było)
+   ========================================================= */
+:root{
+  --bg:#0b0d12;--card:#11141b;--muted:#8b93a7;--text:#e8ecf3;--text-dim:#b9c0cf;
+  --primary:#6aa1ff;--primary-weak:rgba(106,161,255,.15);--ok:#3ac779;--warn:#ffb84d;--danger:#ff6b6b;
+  --border:#202635;--over:#2a3347;--over-strong:#33405a;--chip:#1a1f2b;--shadow:0 6px 18px rgba(0,0,0,.25);--radius:14px;
+
+  --c-type-admin:#7da6ff;--c-type-client:#ffb86b;--c-type-tech:#7fe3b2;--c-type-other:#c59cff;
+  --c-status-assigned:#7a8a9e;--c-status-progress:#6aa1ff;--c-status-blocked:#ff6b6b;--c-status-done:#3ac779;
+  --c-diff-easy:#89f0b7;--c-diff-medium:#ffd56e;--c-diff-hard:#ff8d8d;
+  --c-prio-high:#ff6b6b;--c-prio-normal:#6aa1ff;--c-prio-low:#3ac779;
+
+  --c-meeting:#6aa1ff;--c-alert:#ffd56e;--c-other:#c59cff;
+}

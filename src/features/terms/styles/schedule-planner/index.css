@@ -1,0 +1,22 @@
+/* =========================
+   SchedulePlanner styles (SSOT)
+   Folder: src/features/terms/styles/schedule-planner/
+   Import order matters (specyficzność / kaskada)
+   ========================= */
+
+@import './tokens.css';
+@import './root.css';
+
+@import './day-details.css';
+@import './dock-backlog.css';
+
+@import './calendar-toolbar.css';
+@import './calendar-grid.css';
+
+@import './tipcards.css';
+@import './slot-editor.css';
+
+@import './pagination.css';
+@import './responsive.css';
+
+@import './portal-tooltips.css';

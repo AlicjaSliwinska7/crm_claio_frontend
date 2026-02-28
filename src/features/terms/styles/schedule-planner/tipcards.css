@@ -1,0 +1,93 @@
+/* =========================================================
+   HOVER CARDS (tipcard) — wewnątrz planner (nie portal)
+   ========================================================= */
+.sp-planner .has-card{position:relative}
+.sp-planner .has-card .tipcard{
+  display:none;
+  position:absolute;
+  left:0;
+  top:-10px;
+  transform:translateY(-100%);
+  min-width:260px;
+  max-width:380px;
+  background:linear-gradient(180deg,#0f1420,#0c121c);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+  z-index:60;
+  box-shadow:0 10px 24px rgba(0,0,0,.45);
+}
+.sp-planner .has-card:hover .tipcard{display:block}
+.sp-planner .tipcard::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  bottom:-7px;
+  border:7px solid transparent;
+  border-top-color:var(--border);
+}
+.sp-planner .tipcard__head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text-dim);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.sp-planner .tip-dot{width:10px;height:10px;border-radius:50%}
+.sp-planner .tip-status{
+  margin-left:auto;
+  font-size:11px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:2px 6px;
+}
+.sp-planner .tip-status.tip-progress{color:var(--c-status-progress);border-color:var(--c-status-progress)}
+.sp-planner .tip-status.tip-assigned{color:var(--c-status-assigned);border-color:var(--c-status-assigned)}
+.sp-planner .tip-status.tip-blocked{color:var(--c-status-blocked);border-color:var(--c-status-blocked)}
+.sp-planner .tip-status.tip-done{color:var(--c-status-done);border-color:var(--c-status-done)}
+.sp-planner .tipcard__body{display:grid;gap:4px}
+.sp-planner .tip-line{color:var(--text)}
+.sp-planner .tip-more{color:var(--text-dim)}
+
+/* mini wariant dla daybadge */
+.sp-planner .daybadge.has-card{
+  cursor:pointer;
+  position:relative;
+  overflow:visible;
+}
+.sp-planner .daybadge.has-card .tipcard{
+  display:none;
+  position:absolute;
+  left:0;
+  top:-10px;
+  transform:translateY(-100%);
+  min-width:240px;
+  max-width:360px;
+  background:linear-gradient(180deg,#0f1420,#0c121c);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+  z-index:70;
+  box-shadow:0 10px 24px rgba(0,0,0,.45);
+}
+.sp-planner .daybadge.has-card:hover .tipcard{display:block}
+.sp-planner .daybadge.has-card .tipcard::after{
+  content:"";
+  position:absolute;
+  left:10px;
+  bottom:-7px;
+  border:7px solid transparent;
+  border-top-color:var(--border);
+}
+.sp-planner .tipcard--mini .tipcard__head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text-dim);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.sp-planner .tipcard--mini .tipcard__body{display:grid;gap:4px}
+.sp-planner .tipcard--mini .tip-line{color:var(--text)}
+.sp-planner .tipcard--mini .tip-more{color:var(--text-dim)}

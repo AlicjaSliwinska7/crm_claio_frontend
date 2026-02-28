@@ -1,228 +1,279 @@
-// src/components/pages/contents/TestsSummary.jsx
+// src/features/tests/pages/TestsSummary.jsx
 import React, { useMemo, useState, useCallback } from 'react'
+
 import '../styles/tests-summary.css'
 
-import PropTypes from 'prop-types'
+import { SummaryPage } from '../../../shared/summaries'
+import { buildTestsSummaryConfig } from '../config/testsSummary.config'
 
-// ===== sekcje =====
-import KPIs from '../../../features/tests/components/TestsSummary/KPIs'
-import TestsSummaryFilters from '../../../features/tests/components/TestsSummary/TestsSummaryFilters'
-import TestsSummaryMainTable from '../../../features/tests/components/TestsSummary/TestsSummaryMainTable'
+// DEMO
+import { DEMO_METHODS, DEMO_EXECUTIONS } from '../mocks/testsSummary.mock'
 
-import MixOverview from '../../../features/tests/components/TestsSummary/MixOverview'
-import ClientTime from '../../../features/tests/components/TestsSummary/ClientTime'
-import ClientsByMethods from '../../../features/tests/components/TestsSummary/ClientsByMethods'
-import TopMethods from '../../../features/tests/components/TestsSummary/TopMethods'
-import StdMethodAnalysis from '../../../features/tests/components/TestsSummary/StdMethodAnalysis'
+const iso10 = (v) => (v ? String(v).slice(0, 10) : '')
+const isISO10 = (s) => /^\d{4}-\d{2}-\d{2}$/.test(String(s || ''))
 
-// ===== shared utils (z barrel-a) =====
-import { summaryTime } from '../../../shared/summaries'
-
-// ...reszta pliku bez zmian aż do return()
-// ======================= DEMO (fallback bez backendu) =======================
-const DEMO_METHODS = [
-  {
-    id: 'M-001',
-    standard: 'PN-EN 1234:2020',
-    methodNo: 'PB-998',
-    methodName: 'Odporność na zginanie (A)',
-    accredited: true,
-    testsCount: 42,
-    samplesCount: 120,
-    lastPerformedDate: '2025-09-12',
-    avgTATDays: 4.2,
-    revenue: 48500,
-    laborCost: 12800,
-  },
-  {
-    id: 'M-002',
-    standard: 'ISO 527-1:2019',
-    methodNo: 'PB-101',
-    methodName: 'Rozciąganie tworzyw sztucznych',
-    accredited: true,
-    testsCount: 31,
-    samplesCount: 86,
-    lastPerformedDate: '2025-09-15',
-    avgTATDays: 3.6,
-    revenue: 37200,
-    laborCost: 9900,
-  },
-  {
-    id: 'M-003',
-    standard: 'PN-EN 755',
-    methodNo: 'PB-055',
-    methodName: 'Właściwości profili aluminiowych',
-    accredited: false,
-    testsCount: 12,
-    samplesCount: 28,
-    lastPerformedDate: '2025-08-30',
-    avgTATDays: 5.1,
-    revenue: 11200,
-    laborCost: 4100,
-  },
-  {
-    id: 'M-004',
-    standard: 'EN ISO 13485:2016',
-    methodNo: 'PB-330',
-    methodName: 'Testy wytrzymałościowe narzędzi',
-    accredited: false,
-    testsCount: 7,
-    samplesCount: 19,
-    lastPerformedDate: '2025-07-18',
-    avgTATDays: 6.8,
-    revenue: 22300,
-    laborCost: 7800,
-  },
-]
-
-const DEMO_EXECUTIONS = [
-  { date: '2025-06-05', client: 'TechSolutions Sp. z o.o.', methodId: 'M-001', testsCount: 6, samplesCount: 18 },
-  { date: '2025-06-12', client: 'GreenEnergy S.A.', methodId: 'M-002', testsCount: 4, samplesCount: 12 },
-  { date: '2025-06-20', client: 'Meditech Polska', methodId: 'M-004', testsCount: 2, samplesCount: 5 },
-]
-
-// ============================ Pomocnicze lokalne ============================
-const PLN_FMT = new Intl.NumberFormat('pl-PL', {
-  style: 'currency',
-  currency: 'PLN',
-  maximumFractionDigits: 0,
-})
-
-const fmtPLN = (n) => PLN_FMT.format(Number(n || 0))
-
-const flattenStrings = (obj) => {
-  const out = []
-  const walk = (o) => {
-    if (o && typeof o === 'object') Object.values(o).forEach((v) => walk(v))
-    else if (typeof o === 'string' || typeof o === 'number') out.push(String(o))
-  }
-  walk(obj)
-  return out
+const fmtPLN = (v) => {
+  const n = Number(v)
+  if (!Number.isFinite(n)) return '—'
+  return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(n)
 }
-function TestsSummary({ methods, executions }) {
-  // ---------- źródła danych (z bezpiecznym fallbackiem) ----------
-  const rows = useMemo(() => (Array.isArray(methods) && methods.length ? methods : DEMO_METHODS), [methods])
-  const series = useMemo(
-    () => (Array.isArray(executions) && executions.length ? executions : DEMO_EXECUTIONS),
-    [executions]
-  )
 
-  // ---------- mapy / helpery przekazywane do sekcji ----------
-  const methodById = useMemo(() => new Map(rows.map(r => [r.id, r])), [rows])
-  const idByMethodNo = useMemo(() => new Map(rows.map(r => [r.methodNo, r.id])), [rows])
-  const methodKey = useCallback(id => methodById.get(id)?.methodNo || id || '?', [methodById])
+function presetToRange(preset) {
+  const today = new Date()
+  const to = iso10(today)
 
-  // ---------- stan filtrów i tabeli ----------
+  if (preset === 'all') return { from: '', to: '' }
+  if (preset === 'custom') return { from: '', to: '' } // custom trzymamy w stanie
+
+  const d = new Date(today)
+  if (preset === 'year') d.setFullYear(d.getFullYear() - 1)
+  else if (preset === 'quarter') d.setDate(d.getDate() - 90)
+  else d.setDate(d.getDate() - 30)
+
+  return { from: iso10(d), to }
+}
+
+export default function TestsSummary({ methods = DEMO_METHODS, executions = DEMO_EXECUTIONS }) {
+  // ===== filtry “główne”
   const [filter, setFilter] = useState('')
   const [accrFilter, setAccrFilter] = useState('wszystkie') // wszystkie | akredytowane | nieakredytowane
-  const [sortField, setSortField] = useState(null)
-  const [sortAsc, setSortAsc] = useState(true)
+
+  const [rangePreset, setRangePreset] = useState('year') // all | year | quarter | month | custom
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+
+  // ===== tabela
+  const [sortField, setSortField] = useState('testsCount')
+  const [sortAsc, setSortAsc] = useState(false)
   const [mPage, setMPage] = useState(1)
   const [mPageSize, setMPageSize] = useState(10)
 
-  // ---------- filtr tekst + akredytacja ----------
+  const safeMethods = useMemo(() => (Array.isArray(methods) ? methods : []), [methods])
+  const safeExecutions = useMemo(() => (Array.isArray(executions) ? executions : []), [executions])
+
+  // zakres dat efektywny
+  const effectiveRange = useMemo(() => {
+    if (rangePreset === 'custom') {
+      return { from: isISO10(from) ? from : '', to: isISO10(to) ? to : '' }
+    }
+    return presetToRange(rangePreset)
+  }, [rangePreset, from, to])
+
+  // series po filtrze dat
+  const series = useMemo(() => {
+    const { from: f, to: t } = effectiveRange
+    if (!f && !t) return safeExecutions
+
+    return safeExecutions.filter((e) => {
+      const d = iso10(e?.date)
+      if (!d) return false
+      if (f && d < f) return false
+      if (t && d > t) return false
+      return true
+    })
+  }, [safeExecutions, effectiveRange])
+
+  const methodById = useMemo(() => {
+    const m = new Map()
+    for (const x of safeMethods) if (x?.id) m.set(x.id, x)
+    return m
+  }, [safeMethods])
+
+  const idByMethodNo = useMemo(() => {
+    const m = new Map()
+    for (const x of safeMethods) if (x?.methodNo) m.set(String(x.methodNo), x.id)
+    return m
+  }, [safeMethods])
+
+  const methodKey = useCallback(
+    (methodId) => {
+      const m = methodById.get(methodId)
+      return m?.methodNo ? `${m.methodNo}` : m?.methodName || methodId || '—'
+    },
+    [methodById]
+  )
+
+  // agregacja executions → per methodId
+  const rows = useMemo(() => {
+    const agg = new Map()
+    for (const e of series) {
+      const id = e?.methodId
+      if (!id) continue
+
+      const prev = agg.get(id) || {
+        testsCount: 0,
+        samplesCount: 0,
+        revenue: 0,
+        laborCost: 0,
+        lastPerformedDate: '',
+      }
+
+      prev.testsCount += Number(e?.testsCount) || 0
+      prev.samplesCount += Number(e?.samplesCount) || 0
+      prev.revenue += Number(e?.revenue) || 0
+      prev.laborCost += Number(e?.laborCost) || 0
+
+      const d = iso10(e?.date)
+      if (d && (!prev.lastPerformedDate || d > prev.lastPerformedDate)) prev.lastPerformedDate = d
+
+      agg.set(id, prev)
+    }
+
+    return safeMethods.map((m) => {
+      const a = agg.get(m.id) || {}
+      return {
+        id: m.id,
+        standard: m.standard || '—',
+        methodNo: m.methodNo || '—',
+        methodName: m.methodName || '—',
+        accredited: !!m.accredited,
+
+        testsCount: a.testsCount ?? 0,
+        samplesCount: a.samplesCount ?? 0,
+        lastPerformedDate: a.lastPerformedDate || '—',
+
+        avgTATDays: m?.avgTATDays ?? null,
+
+        revenue: a.revenue ?? 0,
+        laborCost: a.laborCost ?? 0,
+      }
+    })
+  }, [safeMethods, series])
+
+  // filtrowanie tabeli (tekst + akredytacja)
   const filteredMethods = useMemo(() => {
-    const q = String(filter || '').toLowerCase()
-    return rows.filter(r => {
-      const matchesText = flattenStrings({ standard: r.standard, methodNo: r.methodNo, methodName: r.methodName })
-        .join(' ')
-        .toLowerCase()
-        .includes(q)
-
-      const matchesAccr =
-        accrFilter === 'wszystkie' ? true : accrFilter === 'akredytowane' ? !!r.accredited : !r.accredited
-
-      return matchesText && matchesAccr
+    const q = String(filter || '').trim().toLowerCase()
+    return rows.filter((r) => {
+      if (q) {
+        const hay = `${r.standard} ${r.methodNo} ${r.methodName}`.toLowerCase()
+        if (!hay.includes(q)) return false
+      }
+      if (accrFilter === 'akredytowane' && !r.accredited) return false
+      if (accrFilter === 'nieakredytowane' && r.accredited) return false
+      return true
     })
   }, [rows, filter, accrFilter])
 
-  // ---------- KPI na podstawie filteredMethods ----------
+  // KPI w formacie, którego oczekuje KPIs.jsx
   const totals = useMemo(() => {
-    const methodsCount = filteredMethods.length
-    const sum = k => filteredMethods.reduce((a, r) => a + (Number(r[k]) || 0), 0)
-    const tests = sum('testsCount')
-    const samples = sum('samplesCount')
-    const revenue = sum('revenue')
-    const labor = sum('laborCost')
-    const accCnt = filteredMethods.reduce((a, r) => a + (r.accredited ? 1 : 0), 0)
+    const methodsCnt = rows.length
+    const accCnt = rows.filter((r) => r.accredited).length
+    const nonAcc = methodsCnt - accCnt
 
-    const tatWeighted = (() => {
-      const w = sum('testsCount')
-      if (!w) return 0
-      return (
-        filteredMethods.reduce((a, r) => a + (Number(r.avgTATDays) || 0) * (Number(r.testsCount) || 0), 0) / w
-      )
-    })()
+    const tests = rows.reduce((s, r) => s + (Number(r.testsCount) || 0), 0)
+    const samples = rows.reduce((s, r) => s + (Number(r.samplesCount) || 0), 0)
 
-    const lastDates = filteredMethods
-      .map(r => r.lastPerformedDate)
-      .filter(Boolean)
-      .sort()
+    const revenue = rows.reduce((s, r) => s + (Number(r.revenue) || 0), 0)
+    const labor = rows.reduce((s, r) => s + (Number(r.laborCost) || 0), 0)
+    const margin = revenue - labor
 
-    const lastFrom = lastDates[0] || null
-    const lastTo = lastDates[lastDates.length - 1] || null
-    const months = new Set(lastDates.map(summaryTime.monthKeyISO)).size
+    // lastFrom/lastTo z executions w aktualnym zakresie
+    const dates = series.map((e) => iso10(e?.date)).filter(Boolean).sort()
+    const lastFrom = dates[0] || ''
+    const lastTo = dates[dates.length - 1] || ''
+
+    // tatWeighted – jeśli nie masz w executions, robimy proxy z metod avgTATDays ważone liczbą badań
+    let tatWeighted = null
+    const wSum = rows.reduce((s, r) => s + (Number(r.testsCount) || 0), 0)
+    if (wSum > 0) {
+      const t = rows.reduce((s, r) => {
+        const tat = Number(r.avgTATDays)
+        const w = Number(r.testsCount) || 0
+        if (!Number.isFinite(tat) || w <= 0) return s
+        return s + tat * w
+      }, 0)
+      tatWeighted = t / wSum
+    }
+
+    // months – przybliżenie z zakresu dat
+    const months = lastFrom && lastTo ? Math.max(1, (Number(lastTo.slice(5, 7)) - Number(lastFrom.slice(5, 7)) + 1)) : 0
 
     return {
-      methods: methodsCount,
+      methods: methodsCnt,
+      accCnt,
+      nonAcc,
       tests,
       samples,
       revenue,
       labor,
-      margin: revenue - labor,
-      accCnt,
-      nonAcc: methodsCount - accCnt,
-      tatWeighted,
+      margin,
       lastFrom,
       lastTo,
+      tatWeighted,
       months,
     }
-  }, [filteredMethods])
+  }, [rows, series])
 
-  return (
-    <div className="tests-summary ts-page es-root">
-      {/* ✅ nowy osobny kafelek filtrów */}
-      <TestsSummaryFilters
-        filter={filter}
-        setFilter={(v) => {
-          setFilter(v)
-          setMPage(1) // UX: reset paginacji po zmianie filtra
-        }}
-        accrFilter={accrFilter}
-        setAccrFilter={(v) => {
-          setAccrFilter(v)
-          setMPage(1)
-        }}
-      />
+  const onResetFilters = useCallback(() => {
+    setFilter('')
+    setAccrFilter('wszystkie')
+    setRangePreset('year')
+    setFrom('')
+    setTo('')
+    setMPage(1)
+  }, [])
 
-      <KPIs totals={totals} fmtPLN={fmtPLN} />
+  const ctx = useMemo(
+    () => ({
+      // totals & format
+      totals,
+      fmtPLN,
 
-      {/* ✅ nowa tabela oparta o shared/tables */}
-      <TestsSummaryMainTable
-        tableRows={filteredMethods}
-        sortField={sortField}
-        setSortField={setSortField}
-        sortAsc={sortAsc}
-        setSortAsc={setSortAsc}
-        mPage={mPage}
-        setMPage={setMPage}
-        mPageSize={mPageSize}
-        setMPageSize={setMPageSize}
-        fmtPLN={fmtPLN}
-      />
+      // data
+      rows,
+      filteredMethods,
+      series,
 
-      <MixOverview series={series} methodKey={methodKey} />
-      <ClientTime series={series} methodKey={methodKey} />
-      <ClientsByMethods series={series} methodKey={methodKey} />
-      <TopMethods series={series} rows={rows} methodKey={methodKey} idByMethodNo={idByMethodNo} />
-      <StdMethodAnalysis series={series} rows={rows} methodById={methodById} />
-    </div>
+      // filters
+      filter,
+      setFilter,
+      accrFilter,
+      setAccrFilter,
+      rangePreset,
+      setRangePreset,
+      from,
+      setFrom,
+      to,
+      setTo,
+      onResetFilters,
+
+      // table controls
+      sortField,
+      setSortField,
+      sortAsc,
+      setSortAsc,
+      mPage,
+      setMPage,
+      mPageSize,
+      setMPageSize,
+
+      // helpers
+      methodKey,
+      methodById,
+      idByMethodNo,
+    }),
+    [
+      totals,
+      rows,
+      filteredMethods,
+      series,
+      filter,
+      accrFilter,
+      rangePreset,
+      from,
+      to,
+      sortField,
+      sortAsc,
+      mPage,
+      mPageSize,
+      methodKey,
+      methodById,
+      idByMethodNo,
+      onResetFilters,
+    ]
   )
-}
 
-TestsSummary.propTypes = {
-  methods: PropTypes.array,
-  executions: PropTypes.array,
-}
+  const config = useMemo(() => buildTestsSummaryConfig(ctx), [ctx])
 
-export default TestsSummary
+  return <SummaryPage config={config} />
+}
