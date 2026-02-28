@@ -1,10 +1,30 @@
+/* =========================================================
+   Registers – styles entry
+   ========================================================= */
+
+/* 1) Fundamenty (zero layoutu, zero komponentów) */
 @import './base.css';
 @import './utilities.css';
+
+/* 2) Rdzeń tabeli (STRUKTURA, width, sticky, overflow) */
 @import './table.css';
+
+/* 3) Kontrolki wokół tabeli (toolbar, search, selecty) */
 @import './controls.css';
 @import './filters.css';
-@import './pagination.css';
-@import './summary.css';
-@import './details-view.css';
+
+/* 4) Akcje i stany (przyciski, ikony, statusy) */
 @import './actions.css';
 @import './statuses.css';
+
+/* 5) Widoki pochodne tabeli */
+@import './details-view.css';
+@import './summary.css';
+
+/* 6) Paginacja (na końcu – dotyka layoutu footerów) */
+@import './pagination.css';
+
+/* 7) Scrollbar — ZAWSZE OSTATNI */
+@import './scrollbar.css';
+@import'./inputs.css';
+@import './filters-select.css';

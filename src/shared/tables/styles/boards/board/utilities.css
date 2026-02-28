@@ -1,0 +1,9 @@
+/* src/shared/tables/styles/boards/utilities.css */
+
+.board-wrapper .bl-empty-hint {
+  color: rgba(18, 28, 50, 0.62);
+  font-size: 13px;
+  padding: 12px 14px;
+  border-top: 1px dashed rgba(120, 140, 175, 0.22);
+  background: rgba(255, 255, 255, 0.45);
+}

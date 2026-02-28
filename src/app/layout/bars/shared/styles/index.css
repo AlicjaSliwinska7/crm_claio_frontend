@@ -1,0 +1,4 @@
+/* src/app/layout/bars/shared/styles/index.css */
+
+/* Jedno miejsce do zbierania styli “bars” (sidebary, navbary, scrollbary) */
+@import './scroll-bars.css';

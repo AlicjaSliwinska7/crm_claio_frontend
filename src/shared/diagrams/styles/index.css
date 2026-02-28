@@ -1,0 +1,12 @@
+/* src/shared/diagrams2/styles/index.css */
+@import './variables.css';
+@import './shell.css';
+@import './header.css';
+@import './controls.css';
+@import './kpi.css';
+@import './charts-base.css';
+@import './recharts-skin.css';
+@import './tooltip-legend.css';
+@import './gantt.css';
+@import './utils.css';
+@import './responsive.css';

@@ -1,0 +1,186 @@
+/* src/shared/diagrams2/styles/_controls.css */
+
+.d2-root .es-panel-controls,
+.d2-root .d2-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: end;
+}
+
+.d2-root .es-col,
+.d2-root .d2-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.d2-root .es-col.es-col--actions,
+.d2-root .d2-col--actions {
+  margin-left: auto;
+  display: flex;
+  align-items: end;
+}
+
+.d2-root .ts-control label,
+.d2-root .es-label,
+.d2-root .d2-label {
+  color: var(--es-muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* inputs/selects */
+.d2-root .tss-input,
+.d2-root .tss-select,
+.d2-root .tss-input--search,
+.d2-root .es-input,
+.d2-root .es-select,
+.d2-root .d2-input,
+.d2-root .d2-select {
+  border: 1px solid var(--es-border);
+  background: #fff;
+  color: var(--es-slate);
+  border-radius: 10px;
+  height: 36px;
+  padding: 0 10px;
+  font-size: 14px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.d2-root .tss-input:focus,
+.d2-root .tss-select:focus,
+.d2-root .es-input:focus,
+.d2-root .es-select:focus,
+.d2-root .d2-input:focus,
+.d2-root .d2-select:focus {
+  border-color: color-mix(in oklab, var(--es-blue) 45%, white);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--es-blue) 18%, transparent);
+  outline: none;
+}
+
+/* reset selects */
+.d2-root .tss-select,
+.d2-root .es-select,
+.d2-root .d2-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.d2-root .tss-input--date,
+.d2-root .d2-input--date {
+  width: 180px;
+}
+
+/* inline row */
+.d2-root .ts-inline,
+.d2-root .d2-inline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* normal button */
+.d2-root .tss-btn,
+.d2-root .d2-btn {
+  border: 1px solid var(--es-border);
+  background: #fff;
+  border-radius: 10px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--es-slate);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+
+.d2-root .tss-btn:hover,
+.d2-root .d2-btn:hover {
+  border-color: color-mix(in oklab, var(--es-blue) 45%, white);
+  background: #f8fbff;
+}
+
+.d2-root .tss-btn:disabled,
+.d2-root .d2-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* icon button */
+.d2-root .tss-icon-btn,
+.d2-root .tss-btn--icon,
+.d2-root .d2-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tss-icon-btn-size);
+  min-width: var(--tss-icon-btn-size);
+  height: var(--tss-icon-btn-size);
+  padding: 0;
+  border: 1px solid var(--es-border);
+  background: #fff;
+  color: var(--es-blue);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+
+.d2-root .tss-icon-btn:hover,
+.d2-root .tss-btn--icon:hover,
+.d2-root .d2-icon-btn:hover {
+  border-color: color-mix(in oklab, var(--es-blue) 45%, white);
+  background: #f8fbff;
+  color: color-mix(in oklab, var(--es-blue) 85%, black);
+}
+
+.d2-root .tss-icon-btn i,
+.d2-root .tss-btn--icon i,
+.d2-root .d2-icon-btn i {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.d2-root .tss-icon-btn--export i,
+.d2-root .tss-btn--export i {
+  transform: translateY(0.5px);
+}
+
+/* search box */
+.d2-root .tss-search,
+.d2-root .d2-search {
+  display: flex;
+  align-items: center;
+}
+
+.d2-root .tss-search__box,
+.d2-root .d2-search__box {
+  position: relative;
+}
+
+.d2-root .tss-search__box--limit,
+.d2-root .d2-search__box--limit {
+  max-width: 520px;
+}
+
+.d2-root .tss-search__icon,
+.d2-root .d2-search__icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--es-muted);
+}
+
+.d2-root .tss-input--search,
+.d2-root .d2-input--search {
+  padding-left: 32px;
+}
+
+/* spacing between controls and chart/table */
+.d2-root .es-panel-controls + .d2-chart,
+.d2-root .d2-controls + .d2-chart {
+  margin-top: 12px;
+}

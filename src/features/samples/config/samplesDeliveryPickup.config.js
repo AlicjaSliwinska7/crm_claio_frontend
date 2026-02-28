@@ -1,17 +1,15 @@
-// src/features/sales/config/samplesDeliveryPickup.config.js
-import React from 'react'
+// src/features/samples/config/samplesDeliveryPickup.config.js
 
-// klucze widoków – muszą się zgadzać z komponentem
+export const VIEW_ALL = 'wszystkie'
 export const VIEW_PRE = 'przed-dostawa'
 export const VIEW_PICKUP = 'do-odbioru'
 export const VIEW_ARCH_DELIVERED = 'arch-dostarczone'
 export const VIEW_ARCH_PICKEDUP = 'arch-odebrane'
 
-// mały helper jak w komponencie
 export const todayISO = () => new Date().toISOString().slice(0, 10)
 
 // ───────────────────────────────────────────────────────────
-// Dane startowe (jak w Twoim komponencie)
+// Dane startowe
 // ───────────────────────────────────────────────────────────
 export const initialPreDelivery = [
   {
@@ -86,77 +84,100 @@ export const initialPickupHistory = [
 ]
 
 // ───────────────────────────────────────────────────────────
-// CSV – to już miałeś w komponencie, tylko przenosimy
+// CSV
 // ───────────────────────────────────────────────────────────
 export const csvColumnsFor = (view) => {
+  if (view === VIEW_ALL) {
+    return [
+      { key: '__type', label: 'Typ' }, // Dostawa / Odbiór
+      { key: 'sampleNo', label: 'Nr próbki' },
+      { key: 'orderNo', label: 'Nr zlecenia' },
+      { key: 'client', label: 'Klient' },
+      { key: 'contactName', label: 'Osoba kontaktowa' },
+      { key: 'contactPhone', label: 'Telefon' },
+      { key: 'contactEmail', label: 'E-mail' },
+      { key: 'item', label: 'Przedmiot badań' },
+      { key: 'qty', label: 'Ilość próbek' },
+      { key: 'scope', label: 'Zakres badań' },
+      { key: 'deliveryParams', label: 'Parametry dostawy' },
+      { key: '__eta', label: 'Data planowana (ETA)' },
+      { key: '__done', label: 'Wykonane' }, // Dostarczone/Odebrane
+      { key: '__doneAt', label: 'Data wykonania' }, // deliveredAt/pickedUpAt
+      { key: 'comment', label: 'Uwagi' },
+      { key: 'id', label: 'ID' },
+    ]
+  }
+
   if (view === VIEW_PRE) {
     return [
-      { key: 'orderNo', header: 'Nr zlecenia' },
-      { key: 'client', header: 'Klient' },
-      { key: 'contactName', header: 'Osoba kontaktowa' },
-      { key: 'contactPhone', header: 'Telefon' },
-      { key: 'contactEmail', header: 'E-mail' },
-      { key: 'item', header: 'Przedmiot badań' },
-      { key: 'qty', header: 'Ilość próbek' },
-      { key: 'scope', header: 'Zakres badań' },
-      { key: 'etaDelivery', header: 'Przewidywana data dostawy' },
-      { key: 'comment', header: 'Uwagi' },
-      { key: 'delivered', header: 'Dostarczone' },
-      { key: 'deliveredAt', header: 'Data dostawy' },
-      { key: 'id', header: 'ID' },
+      { key: 'orderNo', label: 'Nr zlecenia' },
+      { key: 'client', label: 'Klient' },
+      { key: 'contactName', label: 'Osoba kontaktowa' },
+      { key: 'contactPhone', label: 'Telefon' },
+      { key: 'contactEmail', label: 'E-mail' },
+      { key: 'item', label: 'Przedmiot badań' },
+      { key: 'qty', label: 'Ilość próbek' },
+      { key: 'scope', label: 'Zakres badań' },
+      { key: 'etaDelivery', label: 'Przewidywana data dostawy' },
+      { key: 'comment', label: 'Uwagi' },
+      { key: 'delivered', label: 'Dostarczone' },
+      { key: 'deliveredAt', label: 'Data dostawy' },
+      { key: 'id', label: 'ID' },
     ]
   }
+
   if (view === VIEW_PICKUP) {
     return [
-      { key: 'sampleNo', header: 'Nr próbki' },
-      { key: 'orderNo', header: 'Nr zlecenia' },
-      { key: 'client', header: 'Klient' },
-      { key: 'contactName', header: 'Osoba kontaktowa' },
-      { key: 'contactPhone', header: 'Telefon' },
-      { key: 'contactEmail', header: 'E-mail' },
-      { key: 'item', header: 'Przedmiot badań' },
-      { key: 'qty', header: 'Ilość próbek' },
-      { key: 'deliveryParams', header: 'Parametry dostawy' },
-      { key: 'etaPickup', header: 'Przewidywana data odbioru' },
-      { key: 'pickedUp', header: 'Odebrane' },
-      { key: 'pickedUpAt', header: 'Data odbioru' },
-      { key: 'id', header: 'ID' },
+      { key: 'sampleNo', label: 'Nr próbki' },
+      { key: 'orderNo', label: 'Nr zlecenia' },
+      { key: 'client', label: 'Klient' },
+      { key: 'contactName', label: 'Osoba kontaktowa' },
+      { key: 'contactPhone', label: 'Telefon' },
+      { key: 'contactEmail', label: 'E-mail' },
+      { key: 'item', label: 'Przedmiot badań' },
+      { key: 'qty', label: 'Ilość próbek' },
+      { key: 'deliveryParams', label: 'Parametry dostawy' },
+      { key: 'etaPickup', label: 'Przewidywana data odbioru' },
+      { key: 'pickedUp', label: 'Odebrane' },
+      { key: 'pickedUpAt', label: 'Data odbioru' },
+      { key: 'id', label: 'ID' },
     ]
   }
+
   if (view === VIEW_ARCH_DELIVERED) {
     return [
-      { key: 'orderNo', header: 'Nr zlecenia' },
-      { key: 'client', header: 'Klient' },
-      { key: 'contactName', header: 'Osoba kontaktowa' },
-      { key: 'contactPhone', header: 'Telefon' },
-      { key: 'contactEmail', header: 'E-mail' },
-      { key: 'item', header: 'Przedmiot badań' },
-      { key: 'qty', header: 'Ilość próbek' },
-      { key: 'scope', header: 'Zakres badań' },
-      { key: 'deliveredAt', header: 'Data dostawy' },
-      { key: 'comment', header: 'Uwagi' },
-      { key: 'id', header: 'ID' },
+      { key: 'orderNo', label: 'Nr zlecenia' },
+      { key: 'client', label: 'Klient' },
+      { key: 'contactName', label: 'Osoba kontaktowa' },
+      { key: 'contactPhone', label: 'Telefon' },
+      { key: 'contactEmail', label: 'E-mail' },
+      { key: 'item', label: 'Przedmiot badań' },
+      { key: 'qty', label: 'Ilość próbek' },
+      { key: 'scope', label: 'Zakres badań' },
+      { key: 'deliveredAt', label: 'Data dostawy' },
+      { key: 'comment', label: 'Uwagi' },
+      { key: 'id', label: 'ID' },
     ]
   }
+
   // VIEW_ARCH_PICKEDUP
   return [
-    { key: 'sampleNo', header: 'Nr próbki' },
-    { key: 'orderNo', header: 'Nr zlecenia' },
-    { key: 'client', header: 'Klient' },
-    { key: 'contactName', header: 'Osoba kontaktowa' },
-    { key: 'contactPhone', header: 'Telefon' },
-    { key: 'contactEmail', header: 'E-mail' },
-    { key: 'item', header: 'Przedmiot badań' },
-    { key: 'qty', header: 'Ilość próbek' },
-    { key: 'deliveryParams', header: 'Parametry dostawy' },
-    { key: 'pickedUpAt', header: 'Data odbioru' },
-    { key: 'id', header: 'ID' },
+    { key: 'sampleNo', label: 'Nr próbki' },
+    { key: 'orderNo', label: 'Nr zlecenia' },
+    { key: 'client', label: 'Klient' },
+    { key: 'contactName', label: 'Osoba kontaktowa' },
+    { key: 'contactPhone', label: 'Telefon' },
+    { key: 'contactEmail', label: 'E-mail' },
+    { key: 'item', label: 'Przedmiot badań' },
+    { key: 'qty', label: 'Ilość próbek' },
+    { key: 'deliveryParams', label: 'Parametry dostawy' },
+    { key: 'pickedUpAt', label: 'Data odbioru' },
+    { key: 'id', label: 'ID' },
   ]
 }
 
 // ───────────────────────────────────────────────────────────
-// Fabryka kolumn dla wszystkich widoków
-// makeColumns({ LinkCmp, handlers }) → { [viewKey]: COLS[] }
+// Kolumny – Table jest renderowane w PAGE (col.render(row))
 // ───────────────────────────────────────────────────────────
 export const makeColumns = ({ LinkCmp, handlers }) => {
   const {
@@ -170,17 +191,31 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
     restoreFromPickedUp,
   } = handlers
 
+  const contactCell = (row) => (
+    <div style={{ display: 'grid' }}>
+      <span>{row.contactName}</span>
+      <span>{row.contactPhone}</span>
+      {row.contactEmail ? <a href={`mailto:${row.contactEmail}`}>{row.contactEmail}</a> : null}
+    </div>
+  )
+
+  // helpers dla "WSZYSTKIE"
+  const isPickup = (row) => String(row?.id || '').startsWith('PCK-') || !!row.sampleNo || 'etaPickup' in (row || {})
+  const typeLabel = (row) => (isPickup(row) ? 'Odbiór' : 'Dostawa')
+  const etaValue = (row) => (isPickup(row) ? row.etaPickup : row.etaDelivery)
+  const doneValue = (row) => (isPickup(row) ? !!row.pickedUp : !!row.delivered)
+  const doneAtValue = (row) => (isPickup(row) ? row.pickedUpAt : row.deliveredAt)
+
   const PRE_COLS = [
     {
       key: 'orderNo',
       label: 'Nr zlecenia',
       sortable: true,
       type: 'string',
+      width: 160,
       render: (row) =>
         row.orderNo ? (
-          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>
-            {row.orderNo}
-          </LinkCmp>
+          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>{row.orderNo}</LinkCmp>
         ) : (
           '—'
         ),
@@ -190,40 +225,26 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
       label: 'Klient',
       sortable: true,
       type: 'string',
+      minWidth: 220,
       render: (row) =>
-        row.client ? (
-          <LinkCmp to={`/sprzedaz/klienci/${encodeURIComponent(row.client)}`}>
-            {row.client}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
+        row.client ? <LinkCmp to={`/sprzedaz/klienci/${encodeURIComponent(row.client)}`}>{row.client}</LinkCmp> : '—',
     },
-    {
-      key: 'contact',
-      label: 'Osoba kontaktowa',
-      sortable: false,
-      render: (row) => (
-        <div style={{ display: 'grid' }}>
-          <span>{row.contactName}</span>
-          <span>{row.contactPhone}</span>
-          {row.contactEmail ? <a href={`mailto:${row.contactEmail}`}>{row.contactEmail}</a> : null}
-        </div>
-      ),
-    },
+    { key: 'contact', label: 'Osoba kontaktowa', sortable: false, type: 'string', minWidth: 220, render: contactCell },
     {
       key: 'item',
       label: 'Przedmiot badań',
       sortable: true,
       type: 'string',
+      minWidth: 240,
       render: (row) => <span title={row.item}>{row.item || '—'}</span>,
     },
-    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number' },
+    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number', width: 120, align: 'right' },
     {
       key: 'scope',
       label: 'Zakres badań',
       sortable: true,
       type: 'string',
+      minWidth: 240,
       render: (row) =>
         row.scope ? (
           <LinkCmp to={`/metody-badawcze/spis?q=${encodeURIComponent(row.scope)}`} title={row.scope}>
@@ -233,11 +254,14 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
           '—'
         ),
     },
-    { key: 'etaDelivery', label: 'Przewidywana data dostawy', sortable: true, type: 'date' },
+    { key: 'etaDelivery', label: 'Przew. data dostawy', sortable: true, type: 'date', width: 160, align: 'center' },
     {
       key: 'delivered',
       label: 'Dostarczone',
       sortable: false,
+      type: 'boolean',
+      width: 120,
+      align: 'center',
       render: (row) => (
         <input
           type="checkbox"
@@ -252,12 +276,7 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
         />
       ),
     },
-    {
-      key: 'comment',
-      label: 'Uwagi',
-      sortable: false,
-      render: (row) => <span title={row.comment}>{row.comment || '—'}</span>,
-    },
+    { key: 'comment', label: 'Uwagi', sortable: false, type: 'string', minWidth: 200, render: (row) => row.comment || '—' },
   ]
 
   const PICKUP_COLS = [
@@ -266,11 +285,10 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
       label: 'Nr próbki',
       sortable: true,
       type: 'string',
+      width: 160,
       render: (row) =>
         row.sampleNo ? (
-          <LinkCmp to={`/probki/rejestr-probek?sample=${encodeURIComponent(row.sampleNo)}`}>
-            {row.sampleNo}
-          </LinkCmp>
+          <LinkCmp to={`/probki/rejestr-probek?sample=${encodeURIComponent(row.sampleNo)}`}>{row.sampleNo}</LinkCmp>
         ) : (
           '—'
         ),
@@ -280,11 +298,10 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
       label: 'Nr zlecenia',
       sortable: true,
       type: 'string',
+      width: 160,
       render: (row) =>
         row.orderNo ? (
-          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>
-            {row.orderNo}
-          </LinkCmp>
+          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>{row.orderNo}</LinkCmp>
         ) : (
           '—'
         ),
@@ -294,46 +311,22 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
       label: 'Klient',
       sortable: true,
       type: 'string',
+      minWidth: 220,
       render: (row) =>
-        row.client ? (
-          <LinkCmp to={`/sprzedaz/klienci/${encodeURIComponent(row.client)}`}>
-            {row.client}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
+        row.client ? <LinkCmp to={`/sprzedaz/klienci/${encodeURIComponent(row.client)}`}>{row.client}</LinkCmp> : '—',
     },
-    {
-      key: 'contact',
-      label: 'Osoba kontaktowa',
-      sortable: false,
-      render: (row) => (
-        <div style={{ display: 'grid' }}>
-          <span>{row.contactName}</span>
-          <span>{row.contactPhone}</span>
-          {row.contactEmail ? <a href={`mailto:${row.contactEmail}`}>{row.contactEmail}</a> : null}
-        </div>
-      ),
-    },
-    {
-      key: 'item',
-      label: 'Przedmiot badań',
-      sortable: true,
-      type: 'string',
-      render: (row) => <span title={row.item}>{row.item || '—'}</span>,
-    },
-    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number' },
-    {
-      key: 'deliveryParams',
-      label: 'Parametry dostawy',
-      sortable: false,
-      render: (row) => <span title={row.deliveryParams}>{row.deliveryParams || '—'}</span>,
-    },
-    { key: 'etaPickup', label: 'Przewidywana data odbioru', sortable: true, type: 'date' },
+    { key: 'contact', label: 'Osoba kontaktowa', sortable: false, type: 'string', minWidth: 220, render: contactCell },
+    { key: 'item', label: 'Przedmiot badań', sortable: true, type: 'string', minWidth: 240, render: (row) => row.item || '—' },
+    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number', width: 120, align: 'right' },
+    { key: 'deliveryParams', label: 'Parametry dostawy', sortable: false, type: 'string', minWidth: 240, render: (row) => row.deliveryParams || '—' },
+    { key: 'etaPickup', label: 'Przew. data odbioru', sortable: true, type: 'date', width: 170, align: 'center' },
     {
       key: 'pickedUp',
       label: 'Odebrane',
       sortable: false,
+      type: 'boolean',
+      width: 120,
+      align: 'center',
       render: (row) => (
         <input
           type="checkbox"
@@ -351,73 +344,14 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
   ]
 
   const ARCH_DELIVERED_COLS = [
-    {
-      key: 'orderNo',
-      label: 'Nr zlecenia',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.orderNo ? (
-          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>
-            {row.orderNo}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
-    {
-      key: 'client',
-      label: 'Klient',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.client ? (
-          <LinkCmp to={`/sprzedaz/klienci/${encodeURIComponent(row.client)}`}>
-            {row.client}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
-    {
-      key: 'contact',
-      label: 'Osoba kontaktowa',
-      sortable: false,
-      render: (row) => (
-        <div style={{ display: 'grid' }}>
-          <span>{row.contactName}</span>
-          <span>{row.contactPhone}</span>
-          {row.contactEmail ? <a href={`mailto:${row.contactEmail}`}>{row.contactEmail}</a> : null}
-        </div>
-      ),
-    },
-    {
-      key: 'item',
-      label: 'Przedmiot badań',
-      sortable: true,
-      type: 'string',
-      render: (row) => <span title={row.item}>{row.item || '—'}</span>,
-    },
-    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number' },
-    {
-      key: 'scope',
-      label: 'Zakres badań',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.scope ? (
-          <LinkCmp to={`/metody-badawcze/spis?q=${encodeURIComponent(row.scope)}`} title={row.scope}>
-            {row.scope}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
+    ...PRE_COLS.filter((c) => c.key !== 'delivered'),
     {
       key: 'deliveredAt',
       label: 'Data dostawy',
       sortable: true,
       type: 'date',
+      width: 150,
+      align: 'center',
       render: (row) => (
         <input
           type="date"
@@ -429,8 +363,11 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
     },
     {
       key: 'delivered',
-      label: 'Dostarczone',
+      label: 'W arch.',
       sortable: false,
+      type: 'boolean',
+      width: 90,
+      align: 'center',
       render: (row) => (
         <input
           type="checkbox"
@@ -444,88 +381,17 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
         />
       ),
     },
-    {
-      key: 'comment',
-      label: 'Uwagi',
-      sortable: false,
-      render: (row) => <span title={row.comment}>{row.comment || '—'}</span>,
-    },
   ]
 
   const ARCH_PICKEDUP_COLS = [
-    {
-      key: 'sampleNo',
-      label: 'Nr próbki',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.sampleNo ? (
-          <LinkCmp to={`/probki/rejestr-probek?sample=${encodeURIComponent(row.sampleNo)}`}>
-            {row.sampleNo}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
-    {
-      key: 'orderNo',
-      label: 'Nr zlecenia',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.orderNo ? (
-          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>
-            {row.orderNo}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
-    {
-      key: 'client',
-      label: 'Klient',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.client ? (
-          <LinkCmp to={`/sprzedaz/klienci/${encodeURIComponent(row.client)}`}>
-            {row.client}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
-    {
-      key: 'contact',
-      label: 'Osoba kontaktowa',
-      sortable: false,
-      render: (row) => (
-        <div style={{ display: 'grid' }}>
-          <span>{row.contactName}</span>
-          <span>{row.contactPhone}</span>
-          {row.contactEmail ? <a href={`mailto:${row.contactEmail}`}>{row.contactEmail}</a> : null}
-        </div>
-      ),
-    },
-    {
-      key: 'item',
-      label: 'Przedmiot badań',
-      sortable: true,
-      type: 'string',
-      render: (row) => <span title={row.item}>{row.item || '—'}</span>,
-    },
-    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number' },
-    {
-      key: 'deliveryParams',
-      label: 'Parametry dostawy',
-      sortable: false,
-      render: (row) => <span title={row.deliveryParams}>{row.deliveryParams || '—'}</span>,
-    },
+    ...PICKUP_COLS.filter((c) => c.key !== 'pickedUp'),
     {
       key: 'pickedUpAt',
       label: 'Data odbioru',
       sortable: true,
       type: 'date',
+      width: 150,
+      align: 'center',
       render: (row) => (
         <input
           type="date"
@@ -537,8 +403,11 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
     },
     {
       key: 'pickedUp',
-      label: 'Odebrane',
+      label: 'W arch.',
       sortable: false,
+      type: 'boolean',
+      width: 90,
+      align: 'center',
       render: (row) => (
         <input
           type="checkbox"
@@ -554,7 +423,91 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
     },
   ]
 
+  const ALL_COLS = [
+    {
+      key: '__type',
+      label: 'Typ',
+      sortable: true,
+      type: 'string',
+      width: 110,
+      render: (row) => <span title={typeLabel(row)}>{typeLabel(row)}</span>,
+    },
+    {
+      key: 'sampleNo',
+      label: 'Nr próbki',
+      sortable: true,
+      type: 'string',
+      width: 160,
+      render: (row) =>
+        row.sampleNo ? (
+          <LinkCmp to={`/probki/rejestr-probek?sample=${encodeURIComponent(row.sampleNo)}`}>{row.sampleNo}</LinkCmp>
+        ) : (
+          '—'
+        ),
+    },
+    {
+      key: 'orderNo',
+      label: 'Nr zlecenia',
+      sortable: true,
+      type: 'string',
+      width: 160,
+      render: (row) =>
+        row.orderNo ? (
+          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>{row.orderNo}</LinkCmp>
+        ) : (
+          '—'
+        ),
+    },
+    {
+      key: 'client',
+      label: 'Klient',
+      sortable: true,
+      type: 'string',
+      minWidth: 220,
+      render: (row) =>
+        row.client ? <LinkCmp to={`/sprzedaz/klienci/${encodeURIComponent(row.client)}`}>{row.client}</LinkCmp> : '—',
+    },
+    { key: 'contact', label: 'Osoba kontaktowa', sortable: false, type: 'string', minWidth: 220, render: contactCell },
+    {
+      key: 'item',
+      label: 'Przedmiot badań',
+      sortable: true,
+      type: 'string',
+      minWidth: 240,
+      render: (row) => <span title={row.item}>{row.item || '—'}</span>,
+    },
+    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number', width: 120, align: 'right' },
+    {
+      key: '__eta',
+      label: 'ETA',
+      sortable: true,
+      type: 'date',
+      width: 150,
+      align: 'center',
+      render: (row) => <span>{etaValue(row) || '—'}</span>,
+    },
+    {
+      key: '__done',
+      label: 'Wykonane',
+      sortable: false,
+      type: 'boolean',
+      width: 120,
+      align: 'center',
+      render: (row) => <span>{doneValue(row) ? 'Tak' : 'Nie'}</span>,
+    },
+    {
+      key: '__doneAt',
+      label: 'Data',
+      sortable: true,
+      type: 'date',
+      width: 140,
+      align: 'center',
+      render: (row) => <span>{doneAtValue(row) || '—'}</span>,
+    },
+  ]
+
   return {
+    [VIEW_ALL]: ALL_COLS,
     [VIEW_PRE]: PRE_COLS,
     [VIEW_PICKUP]: PICKUP_COLS,
     [VIEW_ARCH_DELIVERED]: ARCH_DELIVERED_COLS,

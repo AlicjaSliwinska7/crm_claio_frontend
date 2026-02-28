@@ -15,9 +15,8 @@ function Carousel({
   canRight,
   scrollLeft,
   scrollRight,
-  onReorder, // ← NOWY props
+  onReorder,
 }) {
-  // trzymamy indeks aktualnie przeciąganego kafelka
   const dragIndexRef = useRef(null)
 
   const handleDragStart = useCallback(
@@ -25,7 +24,6 @@ function Carousel({
       if (!manage || !onReorder) return
       dragIndexRef.current = index
       e.dataTransfer.effectAllowed = 'move'
-      // na wszelki wypadek dla FF:
       e.dataTransfer.setData('text/plain', String(index))
     },
     [manage, onReorder]
@@ -34,7 +32,7 @@ function Carousel({
   const handleDragOver = useCallback(
     (index) => (e) => {
       if (!manage || !onReorder) return
-      e.preventDefault() // pozwól upuścić
+      e.preventDefault()
       e.dataTransfer.dropEffect = 'move'
     },
     [manage, onReorder]
@@ -78,7 +76,7 @@ function Carousel({
           {shortcuts.map((it, index) => (
             <div
               key={it.id}
-              /* drag tylko w trybie manage */
+              className="qa-dnd-wrap"
               draggable={manage && typeof onReorder === 'function'}
               onDragStart={handleDragStart(index)}
               onDragOver={handleDragOver(index)}
@@ -88,6 +86,7 @@ function Carousel({
               <Tile
                 id={it.id}
                 label={it.label}
+                to={it.to}
                 manage={manage}
                 onRemove={onRemove}
                 onClick={() => onNavigate(it.to)}
@@ -132,7 +131,7 @@ Carousel.propTypes = {
   canRight: PropTypes.bool,
   scrollLeft: PropTypes.func.isRequired,
   scrollRight: PropTypes.func.isRequired,
-  onReorder: PropTypes.func, // ← NOWY
+  onReorder: PropTypes.func,
 }
 
 Carousel.defaultProps = {

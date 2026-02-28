@@ -1,0 +1,15 @@
+/* src/shared/diagrams2/styles/_responsive.css */
+
+@media (max-width: 860px) {
+  .d2-root .tss-input--date,
+  .d2-root .d2-input--date {
+    width: 150px;
+  }
+}
+
+@media (max-width: 520px) {
+  .d2-root .tss-kpis__row,
+  .d2-root .d2-kpis__row {
+    justify-content: center;
+  }
+}

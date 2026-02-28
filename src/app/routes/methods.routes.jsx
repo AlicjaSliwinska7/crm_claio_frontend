@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import TestingMethodsList from "../../features/methods/pages/TestingMethodsDirectory.jsx";
+import TestingMethodsList from "../../features/methods/pages/TestingMethodsList.jsx";
 import TestingMethodDetails from "../../features/methods/pages/TestingMethodDetails.js";
 
 export function buildMethodsRoutes() {

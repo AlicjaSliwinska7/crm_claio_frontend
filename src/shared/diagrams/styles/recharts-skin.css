@@ -1,0 +1,28 @@
+/* src/shared/diagrams2/styles/_recharts-skin.css */
+
+.d2-root .d2-chart .recharts-text,
+.d2-root .ts-chart .recharts-text {
+  font-size: 12px;
+}
+
+.d2-root .d2-chart .recharts-cartesian-grid line,
+.d2-root .ts-chart .recharts-cartesian-grid line {
+  opacity: 0.35;
+}
+
+/* legend wrapper centering */
+.d2-root .d2-chart .recharts-legend-wrapper,
+.d2-root .ts-chart .recharts-legend-wrapper,
+.d2-root .es-chart .recharts-legend-wrapper {
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+/* tooltip wrapper focus reset */
+.d2-root .d2-chart .recharts-tooltip-wrapper,
+.d2-root .ts-chart .recharts-tooltip-wrapper {
+  outline: none;
+}

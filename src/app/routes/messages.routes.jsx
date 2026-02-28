@@ -2,7 +2,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Navigate } from 'react-router-dom'
 
-const MessagesInbox = lazy(() => import('../../features/messages/pages/MessagesInbox.js'))
+const MessagesInbox = lazy(() => import('../../features/messages/pages/MessagesInbox.jsx'))
 const MessageForm   = lazy(() => import('../../features/messages/forms/MessageForm.js'))
 const Notifications = lazy(() => import('../../features/notifications/pages/Notifications.jsx'))
 const S = ({ children }) => <Suspense fallback={null}>{children}</Suspense>

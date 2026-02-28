@@ -31,26 +31,58 @@ body.preview-mode .page-wrapper {
 body.preview-mode .board-preview-wrapper {
   background: rgba(255, 255, 255, 0);
   box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 /* =========================================================
    HEADER PREVIEW
+   Cel:
+   - header jako blok wyśrodkowany względem strony
+   - w środku jedna linia: PIN -> FILTRY -> RESET
+   - ten sam gap między wszystkim (tak jak między filtrami)
    ========================================================= */
 
 body.preview-mode .board-preview-header {
-  display: flex;
-  flex-wrap: wrap;
+  --preview-gap: 12px;
+
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+
   padding: 0.8rem 1rem;
   background-color: #222325;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  margin: 1.5rem;
   color: #ecf0f1;
-  max-width: 100vw;
+
+  max-width: 1500px;
+  width: calc(100vw - 2rem);
   box-sizing: border-box;
+
+  /* ✅ centrowanie headera jako bloku */
+  margin: 0.8rem auto;
+}
+
+/* jedna linia: pinezka + filtry + reset */
+body.preview-mode .board-preview-header .preview-filters-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--preview-gap);
+  flex-wrap: wrap;
+}
+
+/* wrapper filtrów (z BoardFilters) */
+body.preview-mode .board-preview-header .preview-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--preview-gap); /* ✅ ten sam gap co między przyciskami */
 }
 
 /* pola w headerze */
@@ -63,7 +95,9 @@ body.preview-mode .board-preview-header input[type='date'] {
   padding: 0.3rem 0.5rem;
   font-size: 14px;
   min-width: 160px;
-  margin-left: 12px;
+
+  /* ✅ żadnych marginesów – odstępy robi gap */
+  margin: 0;
 }
 
 body.preview-mode .board-preview-header select:focus,
@@ -73,35 +107,51 @@ body.preview-mode .board-preview-header input[type='date']:focus {
   background-color: #ffffff;
 }
 
+/* =========================================================
+   PRZYCISKI PREVIEW (PIN + RESET) — spójne z filtrami
+   ========================================================= */
+
+body.preview-mode .preview-actions {
+  display: flex;
+  align-items: center;
+}
+
+body.preview-mode .preview-actions .pin-button,
+body.preview-mode .preview-reset-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #f39c12;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: scale(1.3);
+}
+
+body.preview-mode .preview-actions .pin-button:hover,
+body.preview-mode .preview-reset-button:hover {
+  transform: scale(1.4);
+  color: #e67e22;
+}
+
+body.preview-mode .preview-actions .pin-button:active,
+body.preview-mode .preview-reset-button:active {
+  transform: scale(1.3);
+}
+
 /* responsywność headera */
 @media (max-width: 720px) {
   body.preview-mode .board-preview-header {
     border-radius: 0;
     margin: 0.8rem;
   }
-}
 
-/* =========================================================
-   AKCJE PREVIEW
-   ========================================================= */
-
-body.preview-mode .preview-actions .pin-button {
-  background-color: #f39c12;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 0.6rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-body.preview-mode .preview-actions .pin-button:hover {
-  background-color: #e67e22;
-  transform: scale(1.05);
+  body.preview-mode .board-preview-header select,
+  body.preview-mode .board-preview-header input[type='date'] {
+    min-width: min(260px, 90vw);
+  }
 }
 
 /* =========================================================
@@ -128,9 +178,7 @@ body.preview-mode .board-day {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  transition: background-color 0.2s ease,
-              box-shadow 0.2s ease,
-              transform 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   border-left: 4px solid #485f7d;
 }
 
@@ -222,6 +270,8 @@ body.preview-mode .board-grid {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  align-items: center;
 }
 
 body.preview-mode .week-days-row {
@@ -230,140 +280,7 @@ body.preview-mode .week-days-row {
   flex-wrap: wrap;
   gap: 1rem;
   width: 100%;
-}
-
-/* =========================================================
-   TABELA PREVIEW (FLAT TABLE)
-   ========================================================= */
-
-body.preview-mode .board-flat-table {
-  width: calc(100vw - 3rem);
-  margin: 1.25rem auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 17px;
-  background-color: #ffffff;
-  border: 1px solid #e0e6ed;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-/* nagłówek */
-body.preview-mode .board-flat-table thead {
-  background-color: #222325;
-  box-shadow: inset 0 -2px 0 #f39c12;
-}
-
-body.preview-mode .board-flat-table thead th {
-  padding: 10px 14px;
-  font-weight: 600;
-  color: #ffffff;
-  text-align: center;
-  user-select: none;
-}
-
-/* wiersze */
-body.preview-mode .board-flat-table tbody tr:hover {
-  background-color: #f9fbff;
-  transform: translateX(2px);
-}
-
-body.preview-mode .board-flat-table td {
-  padding: 10px 14px;
-  border-bottom: 1px solid #e5e7eb;
-  color: #2c3e50;
-  font-size: 15px;
-  text-align: center;
-}
-
-/* =========================================================
-   PRIORYTETY – TEKSTOWE (TYLKO PREVIEW)
-   ========================================================= */
-
-body.preview-mode .priority-chip {
-  font-weight: 600;
-  font-size: 14px;
-  text-transform: lowercase;
-}
-
-body.preview-mode .priority-wysoki { color: #d62828; }
-body.preview-mode .priority-normalny { color: #2a9d8f; }
-body.preview-mode .priority-niski { color: #457b9d; }
-body.preview-mode .priority-blank { color: #9ca3af; }
-
-/* w preview priorytety nie mają paska */
-body.preview-mode .priority-wysoki,
-body.preview-mode .priority-normalny,
-body.preview-mode .priority-niski,
-body.preview-mode .priority-blank {
-  border-left: none;
-}
-
-/* =========================================================
-   TYPY WPISÓW
-   ========================================================= */
-
-body.preview-mode .type-chip {
-  font-weight: 600;
-  font-size: 14px;
-  text-transform: lowercase;
-}
-
-body.preview-mode .type-post { color: #3b82f6; }
-body.preview-mode .type-task { color: #e67e22; }
-
-/* =========================================================
-   STANY PUSTE
-   ========================================================= */
-
-body.preview-mode .empty-state {
-  text-align: center;
-  padding: 2rem;
-  color: #6b7280;
-  font-style: italic;
-}
-
-/* =========================================================
-   WYŁĄCZENIA STAREGO LAYOUTU
-   ========================================================= */
-
-body.preview-mode .board-list-section,
-body.preview-mode .board-wrapper table:not(.board-flat-table) {
-  display: none !important;
-}
-
-/* =========================================================
-   PASEK SORTOWANIA
-   ========================================================= */
-
-body.preview-mode .board-sort-bar {
-  width: calc(100vw - 3rem);
-  margin: 0.5rem auto 0;
-  padding: 0.4rem 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #6b7280;
-  font-size: 14px;
-}
-
-body.preview-mode .board-sort-bar .sort-toggle {
-  background: transparent;
-  border: none;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  color: #3b82f6;
-  transition: color 0.15s ease, transform 0.15s ease;
-}
-
-body.preview-mode .board-sort-bar .sort-toggle:hover {
-  color: #2563eb;
-  transform: translateX(2px);
-}
-
-body.preview-mode .board-sort-bar .entries-count strong {
-  font-weight: 700;
-  color: #111827;
+  max-width: 1500px;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }

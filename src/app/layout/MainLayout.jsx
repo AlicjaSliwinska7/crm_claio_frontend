@@ -12,7 +12,6 @@ const SUSPENSE_FALLBACK = <div style={{ padding: 16 }}>Ładowanie…</div>
 function MainLayout({ clients }) {
   const { pathname } = useLocation()
 
-  // ⬇️ dodałem suppressHeading
   const { title: pageTitle, Icon, iconClass, subtitle, suppressHeading } = usePageTitle()
 
   const isBoardPreview = useMemo(() => pathname.startsWith('/tablica/podglad'), [pathname])
@@ -58,7 +57,6 @@ function MainLayout({ clients }) {
 
         <main className='main-area' role='main'>
           <QuickAccess />
-          {/* ⬇️ jeśli suppressHeading=true (np. /profil), nie renderujemy PageTitle */}
           <MainContent
             title={suppressHeading ? '' : pageTitle}
             Icon={Icon}

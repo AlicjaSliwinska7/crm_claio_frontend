@@ -1,82 +1,114 @@
-import React, { useCallback } from 'react'
+// src/app/layout/bars/shared/components/SidebarSection.jsx
+import React, { useCallback, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 /**
- * Sekcja sidebaru, zgodna ze stylami:
- * - rodzic = <NavLink ...> (żeby działały .sidebar-nav a {...} i .sidebar-link)
- * - z submenu: klik/Enter/Space -> preventDefault + onToggle()
- * - bez submenu: normalna nawigacja po "base"
+ * SidebarSection
+ * - parent is NavLink to preserve existing CSS selectors
+ * - sections with submenu: click/Enter/Space toggles submenu (no navigation)
+ * - sections without submenu: normal navigation
+ *
+ * NEW:
+ * - onItemSelect(item, event) -> if returns true, navigation is prevented
  */
 export default function SidebarSection({
-  section,               // { id, base, label, iconClass, items?: [{to,label}] }
-  isOpen,                // boolean
-  onToggle,              // (id) => void
+  section,
+  isOpen,
+  onToggle,
   isParentActive = false,
   linkClass = 'sidebar-link',
   submenuClass = 'sidebar-submenu',
-  iconPosition = 'left', // 'left' | 'right'
+  iconPosition = 'left',
+
+  // ✅ NEW
+  onItemSelect,
 }) {
-  const hasSub = !!(section.items && section.items.length)
-  const ariaId = `section-${section.id}`
+  const hasSub = !!(section?.items && section.items.length)
+  const sectionId = section?.id || ''
+  const ariaId = useMemo(() => (sectionId ? `section-${sectionId}` : undefined), [sectionId])
 
-  // toggle tylko dla sekcji z submenu — blokujemy nawigację
-  const handleClick = useCallback((e) => {
-    if (!hasSub) return
-    e.preventDefault()
-    e.stopPropagation()
-    onToggle(section.id)
-  }, [hasSub, onToggle, section?.id])
-
-  const handleKeyDown = useCallback((e) => {
-    if (!hasSub) return
-    if (e.key === 'Enter' || e.key === ' ') {
+  const handleClick = useCallback(
+    (e) => {
+      if (!hasSub) return
       e.preventDefault()
       e.stopPropagation()
-      onToggle(section.id)
-    }
-  }, [hasSub, onToggle, section?.id])
+      if (sectionId) onToggle(sectionId)
+    },
+    [hasSub, onToggle, sectionId]
+  )
 
-  // klasa rodzica: aktywna, jeśli sekcja ma aktywne dziecko lub (bez submenu) aktywny base
-  const parentClass = ({ isActive }) =>
-    [
-      linkClass,
-      (isParentActive || (!hasSub && isActive)) ? 'active' : ''
-    ].join(' ').trim()
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (!hasSub) return
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault()
+        e.stopPropagation()
+        if (sectionId) onToggle(sectionId)
+      }
+    },
+    [hasSub, onToggle, sectionId]
+  )
+
+  const parentClass = useCallback(
+    ({ isActive }) => {
+      const active = hasSub ? (isOpen || isParentActive) : isActive
+      return [linkClass, active ? 'active' : ''].join(' ').trim()
+    },
+    [hasSub, isOpen, isParentActive, linkClass]
+  )
+
+  const handleItemClick = useCallback(
+    (item) => (e) => {
+      if (!onItemSelect) return
+      const handled = onItemSelect(item, e)
+      if (handled) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+    [onItemSelect]
+  )
 
   return (
     <>
-      {/* RODZIC (ZAWSZE <a>), żeby Twoje selektory .sidebar-nav a {...} łapały */}
       <NavLink
-        to={section.base || '#'}
+        to={section?.base || '#'}
         className={parentClass}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
-        role={hasSub ? 'button' : undefined}
         aria-expanded={hasSub ? isOpen : undefined}
         aria-controls={hasSub ? ariaId : undefined}
+        aria-haspopup={hasSub ? 'menu' : undefined}
         tabIndex={0}
       >
-        {iconPosition === 'left' && (
-          section.iconClass ? <i className={section.iconClass} aria-hidden="true" /> : null
-        )}
-        <span>{section.label}</span>
-        {iconPosition === 'right' && (
-          section.iconClass ? <i className={section.iconClass} aria-hidden="true" /> : null
-        )}
+        {iconPosition === 'left' && section?.iconClass ? (
+          <i className={section.iconClass} aria-hidden="true" />
+        ) : null}
+
+        <span>{section?.label}</span>
+
+        {iconPosition === 'right' && section?.iconClass ? (
+          <i className={section.iconClass} aria-hidden="true" />
+        ) : null}
       </NavLink>
 
-      {/* SUBMENU */}
       {hasSub && isOpen && (
         <div id={ariaId} className={submenuClass} data-open="true">
-          {section.items.map(item => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) => `${linkClass} ${isActive ? 'active' : ''}`}
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {section.items.map((item) => {
+            const key = item.to || item.href || item.id || item.key || item.label
+            const to = item.to || item.href || '#'
+
+            return (
+              <NavLink
+                key={key}
+                to={to}
+                className={({ isActive }) => `${linkClass} ${isActive ? 'active' : ''}`.trim()}
+                onClick={handleItemClick(item)}
+              >
+                {item.label}
+              </NavLink>
+            )
+          })}
         </div>
       )}
     </>

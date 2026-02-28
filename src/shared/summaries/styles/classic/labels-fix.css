@@ -1,0 +1,14 @@
+/* src/shared/summaries2/styles/classic/_labels-fix.css */
+
+/* ======================================================================
+   Label fix — wyrównanie importowanych filtrów (sum-filter / filters-bar)
+   ====================================================================== */
+.es-root .sum-filter,
+.es-root .sum-filter label,
+.es-root .filters-bar label,
+.es-root .filtersbar label {
+  color: var(--es-muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}

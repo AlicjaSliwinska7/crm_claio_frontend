@@ -1,20 +1,12 @@
-// src/features/lists/components/SortableTh.jsx
+// src/shared/tables/components/SortableTh.jsx
 import React, { useCallback } from 'react'
+import PropTypes from 'prop-types'
 
 /**
- * Wspólny <th> z logiką sortowania i wskaźnikiem ▲▼ (spójny z DataTableWithActions).
- *
- * API:
- *  - columnKey: klucz kolumny (string)
- *  - label: etykieta nagłówka
- *  - sortConfig: { key, direction }
- *  - setSortConfig: fn
- *  - onAfterSort?: fn
- *  - className?: string
- *  - sortable?: bool (domyślnie true)
- *  - disabled?: bool
- *  - title?: string
- *  - numeric?: bool (wyrównanie prawe)
+ * Wspólny <th> z logiką sortowania.
+ * Strzałki nie są renderowane w DOM – robimy je CSS-em po klasach:
+ *  - .sortable
+ *  - .sorted-asc / .sorted-desc
  */
 export default function SortableTh({
   columnKey,
@@ -26,7 +18,9 @@ export default function SortableTh({
   sortable = true,
   disabled = false,
   title,
-  numeric = false,
+  align,     // 'left' | 'center' | 'right' (opcjonalnie)
+  width,     // string | number (opcjonalnie)
+  minWidth,  // string | number (opcjonalnie)
 }) {
   const active = sortConfig?.key === columnKey
   const dir = active ? sortConfig.direction : undefined
@@ -37,9 +31,7 @@ export default function SortableTh({
     setSortConfig((prev) => {
       const prevKey = prev?.key
       const prevDir = prev?.direction || 'asc'
-      const nextDir =
-        prevKey === columnKey ? (prevDir === 'asc' ? 'desc' : 'asc') : 'asc'
-
+      const nextDir = prevKey === columnKey ? (prevDir === 'asc' ? 'desc' : 'asc') : 'asc'
       return { key: columnKey, direction: nextDir }
     })
 
@@ -64,29 +56,51 @@ export default function SortableTh({
       : undefined
 
   const classes = [
-    'sortable', // bazowa klasa jak w DataTableWithActions
+    align ? `align-${align}` : '',
+    sortable ? 'sortable' : '',
     active && dir ? `sorted-${dir}` : '',
-    numeric ? 'align-right' : '',
     disabled || !sortable ? 'th--disabled' : '',
     className,
   ]
     .filter(Boolean)
     .join(' ')
 
+  const style = {}
+  if (width != null) style.width = typeof width === 'number' ? `${width}px` : width
+  if (minWidth != null) style.minWidth = typeof minWidth === 'number' ? `${minWidth}px` : minWidth
+
   return (
     <th
       scope="col"
+      role="columnheader"
       aria-sort={ariaSort}
       className={classes}
       title={title}
+      style={style}
       onClick={sortable && !disabled ? doSort : undefined}
       onKeyDown={onKeyDown}
       tabIndex={sortable && !disabled ? 0 : undefined}
-      role="columnheader"
+      {...(align ? { 'data-align': align } : {})}
     >
       <span className="th-label">{label}</span>
-      {/* pusty span – strzałka rysowana w CSS jak w DataTableWithActions */}
-      {sortable && <span className="th-sort-caret" aria-hidden />}
     </th>
   )
+}
+
+SortableTh.propTypes = {
+  columnKey: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  sortConfig: PropTypes.shape({
+    key: PropTypes.string,
+    direction: PropTypes.oneOf(['asc', 'desc']),
+  }),
+  setSortConfig: PropTypes.func,
+  onAfterSort: PropTypes.func,
+  className: PropTypes.string,
+  sortable: PropTypes.bool,
+  disabled: PropTypes.bool,
+  title: PropTypes.string,
+  align: PropTypes.oneOf(['left', 'center', 'right']),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  minWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }

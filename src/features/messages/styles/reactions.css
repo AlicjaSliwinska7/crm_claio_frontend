@@ -1,0 +1,154 @@
+/* src/features/messages/styles/message-inbox/_reactions.css */
+
+/* ============================ REACTIONS =========================== */
+.message-inbox .reaction-bar {
+  position: absolute;
+  left: 0;
+  top: -42px; /* ✅ pasek nad dymkiem (usuń, jeśli ustawiasz inaczej) */
+
+  display: flex;
+  gap: 6px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  border: 1px solid rgba(204, 214, 224, 0.55);
+
+  border-radius: 999px;
+  padding: 6px 10px;
+
+  opacity: 0;
+  transform: scale(.92);
+  transform-origin: left top;
+  pointer-events: none;
+
+  transition: opacity .18s ease, transform .18s ease, box-shadow .2s ease;
+  z-index: 20;
+
+  white-space: nowrap;
+  max-width: 340px;
+  overflow: hidden;
+
+  box-shadow: var(--shadow-md);
+}
+
+/* ✅ pasek reakcji dla "own" nadal po prawej */
+.message-inbox .message-block.own .reaction-bar {
+  left: auto;
+  right: 0;
+  transform-origin: right top;
+}
+
+/* ✅ KLUCZ: pasek reakcji widoczny TYLKO po kliknięciu (+) */
+.message-inbox .message.is-react-open .reaction-bar {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* (wyłączone) hover nie steruje już reakcjami */
+/*
+.message-inbox .message:hover .reaction-bar {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+*/
+
+.message-inbox .reaction-btn {
+  cursor: pointer;
+  font-size: 18px;
+  background: transparent;
+  border: 0;
+  outline: none;
+  padding: 4px 6px;
+  border-radius: 999px;
+  transition: transform .15s ease, background-color .15s ease;
+}
+.message-inbox .reaction-btn:hover {
+  transform: scale(1.12);
+  background: var(--pri-very-soft);
+}
+.message-inbox .reaction-btn:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--pri) 50%, #fff 50%);
+  outline-offset: 2px;
+}
+
+/* chips pod bańką (emoji + liczba) — “pill” */
+.message-inbox .message-reactions {
+  position: absolute;
+  left: 10px;
+  right: auto;
+
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+
+  padding: 2px 8px;
+
+  z-index: 5;
+  animation: fadeInReaction .2s ease-out;
+}
+
+/* ✅ nawet dla własnych wiadomości chipy zostają po lewej */
+.message-inbox .message-reactions.own {
+  left: 10px !important;
+  right: auto !important;
+}
+
+@keyframes fadeInReaction {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message-inbox .message-reactions span {
+  font-size: 17px;
+  color: #2e4f70;
+  font-weight: 700;
+  letter-spacing: .1px;
+}
+
+/* =========================================================
+   MESSAGE – REACTION (+) BUTTON
+   ========================================================= */
+
+.message-inbox .msg-react-btn {
+  min-width: 30px;
+  min-height: 26px;
+  padding: 4px 8px;
+
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+
+  border-radius: 999px;
+  margin-left: 6px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0.7;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease,
+    transform 0.12s ease;
+}
+
+.message-inbox .msg-react-btn:hover {
+  opacity: 1;
+  background: rgba(120, 135, 170, 0.16);
+}
+
+.message-inbox .msg-react-btn:active {
+  transform: scale(0.9);
+}
+
+.message-inbox .msg-react-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(120, 135, 170, 0.45);
+}

@@ -1,0 +1,20 @@
+/* src/shared/diagrams2/styles/_variables.css */
+
+.d2-root {
+  --es-bg: #f5f7fb;
+  --es-card: #ffffff;
+  --es-border: #e6ecf5;
+  --es-hair: rgba(0, 0, 0, 0.06);
+  --es-text: #0f172a;
+  --es-muted: #5b6f84;
+  --es-blue: #3a628a;
+  --es-blue-2: #6e9cc5;
+  --es-slate: #334155;
+
+  /* icon button */
+  --tss-icon-btn-size: 38px;
+
+  background: var(--es-bg);
+  padding: 16px;
+  color: var(--es-text);
+}

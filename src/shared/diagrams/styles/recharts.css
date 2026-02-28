@@ -1,0 +1,43 @@
+/* src/shared/diagrams2/styles/recharts.css */
+
+/* Poniżej celowo mało “koloru” – możesz to dopracować pod swój theme */
+.d2-chart .recharts-cartesian-grid line {
+  opacity: 0.35;
+}
+
+.d2-chart .recharts-text {
+  font-size: 12px;
+}
+
+.d2-chart .recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.d2-tooltip {
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(180,190,205,0.7);
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+}
+
+.d2-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.d2-legend__item {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  opacity: 0.85;
+}
+.d2-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: currentColor; /* ważne: kolor z props/inline style */
+  opacity: 0.9;
+}

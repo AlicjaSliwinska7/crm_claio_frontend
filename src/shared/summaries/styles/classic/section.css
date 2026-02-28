@@ -1,0 +1,18 @@
+/* src/shared/summaries2/styles/classic/_section.css */
+
+/* -------------------- Section rhythm -------------------- */
+.es-root .es-section {
+  position: relative;
+  margin: 0 0 16px;
+}
+.es-root .es-section + .es-section {
+  margin-top: 18px;
+}
+.es-root .es-section + .es-section::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: -10px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--es-hair), rgba(0, 0, 0, 0.02));
+}

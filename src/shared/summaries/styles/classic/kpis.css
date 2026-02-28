@@ -1,0 +1,29 @@
+/* src/shared/summaries2/styles/classic/_kpis.css */
+
+/* -------------------- KPI row -------------------- */
+.es-root .tss-card.tss-kpis {
+  border: 1px dashed var(--es-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+}
+.es-root .tss-kpis__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 14px;
+}
+.es-root .tss-kpis__sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: center;
+  font-size: 12px;
+}
+.es-root .tss-sep { opacity: 0.45; }
+
+@media (max-width: 520px) {
+  .es-root .tss-kpis__row { justify-content: center; }
+}

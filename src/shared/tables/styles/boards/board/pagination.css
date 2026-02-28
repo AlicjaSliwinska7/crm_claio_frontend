@@ -1,0 +1,40 @@
+/* src/shared/tables/styles/boards/pagination.css
+   Scope: shared/tables boards skin
+*/
+
+/* wrapper pod tabelą (BoardTable.jsx) */
+.bl-board-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 8px 14px;
+}
+
+/* delikatne dopasowanie do boards (bez psucia globalnej paginacji) */
+.bl-board-pagination .pagination--inline {
+  padding: 6px 10px;
+  background: transparent;
+  border: none;
+}
+
+.bl-board-pagination .page-btn {
+  height: 32px;
+}
+
+.bl-board-pagination .page-btn:hover:not(:disabled) {
+  transform: scale(1.12);
+}
+/* src/shared/tables/styles/boards/pagination.css */
+
+.bl-board-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 8px 14px;
+}
+
+.bl-board-pagination .pagination--inline {
+  padding: 6px 10px;
+  background: transparent;
+  border:none;
+}

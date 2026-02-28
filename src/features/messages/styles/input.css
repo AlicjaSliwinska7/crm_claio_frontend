@@ -1,0 +1,253 @@
+/* src/features/messages/styles/message-inbox/_input.css */
+
+/* ============================== INPUT ============================= */
+.message-inbox .chat-input {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 12px 14px;
+	border-top: 1px solid var(--hair);
+	background: var(--bg-card);
+}
+
+.message-inbox .composer {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.message-inbox .chat-input input[type="text"],
+.message-inbox .chat-input input:not([type]) {
+	flex: 1;
+	min-width: 0;
+	height: 40px;
+	border-radius: 12px;
+	border: 1px solid rgba(203, 220, 238, 0.9);
+	background: rgba(255, 255, 255, 0.9);
+	padding: 0 12px;
+	font-size: 14px;
+	outline: none;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.message-inbox .chat-input input:focus {
+	border-color: color-mix(in oklab, var(--pri) 45%, rgba(203, 220, 238, 0.9) 55%);
+	box-shadow: 0 0 0 3px color-mix(in oklab, var(--pri) 18%, transparent 82%);
+}
+
+.message-inbox .chat-input button {
+	cursor: pointer;
+	font-weight: 800;
+	letter-spacing: 0.2px;
+}
+
+.message-inbox .chat-input .btn-primary {
+	color: #fff;
+	box-shadow: 0 10px 22px rgba(20, 40, 68, 0.16);
+}
+
+.message-inbox .chat-input .btn-primary:hover {
+	filter: brightness(1.02);
+	box-shadow: 0 12px 26px rgba(20, 40, 68, 0.18);
+}
+
+.message-inbox .emoji-toggle-btn,
+.message-inbox .file-attach {
+	width: 40px;
+	padding: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.message-inbox .emoji-toggle-btn + .file-attach {
+	margin-left: -10px;
+}
+
+.message-inbox .emoji-toggle-btn:hover,
+.message-inbox .file-attach:hover {
+	transform: scale(1.4);
+}
+
+.message-inbox .emoji-toggle-btn:active,
+.message-inbox .file-attach:active {
+	transform: translateY(1px);
+}
+
+.message-inbox .emoji-toggle-btn:focus-visible,
+.message-inbox .file-attach:focus-visible {
+	outline: 2px solid color-mix(in oklab, var(--pri) 55%, #fff 45%);
+	outline-offset: 2px;
+}
+
+/* Hint pod composerem */
+.message-inbox .composer-hint {
+	margin-top: 6px;
+	font-size: 12px;
+	color: #7a8da5;
+}
+
+/* ====================== NO LEFT SHADOW / SEAM ======================
+   Usunięcie “cienia”/krawędzi po lewej stronie prawego panelu (chat),
+   widocznego na granicy między listą rozmów a treścią rozmowy.
+
+   UWAGA: to override na layout (zwykle w _layout/_chat), ale dodajemy
+   tu bezpieczne reguły scoped do .message-inbox, żeby nie grzebać w
+   innych plikach. Jeśli masz dokładną klasę kontenera prawego panelu,
+   można to zawęzić do jednej reguły.
+   ================================================================ */
+
+.message-inbox .chat-window,
+.message-inbox .chat-pane,
+.message-inbox .chat-main,
+.message-inbox .conversation-pane,
+.message-inbox .inbox-chat,
+.message-inbox .chat-area,
+.message-inbox .right-pane,
+.message-inbox .right-panel {
+	/* usuń separator/cień przy lewej krawędzi */
+	border-left: none !important;
+	box-shadow: none !important;
+}
+
+/* jeśli “cień” jest robiony gradientem/pseudo-elementem */
+.message-inbox .chat-window::before,
+.message-inbox .chat-window::after,
+.message-inbox .chat-pane::before,
+.message-inbox .chat-pane::after,
+.message-inbox .chat-main::before,
+.message-inbox .chat-main::after,
+.message-inbox .conversation-pane::before,
+.message-inbox .conversation-pane::after,
+.message-inbox .right-pane::before,
+.message-inbox .right-pane::after,
+.message-inbox .right-panel::before,
+.message-inbox .right-panel::after {
+	box-shadow: none !important;
+	background: none !important;
+}
+
+/* jeśli “cień” to inset na wrapperze split view */
+.message-inbox .split,
+.message-inbox .split-view,
+.message-inbox .inbox-layout,
+.message-inbox .inbox-body {
+	box-shadow: none !important;
+}
+
+/* ============================== EMOJI PANEL ============================= */
+/* Scoped: tylko w MessageInbox. Cel: mniejsze headery/przyciski, zero scrolla,
+   pełne zaokrąglone krawędzie, spójnie z resztą UI. */
+
+/* 1) Kontener panelu (Twoje klasy + fallbacki) */
+.message-inbox .emoji-panel,
+.message-inbox .emoji-menu,
+.message-inbox .emoji-popover,
+.message-inbox .emoji-picker-popover,
+.message-inbox .EmojiPickerReact {
+	border-radius: 16px !important; /* spójnie z messageinbox */
+	overflow: hidden; /* żeby wszystkie rogi były zaokrąglone */
+	border: 1px solid rgba(204, 214, 224, 0.6);
+	background: rgba(255, 255, 255, 0.82);
+	backdrop-filter: blur(8px) saturate(120%);
+	-webkit-backdrop-filter: blur(8px) saturate(120%);
+	box-shadow: 0 16px 34px rgba(24, 34, 49, 0.18);
+}
+
+/* 2) Header: mniejszy, mniej “puchaty” */
+.message-inbox .emoji-panel__header,
+.message-inbox .emoji-menu__header,
+.message-inbox .emoji-popover__header,
+.message-inbox .EmojiPickerReact .epr-header,
+.message-inbox .EmojiPickerReact .epr-search-container {
+	padding: 8px 10px !important;
+	gap: 8px !important;
+}
+
+/* 3) Tytuły / labelki w headerze */
+.message-inbox .emoji-panel__title,
+.message-inbox .emoji-menu__title,
+.message-inbox .EmojiPickerReact .epr-emoji-category-label,
+.message-inbox .EmojiPickerReact .epr-header .epr-header-overlay {
+	font-size: 12px !important;
+	font-weight: 800 !important;
+	letter-spacing: 0.2px !important;
+	color: rgba(25, 40, 62, 0.78) !important;
+}
+
+/* 4) Input wyszukiwania w pickerze — mniejszy, spójny */
+.message-inbox .emoji-panel input[type='search'],
+.message-inbox .emoji-menu input[type='search'],
+.message-inbox .EmojiPickerReact input[type='text'],
+.message-inbox .EmojiPickerReact input[type='search'] {
+	height: 32px !important;
+	border-radius: 12px !important;
+	font-size: 13px !important;
+	padding: 0 10px !important;
+	border: 1px solid rgba(203, 220, 238, 0.9) !important;
+	background: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* 5) Buttony w headerze (np. X, zakładki) — mniejsze */
+.message-inbox .emoji-panel button,
+.message-inbox .emoji-menu button,
+.message-inbox .EmojiPickerReact button {
+	font-size: 12px;
+	font-weight: 800;
+}
+
+/* Ikony/przyciski typu "close" w headerze */
+.message-inbox .emoji-panel__close,
+.message-inbox .emoji-menu__close,
+.message-inbox .EmojiPickerReact .epr-btn {
+	width: 30px !important;
+	height: 30px !important;
+	min-width: 30px !important;
+	min-height: 30px !important;
+	border-radius: 12px !important;
+}
+
+/* 6) Obszar emoji — ZERO SCROLLA: wymuszamy wysokość „fit” i chowamy overflow */
+.message-inbox .emoji-panel__body,
+.message-inbox .emoji-menu__body,
+.message-inbox .EmojiPickerReact .epr-body {
+	overflow: hidden !important; /* ✅ bez scrollowania */
+	max-height: none !important;
+}
+
+/* 7) Jeśli biblioteka wymusza scroll na listach — wyłączamy */
+.message-inbox .EmojiPickerReact .epr-emoji-list,
+.message-inbox .EmojiPickerReact .epr-category-nav,
+.message-inbox .EmojiPickerReact .epr-body::-webkit-scrollbar {
+	display: none !important;
+}
+
+.message-inbox .EmojiPickerReact .epr-emoji-list,
+.message-inbox .EmojiPickerReact .epr-category-nav {
+	scrollbar-width: none !important;
+	-ms-overflow-style: none !important;
+	overflow: hidden !important; /* ✅ bez scrollowania */
+}
+
+/* 8) Same kafelki emoji — trochę mniejsze, żeby mieściło się bez scrolla */
+.message-inbox .EmojiPickerReact .epr-emoji {
+	width: 30px !important;
+	height: 30px !important;
+	border-radius: 10px !important;
+}
+
+.message-inbox .EmojiPickerReact .epr-emoji:hover {
+	background: rgba(120, 135, 170, 0.14) !important;
+}
+
+/* 9) Dolne krawędzie/panele (np. footer) też zaokrąglone */
+.message-inbox .emoji-panel__footer,
+.message-inbox .emoji-menu__footer,
+.message-inbox .EmojiPickerReact .epr-footer {
+	border-top: 1px solid rgba(204, 214, 224, 0.45);
+	padding: 8px 10px !important;
+}

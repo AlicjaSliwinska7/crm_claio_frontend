@@ -2,359 +2,643 @@
    QUICK ACCESS – SCOPED CSS
    ========================================================= */
 
-/* 1) Zmienne tylko dla QuickAccess */
+/* =========================================================
+   1) ZMIENNE (tylko dla QuickAccess)
+   ========================================================= */
+
 .quick-access-panel {
-	--qa-gap: 17px;          /* odstęp między kafelkami */
-	--qa-btn-size: 36px;     /* wielkość hitboxu strzałki */
-	--qa-edge-out: 12px;     /* o ile strzałki wystają poza ramę */
-	--qa-tile-h: 92px;       /* wysokość kafelków */
+  --qa-gap: 17px;          /* odstęp między kafelkami */
+  --qa-btn-size: 36px;     /* wielkość hitboxu strzałki */
+  --qa-edge-out: 12px;     /* o ile strzałki wystają poza ramę */
+  --qa-tile-h: 92px;       /* wysokość kafelków */
 
-	--qa-text: #2a2a2aa0;
-	--qa-text-strong: #1f2c45;
-	--qa-bg: hsla(0, 0%, 71%, 0.185);
+  --qa-text: #2a2a2aa0;
+  --qa-text-strong: #1f2c45;
+  --qa-bg: hsl(218.18deg 40.48% 64.02% / 18.5%);
 
-	--qa-border: #cfd6e3;
-	--qa-tile-bg: rgba(255, 255, 255, 0.5);
-	--qa-tile-bg-hover: hsla(0, 0%, 71%, 0.185);
-	--qa-add-core: #ffffff;
-	--qa-plus-stroke: #6b7280;
-	--qa-plus-stroke-hover: #111827;
-	--qa-plus-stroke-active: #374151;
+  --qa-border: #cfd6e3;
+  --qa-tile-bg: rgba(255, 255, 255, 0.5);
+  --qa-tile-bg-hover: hsla(0, 0%, 71%, 0.185);
+  --qa-add-core: #ffffff;
+  --qa-plus-stroke: #6b7280;
+  --qa-plus-stroke-hover: #111827;
+  --qa-plus-stroke-active: #374151;
+
+  /* ikony */
+  --qa-icon-badge: rgba(255, 255, 255, 0.65);
+  --qa-icon-size: 24px;          /* rozmiar ikony */
+  --qa-icon-badge-size: 48px;    /* rozmiar kółka */
+  --qa-icon-color: #00000052;
+
+  /* aktywny */
+  --qa-active-bg: rgba(60, 65, 75, 0.22);
+  --qa-active-icon: #c62828;
+  --qa-active-border: rgba(180, 40, 40, 0.35);
+
+  /* shine (wolniej + po przekątnej, bez ucinania) */
+  --qa-shine-angle: 135deg;   /* lewy-górny -> prawy-dolny */
+  --qa-shine-alpha: 0.5;
+  --qa-shine-inset: -60%;     /* większe pole, żeby nie ucinało */
+  --qa-shine-from: -20%;
+  --qa-shine-to: 50%;
+  --qa-shine-duration: 2s;  /* ✅ spowolnione */
+
+  /* ADD TILE */
+  --qa-add-icon-d: 50px;
+  --qa-add-plus: 24px;
+
+  /* SILVER ICON (tylko ikona, bez tła) */
+  --qa-silver-ico: rgba(170, 178, 190, 0.90); /* bazowy “stalowy” */
+  --qa-silver-hi: rgba(255, 255, 255, 0.75);  /* highlight */
+  --qa-silver-lo: rgba(0, 0, 0, 0.18);        /* cień */
 }
 
-/* 2) Panel */
+/* =========================================================
+   2) PANEL
+   ========================================================= */
+
 .quick-access-panel {
-	padding: 1px 24px 20px 24px;
-	background: linear-gradient(145deg, transparent);
-	border-radius: 2px;
-	box-shadow:
-		inset 0 1px 3px rgba(255, 255, 255, 0.6),
-		inset 0 -1px 3px rgba(0, 0, 0, 0.05),
-		0 6px 12px rgba(0, 0, 0, 0.15);
-	font-family: Arial, sans-serif;
-	max-width: 60%;
-	margin: 30px auto 20px auto;
-	overflow: visible;
-	position: relative;
+  padding: 1px 24px 20px 24px;
+  background: linear-gradient(145deg, transparent);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 1px 3px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.05),
+    0 6px 12px rgba(0, 0, 0, 0.15);
+  font-family: Arial, sans-serif;
+  max-width: 60%;
+  margin: 30px auto 20px auto;
+  overflow: visible;
+  position: relative;
 }
 
-/* 3) Nagłówek */
+/* =========================================================
+   3) NAGŁÓWEK
+   ========================================================= */
+
 .quick-access-panel h2 {
-	margin: 10px 0;
+  margin: 10px 0;
 }
 
-/* 4) Wrapper całej karuzeli (strzałki + tor) */
+/* =========================================================
+   4) WRAPPER KARUZELI (strzałki + tor)
+   ========================================================= */
+
 .quick-access-panel .quick-access-carousel {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	overflow: visible !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible !important;
 }
 
 /* Strzałki */
 .quick-access-panel .quick-access-carousel .carousel-button {
-	position: absolute;
+  position: absolute;
 }
 .quick-access-panel .quick-access-carousel .carousel-button.left {
-	left: calc(-3.5 * var(--qa-edge-out));
+  left: calc(-3.5 * var(--qa-edge-out));
 }
 .quick-access-panel .quick-access-carousel .carousel-button.right {
-	right: calc(-3.5 * var(--qa-edge-out));
-}
-
-/* 5) Wrap toru */
-.quick-access-panel .qa-rail-wrap {
-	width: 100%;
-	overflow: visible !important;
-	padding-top: 10px;
-	margin-top: -10px;
-	position: relative;
-}
-
-/* 6) Tor przewijania: zawsze N kafelków w całości */
-.quick-access-panel .qa-rail-wrap > .quick-access-buttons {
-	--qa-visible: 5;
-	--qa-tile-w: calc((100% - (var(--qa-visible) - 1) * var(--qa-gap)) / var(--qa-visible));
-
-	display: flex;
-	justify-content: flex-start;
-	gap: var(--qa-gap);
-	align-items: stretch;
-
-	width: 100%;
-	box-sizing: border-box;
-
-	overflow-x: auto;
-	overflow-y: visible !important;
-	padding-top: 8px;
-	margin-top: -8px;
-	scrollbar-width: none;
-	position: relative;
-}
-.quick-access-panel .qa-rail-wrap > .quick-access-buttons::-webkit-scrollbar {
-	display: none;
-}
-
-/* NOWE: po drag&drop każdy bezpośredni DIV w środku traktuj jak kafelek */
-.quick-access-panel .quick-access-buttons > div {
-	flex: 0 0 var(--qa-tile-w);
-	width: var(--qa-tile-w);
-	height: var(--qa-tile-h);
+  right: calc(-3.5 * var(--qa-edge-out));
 }
 
 /* =========================================================
-   WARIANT 1 (stary): bezpośredni button w .quick-access-buttons
+   5) WRAP TORU
    ========================================================= */
-.quick-access-panel .quick-access-buttons > button:not(.qa-add) {
-	flex: 0 0 var(--qa-tile-w);
-	width: var(--qa-tile-w);
-	height: var(--qa-tile-h);
 
-	font-size: 14px;
-	font-weight: 600;
-	background: var(--qa-bg);
-	color: #2c3e50;
-	border: 1px solid transparent;
-	border-radius: 2px;
-	cursor: pointer;
-
-	position: relative;
-	overflow: hidden;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-
-	transition:
-		transform 0.2s ease,
-		box-shadow 0.2s ease,
-		background-color 0.2s ease,
-		color 0.2s ease,
-		border-color 0.2s ease;
-	will-change: transform, box-shadow;
-	transform-origin: center;
-	z-index: 0;
-}
-.quick-access-panel .quick-access-buttons > button:not(.qa-add):hover {
-	transform: translateY(-2px) scale(1.02);
-	box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
-	color: var(--qa-text-strong);
-	z-index: 2;
-}
-.quick-access-panel .quick-access-buttons > button:not(.qa-add):active {
-	transform: translateY(0) scale(0.985);
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-.quick-access-panel .quick-access-buttons > button:not(.qa-add):active::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: radial-gradient(closest-side, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
-	pointer-events: none;
-}
-.quick-access-panel .quick-access-buttons > button:not(.qa-add):hover::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	left: -100%;
-	background: linear-gradient(
-		120deg,
-		rgba(255, 255, 255, 0) 40%,
-		rgba(255, 255, 255, 0.5) 50%,
-		rgba(255, 255, 255, 0) 60%
-	);
-	pointer-events: none;
-	animation: qaShineButton 1.2s forwards;
+.quick-access-panel .qa-rail-wrap {
+  width: 100%;
+  overflow: visible !important;
+  padding-top: 10px;
+  margin-top: -10px;
+  position: relative;
 }
 
 /* =========================================================
-   WARIANT 2 (aktualny): .qa-tile > .qa-btn
+   6) TOR PRZEWIJANIA (zawsze N kafelków)
+   ========================================================= */
+
+.quick-access-panel .qa-rail-wrap > .quick-access-buttons {
+  --qa-visible: 5;
+  --qa-tile-w: calc(
+    (100% - (var(--qa-visible) - 1) * var(--qa-gap)) / var(--qa-visible)
+  );
+
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--qa-gap);
+  align-items: stretch;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  overflow-x: auto;
+  overflow-y: visible !important;
+  padding-top: 8px;
+  margin-top: -8px;
+  scrollbar-width: none;
+  position: relative;
+}
+
+.quick-access-panel .qa-rail-wrap > .quick-access-buttons::-webkit-scrollbar {
+  display: none;
+}
+
+/* ✅ FIX DnD (bez zmiany wyglądu):
+   wrappery (div) są bezpośrednimi dziećmi raila i muszą mieć stały slot */
+.quick-access-panel .quick-access-buttons > div:not(button) {
+  flex: 0 0 var(--qa-tile-w);
+  width: var(--qa-tile-w);
+  height: var(--qa-tile-h);
+}
+.quick-access-panel .quick-access-buttons > div:not(button) > .qa-tile {
+  width: 100%;
+  height: 100%;
+}
+
+/* =========================================================
+   7) WARIANT 1 (stary): bezpośredni button w .quick-access-buttons
+   ========================================================= */
+
+.quick-access-panel .quick-access-buttons > button:not(.qa-add) {
+  flex: 0 0 var(--qa-tile-w);
+  width: var(--qa-tile-w);
+  height: var(--qa-tile-h);
+
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--qa-bg);
+  color: #2c3e50;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  will-change: transform, box-shadow;
+  transform-origin: center;
+  z-index: 0;
+}
+
+.quick-access-panel .quick-access-buttons > button:not(.qa-add):hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  color: var(--qa-text-strong);
+  z-index: 2;
+}
+
+.quick-access-panel .quick-access-buttons > button:not(.qa-add):active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quick-access-panel .quick-access-buttons > button:not(.qa-add):active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+
+/* ✨ SHINE po przekątnej (lewy-górny -> prawy-dolny), wolniej, bez ucinania */
+.quick-access-panel .quick-access-buttons > button:not(.qa-add):hover::after {
+  content: '';
+  position: absolute;
+  inset: var(--qa-shine-inset);
+  background: linear-gradient(
+    var(--qa-shine-angle),
+    rgba(255, 255, 255, 0) 47%,
+    rgba(255, 255, 255, var(--qa-shine-alpha)) 50%,
+    rgba(255, 255, 255, 0) 53%
+  );
+  pointer-events: none;
+  transform: translate(var(--qa-shine-from), var(--qa-shine-from));
+  animation: qaShineDiag var(--qa-shine-duration) ease-out forwards;
+}
+
+/* =========================================================
+   8) WARIANT 2 (aktualny): .qa-tile > .qa-btn
    ========================================================= */
 
 /* obramowanie / slot kafelka */
 .quick-access-panel .quick-access-buttons .qa-tile {
-	width: 100%;
-	height: 100%;
-	position: relative;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 /* właściwy przycisk */
 .quick-access-panel .quick-access-buttons .qa-tile .qa-btn {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 
-	font-size: 14px;
-	font-weight: 600;
-	background: var(--qa-bg);
-	color: #575757ca;
-	border: 1px solid transparent;
-	border-radius: 2px;
-	cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--qa-bg);
+  color: #575757ca;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
 
-	position: relative;
-	overflow: hidden;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-	transition:
-		transform 0.2s ease,
-		box-shadow 0.2s ease,
-		background-color 0.2s ease,
-		color 0.2s ease,
-		border-color 0.2s ease;
-	will-change: transform, box-shadow;
-	transform-origin: center;
-	z-index: 0;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  will-change: transform, box-shadow;
+  transform-origin: center;
+  z-index: 0;
 }
+
 .quick-access-panel .quick-access-buttons .qa-tile .qa-btn:hover {
-	transform: translateY(-2px) scale(1.02);
-	box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
-	z-index: 2;
-}
-.quick-access-panel .quick-access-buttons .qa-tile .qa-btn:active {
-	transform: translateY(0) scale(0.985);
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-.quick-access-panel .quick-access-buttons .qa-tile .qa-btn:active::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: radial-gradient(closest-side, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
-	pointer-events: none;
-}
-.quick-access-panel .quick-access-buttons .qa-tile .qa-btn:hover::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	left: -100%;
-	background: linear-gradient(
-		120deg,
-		rgba(255, 255, 255, 0) 40%,
-		rgba(255, 255, 255, 0.5) 50%,
-		rgba(255, 255, 255, 0) 60%
-	);
-	pointer-events: none;
-	animation: qaShineButton 1.2s forwards;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  z-index: 2;
 }
 
-/* shine keyframes wspólne */
-@keyframes qaShineButton {
-	0% { left: -100%; }
-	100% { left: 100%; }
+.quick-access-panel .quick-access-buttons .qa-tile .qa-btn:active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quick-access-panel .quick-access-buttons .qa-tile .qa-btn:active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+/* =========================================================
+   ACTIVE TILE BG — ciemniejsze tło dla aktywnego kafelka
+   (nic innego nie zmieniamy)
+   ========================================================= */
+
+.quick-access-panel .qa-tile.active .qa-btn,
+.quick-access-panel .qa-tile.is-active .qa-btn,
+.quick-access-panel .qa-btn.active,
+.quick-access-panel .qa-btn.is-active {
+border: 1px solid rgba(0, 0, 0, 0.043);}
+/* ✨ SHINE po przekątnej (lewy-górny -> prawy-dolny), wolniej, bez ucinania */
+.quick-access-panel .quick-access-buttons .qa-tile .qa-btn:hover::after {
+  content: '';
+  position: absolute;
+  inset: var(--qa-shine-inset);
+  background: linear-gradient(
+    var(--qa-shine-angle),
+    rgba(255, 255, 255, 0) 47%,
+    rgba(255, 255, 255, var(--qa-shine-alpha)) 50%,
+    rgba(255, 255, 255, 0) 53%
+  );
+  pointer-events: none;
+  transform: translate(var(--qa-shine-from), var(--qa-shine-from));
+  animation: qaShineDiag var(--qa-shine-duration) ease-out forwards;
+}
+
+/* shine keyframes wspólne — przekątna */
+@keyframes qaShineDiag {
+  0%   { transform: translate(var(--qa-shine-from), var(--qa-shine-from)); }
+  100% { transform: translate(var(--qa-shine-to), var(--qa-shine-to)); }
 }
 
 /* =========================================================
-   ADD TILE — klasyczny „dodaj kafelek”
+   9) ICON + LABEL — SSOT (nie dublować)
    ========================================================= */
 
-.quick-access-panel {
-	--qa-add-icon-d: 50px;
-	--qa-add-plus: 24px;
+.quick-access-panel .quick-access-buttons .qa-tile .qa-btn .qa-btn__inner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto; /* ikona bierze resztę, label na dole */
+  place-items: center;
+  gap: 6px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
+/* badge ikony: większy i "opuszczony" (bez tła, jak było) */
+.quick-access-panel .quick-access-buttons .qa-tile .qa-btn .qa-ico {
+  width: var(--qa-icon-badge-size);
+  height: var(--qa-icon-badge-size);
+
+  margin-top: auto;      /* spycha ikonę na dół */
+  margin-bottom: 2px;    /* bliżej labela */
+
+  color: rgba(0, 0, 0, 0.434);
+
+  border-bottom: 2px solid var(--qa-border);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.quick-access-panel .qa-tile.active .qa-ico,
+.quick-access-panel .qa-tile.is-active .qa-ico,
+.quick-access-panel .qa-btn.active .qa-ico,
+.quick-access-panel .qa-btn.is-active .qa-ico {
+  border-bottom-color: transparent !important;
+}
+
+/* lucide */
+.quick-access-panel .qa-ico svg {
+  width: var(--qa-icon-size);
+  height: var(--qa-icon-size);
+  stroke-width: 2.25px;
+  opacity: 0.95;
+}
+
+/* Font Awesome (solid wymuszone) */
+.quick-access-panel .qa-ico i {
+  font-size: 30px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  opacity: 0.95;
+  transform: translateY(0.5px);
+}
+
+/* label: NIE ZAWIJAJ, ellipsis */
+.quick-access-panel .quick-access-buttons .qa-tile .qa-label {
+  margin-top: auto;
+  padding: 0 8px 2px 8px;
+
+  font-weight: 600;
+  letter-spacing: 0.15px;
+  color: var(--qa-text-strong);
+  text-align: center;
+
+  font-size: 10px;
+  line-height: 1.1;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-width: 100%;
+}
+
+/* X w trybie manage zawsze nad wszystkim */
+.quick-access-panel .quick-access-buttons .qa-tile .qa-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 5;
+}
+
+/* =========================================================
+   10) ACTIVE ICON — FIX (Lucide + FA)
+   ========================================================= */
+
+/* 1) czerwony jako "color" na kontenerze ikony */
+.quick-access-panel .qa-tile.active .qa-ico,
+.quick-access-panel .qa-tile.is-active .qa-ico,
+.quick-access-panel .qa-btn.active .qa-ico,
+.quick-access-panel .qa-btn.is-active .qa-ico {
+  color: #d60000 !important;
+  transform: scale(1.2);}
+
+/* 2) Lucide: stroke często jest na <svg>, więc targetujemy svg + dzieci */
+.quick-access-panel .qa-tile.active .qa-ico svg,
+.quick-access-panel .qa-tile.is-active .qa-ico svg,
+.quick-access-panel .qa-btn.active .qa-ico svg,
+.quick-access-panel .qa-btn.is-active .qa-ico svg {
+  stroke: #d60000 !important;
+}
+
+/* 4) Font Awesome */
+.quick-access-panel .qa-tile.active .qa-ico i,
+.quick-access-panel .qa-tile.is-active .qa-ico i,
+.quick-access-panel .qa-btn.active .qa-ico i,
+.quick-access-panel .qa-btn.is-active .qa-ico i {
+  color: currentColor !important;
+}
+
+/* =========================================================
+   11) AKTYWNY SKRÓT — (pozostałe zachowania)
+   ========================================================= */
+
+.quick-access-panel .qa-tile.hover .qa-ico i,
+.quick-access-panel .qa-tile.is-hover .qa-ico i,
+.quick-access-panel .qa-btn.hover .qa-ico i,
+.quick-access-panel .qa-btn.is-hover .qa-ico i {
+  color: #d60000 !important;}
+
+
+
+/* hover dla aktywnego (delikatnie) */
+.quick-access-panel .qa-tile.active:hover .qa-btn,
+.quick-access-panel .qa-tile.is-active:hover .qa-btn {
+  transform: translateY(-1px) scale(1.01);
+}
+
+/* =========================================================
+   12) ADD TILE — klasyczny „dodaj kafelek”
+   ========================================================= */
+
 .quick-access-panel .quick-access-buttons .qa-add {
-	background: transparent;
-	color: var(--qa-plus-stroke);
-	gap: 10px;
-	position: relative;
-	border-color: transparent;
+  background: transparent;
+  color: var(--qa-plus-stroke);
+  gap: 10px;
+  position: relative;
+  border-color: transparent;
 }
 
 .quick-access-panel .quick-access-buttons .qa-add::before {
-	content: '';
-	position: absolute;
-	inset: 8px;
-	opacity: 0.08;
-	pointer-events: none;
-	transition: opacity 0.2s ease;
-	z-index: -1;
+  content: '';
+  position: absolute;
+  inset: 8px;
+  opacity: 0.08;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: -1;
 }
+
 .quick-access-panel .quick-access-buttons .qa-add:hover::before {
-	opacity: 0.15;
+  opacity: 0.15;
 }
 
 .quick-access-panel .quick-access-buttons .qa-add:hover {
-	color: var(--qa-plus-stroke-hover);
+  color: var(--qa-plus-stroke-hover);
 }
+
 .quick-access-panel .quick-access-buttons .qa-add:active {
-	color: var(--qa-plus-stroke-active);
+  color: var(--qa-plus-stroke-active);
 }
 
 .quick-access-panel .quick-access-buttons .qa-add:focus-visible {
-	outline: 2px solid rgba(58, 98, 138, 0.35);
-	outline-offset: 2px;
+  outline: 2px solid rgba(58, 98, 138, 0.35);
+  outline-offset: 2px;
 }
 
 /* okrągły „plus” */
 .quick-access-panel .qa-add .qa-add-icon {
-	width: var(--qa-add-icon-d);
-	height: var(--qa-add-icon-d);
-	border-radius: 9999px;
-	background: #fff;
-	border: 1px solid var(--qa-border);
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06), inset 0 -1px 0 rgba(0, 0, 0, 0.04);
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	transition:
-		transform 0.18s ease,
-		box-shadow 0.18s ease,
-		border-color 0.18s ease,
-		background-color 0.18s ease;
+  width: var(--qa-add-icon-d);
+  height: var(--qa-add-icon-d);
+  border-radius: 9999px;
+  background: #fff;
+  border: 1px solid var(--qa-border);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease;
 }
+
 .quick-access-panel .qa-add:hover .qa-add-icon {
-	transform: scale(1.06);
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.04);
-	border-color: #c7cfdd;
+  transform: scale(1.06);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  border-color: #c7cfdd;
 }
+
 .quick-access-panel .qa-add:active .qa-add-icon {
-	transform: scale(0.96);
+  transform: scale(0.96);
+    border-color: #c7cfdd;
+
 }
 
 /* sam plus */
 .quick-access-panel .qa-add .qa-add-icon svg {
-	width: var(--qa-add-plus);
-	height: var(--qa-add-plus);
-	filter: none !important;
+  width: var(--qa-add-plus);
+  height: var(--qa-add-plus);
+  filter: none !important;
 }
+
 .quick-access-panel .qa-add .qa-add-icon svg,
 .quick-access-panel .qa-add .qa-add-icon svg * {
-	stroke: currentColor !important;
-	stroke-width: 3.2px !important;
-	stroke-linecap: butt !important;
-	stroke-linejoin: miter !important;
-	vector-effect: non-scaling-stroke;
-	shape-rendering: crispEdges;
+  stroke: currentColor !important;
+  stroke-width: 3.2px !important;
+  stroke-linecap: butt !important;
+  stroke-linejoin: miter !important;
+  vector-effect: non-scaling-stroke;
+  shape-rendering: crispEdges;
 }
 
 /* podpis pod ikoną */
 .quick-access-panel .qa-add span:last-child {
-	margin-top: 4px;
-	font-weight: 600;
-	letter-spacing: 0.2px;
-	line-height: 1;
-	font-size: 12.5px;
-	color: var(--qa-text-strong);
+  margin-top: 4px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1;
+  font-size: 12.5px;
+  color: var(--qa-text-strong);
 }
 
 /* przerywana ramka „ładniejsza” na WebKit (opcjonalnie) */
 @supports (-webkit-mask: none) {
-	.quick-access-panel .quick-access-buttons .qa-add {
-		border-image: repeating-linear-gradient(
-				90deg,
-				var(--qa-border) 0 calc(var(--qa-dash-gap) * 1),
-				transparent 0 calc(var(--qa-dash-gap) * 2)
-			)
-			1;
-		border-style: solid;
-		border-width: 2px;
-	}
+  .quick-access-panel .quick-access-buttons .qa-add {
+    border-image: repeating-linear-gradient(
+        90deg,
+        var(--qa-border) 0 calc(var(--qa-dash-gap) * 1),
+        transparent 0 calc(var(--qa-dash-gap) * 2)
+      )
+      1;
+    border-style: solid;
+    border-width: 2px;
+  }
 }
 
-/* reduced motion */
+/* =========================================================
+   13) REDUCED MOTION
+   ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
-	.quick-access-panel .qa-add .qa-add-icon {
-		transition: none;
-	}
+  .quick-access-panel .qa-add .qa-add-icon {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   14) SILVER ICONS ONLY (bez tła / badge)
+   Jedyna zmiana wizualna: same ikony (svg/i) są “srebrne”.
+   Active (czerwony) ma priorytet i nie jest ruszany.
+   ========================================================= */
+
+/* default: srebrny dla ikon (lucide + FA), bez dotykania tła .qa-ico */
+.quick-access-panel .qa-ico svg,
+.quick-access-panel .qa-ico svg * {
+  stroke: var(--qa-silver-ico);
+}
+
+.quick-access-panel .qa-ico i {
+  color: linear-gradient(135deg, #2e2f30, #727b89 35%, #8b919a 70%, #000000);
+}
+
+/* “metaliczny” połysk na samej ikonie: tylko cienie (nie zmienia tła) */
+.quick-access-panel .qa-ico svg,
+.quick-access-panel .qa-ico i {
+  filter:
+    drop-shadow(0 1px 0 rgba(43, 41, 41, 0.226))
+    drop-shadow(0 2px 4px var(--qa-silver-lo));
+}
+
+/* hover: delikatnie jaśniejsze srebro (tylko ikona) */
+.quick-access-panel .qa-tile:hover .qa-ico svg,
+.quick-access-panel .qa-tile:hover .qa-ico svg * {
+  stroke: rgba(210, 218, 230, 0.95);
+}
+
+.quick-access-panel .qa-tile:hover .qa-ico i {
+  color: rgba(166, 174, 186, 0.95);
+  transform: scale(1.1);
+    filter:
+    drop-shadow(0 1px 0 rgba(205, 209, 213, 0.95))
+    drop-shadow(0 2px 4px var(--qa-silver-lo));
+}
+
+/* =========================================================
+   15) FIX: usuń białą obwódkę (drop-shadow) dla aktywnej ikony
+   (nic innego nie zmieniamy)
+   ========================================================= */
+
+.quick-access-panel .qa-tile.active .qa-ico svg,
+.quick-access-panel .qa-tile.is-active .qa-ico svg,
+.quick-access-panel .qa-btn.active .qa-ico svg,
+.quick-access-panel .qa-btn.is-active .qa-ico svg,
+.quick-access-panel .qa-tile.active .qa-ico i,
+.quick-access-panel .qa-tile.is-active .qa-ico i,
+.quick-access-panel .qa-btn.active .qa-ico i,
+.quick-access-panel .qa-btn.is-active .qa-ico i {
+  filter: none !important;
+}
+
+.quick-access-panel .qa-tile.active .qa-ico svg *,
+.quick-access-panel .qa-tile.is-active .qa-ico svg *,
+.quick-access-panel .qa-btn.active .qa-ico svg *,
+.quick-access-panel .qa-btn.is-active .qa-ico svg * {
+  filter: none !important;
 }

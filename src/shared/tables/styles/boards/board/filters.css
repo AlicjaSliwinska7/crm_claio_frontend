@@ -1,0 +1,85 @@
+/* src/shared/tables/styles/boards/_filters.css */
+
+.board-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* input date – zostawiamy prosty styl, bez agresywnych kolorów */
+.board-filters .goto-date-input {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--hair, rgba(0,0,0,0.12));
+  background: var(--bg-card, #fff);
+  color: inherit;
+}
+
+/* reset button */
+.board-filters .reset-filters-button {
+  height: 36px;
+  width: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--hair, rgba(0,0,0,0.12));
+  border-radius: 10px;
+  background: transparent;
+
+  cursor: pointer;
+  padding: 0;
+}
+
+.board-filters .reset-filters-button:hover {
+  filter: brightness(0.98);
+}
+
+.board-filters .reset-filters-button:active {
+  transform: translateY(1px);
+}
+/* === FILTRY === */
+.board-filters {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.board-filters select,
+.board-filters input[type='date'] {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #2c3e50;
+  padding: 0.5rem 0.3rem;
+  font-size: 1rem;
+  min-width: 8.5rem;
+  color: #2c3e50;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.board-filters select:focus,
+.board-filters input[type='date']:focus {
+  border-color: #1f2c45;
+}
+
+.goto-date-input {
+  min-width: 130px;
+}
+/* === RESET FILTRÓW === */
+.reset-filters-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  color: #2c3e50;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+.reset-filters-button:hover {
+  color: #d32f2f;
+  transform: scale(1.07);
+    border: none;
+
+}

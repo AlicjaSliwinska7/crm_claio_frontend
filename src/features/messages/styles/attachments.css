@@ -1,0 +1,122 @@
+/* _attachments.css */
+
+/* Dodatkowy wiersz pod inputem (załączniki w trakcie pisania) */
+.attachrow {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 8px 2px 2px;
+}
+
+.attachchip {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 10px;
+	border-radius: 999px;
+	border: 1px solid var(--border);
+	background: #fff;
+	box-shadow: var(--shadow-sm);
+	max-width: 100%;
+}
+
+.attachchip__icon {
+	font-size: 14px;
+}
+
+.attachchip__name {
+	font-size: 12.5px;
+	color: var(--text);
+	max-width: 240px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.attachchip__size {
+	font-size: 12px;
+	color: var(--muted);
+}
+
+.attachchip__x {
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	color: #7a8da5;
+	font-size: 18px;
+	line-height: 1;
+	padding: 0 4px;
+	border-radius: 8px;
+}
+.attachchip__x:hover {
+	background: rgba(122, 141, 165, 0.12);
+	color: #395a7b;
+}
+
+/* Załączniki już wysłane (pod dymkiem) */
+.msg-files {
+	display: grid;
+	gap: 8px;
+	margin-top: 10px;
+}
+
+.msg-file {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 10px;
+	border-radius: 12px;
+	border: 1px solid rgba(204, 214, 224, 0.8);
+	background: rgba(255, 255, 255, 0.7);
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+}
+
+.message.own .msg-file {
+	background: rgba(255, 255, 255, 0.55);
+}
+
+.msg-file__icon {
+	font-size: 18px;
+}
+
+.msg-file__meta {
+	min-width: 0;
+	display: grid;
+	gap: 2px;
+}
+
+.msg-file__name {
+	font-size: 12.5px;
+	font-weight: 700;
+	color: #274a6c;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 360px;
+}
+
+.msg-file__size {
+	font-size: 12px;
+	color: #6b7f96;
+}
+
+/* Ikonka spinacza jako button (bez tła) */
+.file-attach-btn {
+	background: transparent !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	color: #66778c;
+	padding: 6px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: var(--icon-lg);
+	line-height: 1;
+}
+.file-attach-btn:hover {
+	color: var(--pri-strong);
+	transform: translateY(-1px);
+}
+.file-attach-btn:focus-visible {
+	outline: 2px solid color-mix(in oklab, var(--pri) 55%, #fff 45%);
+	outline-offset: 2px;
+}

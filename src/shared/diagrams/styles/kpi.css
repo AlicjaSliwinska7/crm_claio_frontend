@@ -1,0 +1,33 @@
+/* src/shared/diagrams2/styles/_kpi.css */
+
+.d2-root .tss-card.tss-kpis,
+.d2-root .d2-kpis {
+  border: 1px dashed var(--es-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+.d2-root .tss-kpis__row,
+.d2-root .d2-kpis__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.d2-root .tss-kpis__sub,
+.d2-root .d2-kpis__sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.d2-root .tss-sep,
+.d2-root .d2-sep {
+  opacity: 0.45;
+}

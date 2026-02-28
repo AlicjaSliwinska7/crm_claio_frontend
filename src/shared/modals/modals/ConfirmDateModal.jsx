@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal } from '../modals' // Twój barrel w shared/modals
+import Modal from './Modal' // Twój barrel w shared/modals
 
 export default function ConfirmDateModal({
   open, title = 'Potwierdź datę', label = 'Data',

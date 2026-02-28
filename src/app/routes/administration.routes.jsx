@@ -14,6 +14,10 @@ const AppointmentsRegister = lazy(() =>
   import('../../features/administration/pages/AppointmentsRegister.jsx')
 )
 
+const CleaningSchedule = lazy(() =>
+  import('../../features/administration/pages/CleaningSchedule.jsx')
+)
+
 const Appointment = lazy(() =>
   import('../../features/administration/pages/Appointment.js')
 )
@@ -72,6 +76,8 @@ export function buildAdminRoutes(deps) {
             />
           ),
         },
+        { index: true, element: <Navigate to="grafik_sprzatania" replace /> },
+        { path: 'grafik_sprzatania', element: withSuspense(<CleaningSchedule />) },
 
         { path: 'dokumenty', element: withSuspense(<Documents />) },
 

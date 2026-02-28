@@ -1,7 +1,7 @@
 // src/shared/tables/components/SearchBar.jsx
 import React from 'react'
 import PropTypes from 'prop-types'
-import SearchField from '../../components/inputs/SearchField'
+import SearchField from '../../search/SearchField'
 
 /**
  * Listowy pasek wyszukiwania – korzysta z kanonicznego SearchField,

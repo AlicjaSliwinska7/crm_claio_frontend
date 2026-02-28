@@ -1,0 +1,195 @@
+/* src/shared/tables/styles/filter-select.css
+   Custom FilterSelect dropdown (headless) – styl listy opcji + search
+   Scope: .rg-selectbox / .rg-select__*
+*/
+
+/* wrapper */
+.rg-selectbox {
+  position: relative;
+  width: 100%;
+}
+
+/* trigger jest "rg-input rg-select" więc łapie underline z SSOT
+   tutaj tylko dodatki (chevron + układ) */
+.rg-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 4px;
+}
+
+.rg-select__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rg-select__value.is-placeholder {
+  opacity: 0.75;
+}
+
+/* chevron (rysujemy CSS-em, żeby nie zależeć od ikon) */
+.rg-select__chev {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+  position: relative;
+}
+
+.rg-select__chev::before,
+.rg-select__chev::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  width: 7px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.rg-select__chev::before {
+  left: 3px;
+  transform: rotate(45deg);
+}
+
+.rg-select__chev::after {
+  right: 3px;
+  transform: rotate(-45deg);
+}
+
+/* rotate when open */
+.rg-selectbox.is-open .rg-select__chev {
+  transform: rotate(180deg);
+}
+
+/* disabled */
+.rg-selectbox.is-disabled .rg-select__trigger {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* popover */
+.rg-select__popover {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+
+  /* szerokość jak trigger */
+  width: 100%;
+  box-sizing: border-box;
+
+  max-width: calc(100vw - 24px);
+  z-index: 50;
+
+  background: #efefef;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  border-radius: 1px;
+
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.12);
+
+  display: flex;
+  flex-direction: column;
+
+  /* ✅ brak wewnętrznego scrolla (i w konsekwencji brak scrollbarów) */
+  max-height: none;
+  overflow: visible;
+}
+
+/* search row */
+.rg-select__search {
+  padding-left: 8px;
+  padding-right: 8px;
+  background: #efefef;
+  flex: 0 0 auto;
+}
+
+.rg-select__searchInput {
+  font-weight: 500;
+
+  width: 100%;
+  height: 34px;
+  box-sizing: border-box;
+
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #585a5d;
+}
+
+
+/* list */
+/* ❗ ZMIANA: brak scrollowania + szerokość jak trigger */
+.rg-select__list {
+  width: 100%;
+  padding: 6px;
+
+  overflow: visible; /* ⛔ brak scrolla */
+}
+
+/* option */
+.rg-select__option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+
+  border: none;
+  border-bottom: 2px solid #585a5d;
+  padding: 5px 7px;
+
+  background: #efefef;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+
+  transition: background 0.12s ease, border-color 0.12s ease, transform 0.06s ease;
+}
+
+.rg-select__option:hover {
+  border-bottom: 2px solid #585a5d;
+  background-color: #8fa5ba;
+}
+
+.rg-select__option.is-active {
+  border-bottom: 2px solid #585a5d;
+  font-weight: 600;
+}
+
+.rg-select__option.is-selected:hover {
+  border-bottom: 2px solid #585a5d;
+}
+
+.rg-select__optionLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rg-select__check {
+  flex: 0 0 auto;
+  opacity: 0.9;
+}
+
+/* empty state */
+.rg-select__empty {
+  padding: 10px;
+  font-size: 12px;
+  opacity: 0.75;
+}
+.rg-select__faChev {
+  display: inline-flex;
+  align-items: center;
+}
+
+.rg-select__faChev i {
+  font-size: 11px;
+  transform: translateY(1px);
+}

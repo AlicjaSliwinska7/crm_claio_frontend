@@ -1,368 +1,337 @@
-import React, { useMemo, useState } from 'react'
+// src/features/tests/pages/TestsRegister.jsx
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 
+// skórka tabel rejestrów
 import '../../../shared/tables/styles/directories_lists_registers/index.css'
 
-// wspólne klocki
 import {
-	ListLayout,
-	SearchBar,
-	Pagination,
-	EmptyStateRow,
-	SortableTh,
-	ActionsHeader,
-	ActionsCell,
-	ListSummary,
-	useUrlPagination,
-	useCsvExport,
+  // layout + toolbar
+  ListLayout,
+  SearchBar,
+  FilterSelect,
+  Pagination,
+  ListSummary,
+  ExportCsvButton,
+  DataTableWithActions,
+
+  // hooki
+  useListQuery,
+  useUrlPagination,
+  useCsvExport,
+
+  // stałe wspólne
+  PAGE_SIZE,
+  CSV_DELIMITER,
+  CSV_BOM,
+  SCROLL_SELECTOR,
+
+  // util: nawigacja po wierszu (Enter/Space + rola button)
+  rowNavigateProps as makeRowNavigateProps,
 } from '../../../shared/tables'
 
-import { sortRows } from '../../../shared/tables/utils/sorters'
-import { buildTypeMap } from '../../../shared/tables/utils/columns'
-import { CircleX, FileText } from '../../../shared/modals/ui/icons/icons'
+import {
+  STATUS_DEFS,
+  OUTCOME_DEFS,
+  CSV_COLUMNS,
+  initialTests,
+  makeTestsColumns,
+  norm,
+  fmtDate,
+  getSearchFields,
+} from '../config/tests.config'
 
-// stałe modułu (filtry, formatery)
-import { PAGE_SIZE, STATUS_DEFS, OUTCOME_DEFS, fmtDate, norm, toStr } from '../components/constants'
+export default function TestsRegister() {
+  const navigate = useNavigate()
+  const [sp, setSp] = useSearchParams()
 
-// nowy config
-import { initialTests, makeTestsColumns, CSV_COLUMNS } from '../config/testsRegistry.config'
+  // dane (docelowo fetch → setRows)
+  const [rows] = useState(initialTests)
 
-export default function TestsRegistry() {
-	const navigate = useNavigate()
+  // filtry dodatkowe (status/wynik/daty)
+  const [filterStatus, setFilterStatus] = useState('wszystkie')
+  const [filterOutcome, setFilterOutcome] = useState('wszystkie')
+  const [startOn, setStartOn] = useState('')
+  const [endOn, setEndOn] = useState('')
 
-	// dane (docelowo fetch → setRows)
-	const [rows] = useState(initialTests)
+  // kolumny – wstrzykujemy Link (kolumny trzyma SSOT w configu)
+  const columns = useMemo(() => makeTestsColumns(Link), [])
 
-	// filtry
-	const [filter, setFilter] = useState('')
-	const [filterStatus, setFilterStatus] = useState('wszystkie')
-	const [filterOutcome, setFilterOutcome] = useState('wszystkie')
-	const [startOn, setStartOn] = useState('')
-	const [endOn, setEndOn] = useState('')
+  // nawigacja do programu badań
+  const goToProgram = useCallback(
+    (row) => navigate(`/badania/rejestr-badan/PB/${encodeURIComponent(row.orderNo || row.id)}`),
+    [navigate]
+  )
 
-	// sort
-	const [sortConfig, setSortConfig] = useState({ key: 'startDate', direction: 'desc' })
+  // shared/tables: search + sort
+  const { searchQuery, setSearchQuery, sortConfig, setSortConfig, filteredSorted } = useListQuery(
+    rows,
+    columns,
+    {
+      initialSort: { key: 'startDate', direction: 'desc' },
+      getSearchFields,
+    }
+  )
 
-	// ?page=
-	const [sp, setSp] = useSearchParams()
+  // dodatkowe filtry (status/wynik/dokładna data) nakładamy na filteredSorted
+  const filtered = useMemo(() => {
+    return (filteredSorted || []).filter((r) => {
+      const matchesStatus =
+        filterStatus === 'wszystkie' ? true : norm(r.status) === norm(filterStatus)
 
-	// kolumny – wstrzykujemy Link
-	const HEADER_COLS = useMemo(() => makeTestsColumns(Link), [])
+      const matchesOutcome =
+        filterOutcome === 'wszystkie' ? true : norm(r.outcome) === norm(filterOutcome)
 
-	// nawigacja do programu badań
-	const goToProgram = r => navigate(`/badania/rejestr-badan/PB/${encodeURIComponent(r.orderNo || r.id)}`)
+      // dokładna data
+      const s = (r.startDate || '').slice(0, 10)
+      const e = (r.endDate || '').slice(0, 10)
+      const matchesStart = startOn ? s === startOn : true
+      const matchesEnd = endOn ? e === endOn : true
 
-	// filtr + sort
-	const filteredAndSorted = useMemo(() => {
-		const q = norm(filter)
+      return matchesStatus && matchesOutcome && matchesStart && matchesEnd
+    })
+  }, [filteredSorted, filterStatus, filterOutcome, startOn, endOn])
 
-		const base = (rows || []).filter(r => {
-			const searchable = [
-				r.id,
-				r.orderNo,
-				r.client,
-				r.subject,
-				r.standard,
-				r.method,
-				r.methodPoint,
-				...(r.samples || []),
-			]
-				.map(toStr)
-				.join(' ')
-				.toLowerCase()
+  // paginacja (URL)
+  const { pageCount, currentPage, visible, onPageChange, resetToFirstPage } = useUrlPagination(
+    filtered,
+    {
+      pageSize: PAGE_SIZE,
+      searchParams: sp,
+      setSearchParams: setSp,
+      param: 'page',
+      scrollSelector: SCROLL_SELECTOR,
+      canonicalize: true,
+    }
+  )
 
-			const matchesText = searchable.includes(q)
-			const matchesStatus = filterStatus === 'wszystkie' ? true : norm(r.status) === norm(filterStatus)
-			const matchesOutcome = filterOutcome === 'wszystkie' ? true : norm(r.outcome) === norm(filterOutcome)
+  // CSV (bieżący widok)
+  const csvRows = useMemo(
+    () =>
+      filtered.map((r) => ({
+        ...r,
+        samples: (r.samples || []).join(', '),
+        samplesCount: r.samplesCount ?? (r.samples?.length || 0),
+        startDate: fmtDate(r.startDate),
+        endDate: fmtDate(r.endDate),
+      })),
+    [filtered]
+  )
 
-			const matchesStart = startOn ? (r.startDate || '').slice(0, 10) === startOn : true
-			const matchesEnd = endOn ? (r.endDate || '').slice(0, 10) === endOn : true
+  const exportCSV = useCsvExport({
+    columns: CSV_COLUMNS,
+    rows: csvRows,
+    filename: 'rejestr_badan.csv',
+    delimiter: CSV_DELIMITER,
+    includeHeader: true,
+    addBOM: CSV_BOM,
+  })
 
-			return matchesText && matchesStatus && matchesOutcome && matchesStart && matchesEnd
-		})
+  // podsumowania
+  const statusSummaryItems = useMemo(() => {
+    const counts = new Map(STATUS_DEFS.map((s) => [s.key, 0]))
+    for (const r of filtered) {
+      const k = norm(r.status)
+      if (counts.has(k)) counts.set(k, (counts.get(k) || 0) + 1)
+    }
+    const items = [['Badania', filtered.length]]
+    STATUS_DEFS.forEach((s) => {
+      const n = counts.get(s.key) || 0
+      if (n > 0) items.push([s.label, n])
+    })
+    return items
+  }, [filtered])
 
-		const typeMap = buildTypeMap(HEADER_COLS)
+  const outcomeSummaryItems = useMemo(() => {
+    const counts = new Map(OUTCOME_DEFS.map((o) => [o.key, 0]))
+    for (const r of filtered) {
+      const k = norm(r.outcome)
+      if (counts.has(k)) counts.set(k, (counts.get(k) || 0) + 1)
+    }
+    const items = [['Badania', filtered.length]]
+    OUTCOME_DEFS.forEach((o) => {
+      const n = counts.get(o.key) || 0
+      if (n > 0) items.push([o.label, n])
+    })
+    return items
+  }, [filtered])
 
-		return sortConfig.key ? sortRows(base, sortConfig, typeMap) : base
-	}, [rows, filter, filterStatus, filterOutcome, startOn, endOn, sortConfig, HEADER_COLS])
+  // reset filtrów
+  const clearFilters = useCallback(() => {
+    setSearchQuery('')
+    setFilterStatus('wszystkie')
+    setFilterOutcome('wszystkie')
+    setStartOn('')
+    setEndOn('')
+    resetToFirstPage(true)
+  }, [resetToFirstPage, setSearchQuery])
 
-	// podsumowania
-	const statusSummaryItems = useMemo(() => {
-		const counts = new Map(STATUS_DEFS.map(s => [s.key, 0]))
-		for (const r of filteredAndSorted) {
-			const k = norm(r.status)
-			if (counts.has(k)) counts.set(k, (counts.get(k) || 0) + 1)
-		}
-		const items = [['Badania', filteredAndSorted.length]]
-		STATUS_DEFS.forEach(s => {
-			const n = counts.get(s.key) || 0
-			if (n > 0) items.push([s.label, n])
-		})
-		return items
-	}, [filteredAndSorted])
+  // props do nawigacji po wierszu
+  const handleRowClick = useCallback((id, row) => goToProgram(row), [goToProgram])
 
-	const outcomeSummaryItems = useMemo(() => {
-		const counts = new Map(OUTCOME_DEFS.map(o => [o.key, 0]))
-		for (const r of filteredAndSorted) {
-			const k = norm(r.outcome)
-			if (counts.has(k)) counts.set(k, (counts.get(k) || 0) + 1)
-		}
-		const items = [['Badania', filteredAndSorted.length]]
-		OUTCOME_DEFS.forEach(o => {
-			const n = counts.get(o.key) || 0
-			if (n > 0) items.push([o.label, n])
-		})
-		return items
-	}, [filteredAndSorted])
+  const rowProps = useCallback(
+    (row) => ({
+      ...makeRowNavigateProps(row.id, () => handleRowClick(row.id, row)),
+      className: 'row-clickable',
+      title: 'Kliknij, aby przejść do Programu Badań',
+    }),
+    [handleRowClick]
+  )
 
-	// paginacja
-	const { pageCount, currentPage, visible, onPageChange, resetToFirstPage } = useUrlPagination(filteredAndSorted, {
-		pageSize: PAGE_SIZE,
-		searchParams: sp,
-		setSearchParams: setSp,
-		param: 'page',
-		scrollSelector: '.table-container, .tests-list',
-		canonicalize: true,
-	})
+  /**
+   * ✅ KLUCZOWE: ActionsCell obsługuje TYLKO: preview/edit/delete/form/download/link(download)
+   * Więc tu zwracamy type:'form' zamiast type:'custom'
+   */
+  const actionsForRow = useCallback(
+    (row) => [
+      {
+        type: 'form',
+        key: 'form',
+        label: 'Program badań',
+        title: 'Program badań',
+        onClick: () => goToProgram(row),
+      },
+    ],
+    [goToProgram]
+  )
 
-	// CSV – identyczne kolumny jak w oryginale
-	const exportCSV = useCsvExport({
-		columns: CSV_COLUMNS,
-		rows: useMemo(
-			() =>
-				filteredAndSorted.map(r => ({
-					...r,
-					samples: (r.samples || []).join(', '),
-					samplesCount: r.samplesCount ?? (r.samples?.length || 0),
-					startDate: fmtDate(r.startDate),
-					endDate: fmtDate(r.endDate),
-				})),
-			[filteredAndSorted]
-		),
-		filename: 'rejestr_badan.csv',
-		delimiter: ';',
-		includeHeader: true,
-		addBOM: true,
-	})
+  return (
+    <ListLayout
+      rootClassName="tests-list"
+      controlsClassName="tests-controls"
+      controls={
+        <>
+          <SearchBar
+            value={searchQuery}
+            placeholder="Znajdź badanie..."
+            onChange={(val) => {
+              setSearchQuery(val)
+              resetToFirstPage(true)
+            }}
+            onClear={() => {
+              setSearchQuery('')
+              resetToFirstPage(true)
+            }}
+          />
 
-	return (
-		<ListLayout
-			rootClassName='tests-list'
-			controlsClassName='tests-controls'
-			controls={
-				<div style={{ display: 'grid', gap: 8 }}>
-					{/* rząd 1: search */}
-					<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-						<SearchBar
-							value={filter}
-							placeholder='Znajdź badanie...'
-							onChange={val => {
-								setFilter(val)
-								resetToFirstPage(true)
-							}}
-							onClear={() => {
-								setFilter('')
-								resetToFirstPage(true)
-							}}
-						/>
-					</div>
+          {/* ✅ Filtry pod searchbarem — zostawiamy CSS (flex-start) */}
+          <div className="list-controls-row">
+            <FilterSelect
+              label="Status"
+              value={filterStatus}
+              onChange={(e) => {
+                setFilterStatus(e.target.value)
+                resetToFirstPage(true)
+              }}
+              options={STATUS_DEFS}
+              includeAll
+              allValue="wszystkie"
+              allLabel="Wszystkie statusy"
+              title="Filtr statusu"
+              ariaLabel="Filtr statusu"
+            />
 
-					{/* rząd 2: filtry */}
-					<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'flex-end' }}>
-						<select
-							className='training-filter-select'
-							value={filterStatus}
-							onChange={e => {
-								setFilterStatus(e.target.value)
-								resetToFirstPage(true)
-							}}
-							title='Filtr statusu'
-							style={{ minWidth: 180 }}>
-							<option value='wszystkie'>Wszystkie statusy</option>
-							{STATUS_DEFS.map(s => (
-								<option key={s.key} value={s.key}>
-									{s.label}
-								</option>
-							))}
-						</select>
+            <FilterSelect
+              label="Wynik"
+              value={filterOutcome}
+              onChange={(e) => {
+                setFilterOutcome(e.target.value)
+                resetToFirstPage(true)
+              }}
+              options={OUTCOME_DEFS}
+              includeAll
+              allValue="wszystkie"
+              allLabel="Wszystkie wyniki"
+              title="Filtr wyniku"
+              ariaLabel="Filtr wyniku"
+            />
 
-						<select
-							className='training-filter-select'
-							value={filterOutcome}
-							onChange={e => {
-								setFilterOutcome(e.target.value)
-								resetToFirstPage(true)
-							}}
-							title='Filtr wyniku'
-							style={{ minWidth: 160 }}>
-							<option value='wszystkie'>Wszystkie wyniki</option>
-							{OUTCOME_DEFS.map(o => (
-								<option key={o.key} value={o.key}>
-									{o.label}
-								</option>
-							))}
-						</select>
+            <label className="rg-field">
+              <span className="rg-label">Data rozpoczęcia</span>
+              <input
+                id="filter-startOn"
+                type="date"
+                className="rg-input"
+                value={startOn}
+                onChange={(e) => {
+                  setStartOn(e.target.value)
+                  resetToFirstPage(true)
+                }}
+                title="Data rozpoczęcia"
+                aria-label="Data rozpoczęcia"
+              />
+            </label>
 
-						{/* daty */}
-						<div className='ts-control' style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-							<label htmlFor='filter-startOn' className='muted' style={{ fontSize: 12 }}>
-								Data rozpoczęcia
-							</label>
-							<input
-								id='filter-startOn'
-								type='date'
-								className='search-bar ts-date'
-								value={startOn}
-								onChange={e => {
-									setStartOn(e.target.value)
-									resetToFirstPage(true)
-								}}
-								title='Data rozpoczęcia'
-								style={{ minWidth: 160 }}
-							/>
-						</div>
+            <label className="rg-field">
+              <span className="rg-label">Data zakończenia</span>
+              <input
+                id="filter-endOn"
+                type="date"
+                className="rg-input"
+                value={endOn}
+                onChange={(e) => {
+                  setEndOn(e.target.value)
+                  resetToFirstPage(true)
+                }}
+                title="Data zakończenia"
+                aria-label="Data zakończenia"
+              />
+            </label>
 
-						<div className='ts-control' style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-							<label htmlFor='filter-endOn' className='muted' style={{ fontSize: 12 }}>
-								Data zakończenia
-							</label>
-							<input
-								id='filter-endOn'
-								type='date'
-								className='search-bar ts-date'
-								value={endOn}
-								onChange={e => {
-									setEndOn(e.target.value)
-									resetToFirstPage(true)
-								}}
-								title='Data zakończenia'
-								style={{ minWidth: 160 }}
-							/>
-						</div>
+            <button
+              type="button"
+              className="reset-filters-button"
+              onClick={clearFilters}
+              title="Wyczyść filtry"
+              aria-label="Wyczyść filtry"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m15 9-6 6"></path>
+                <path d="m9 9 6 6"></path>
+              </svg>
+            </button>
+          </div>
+        </>
+      }
+      footer={
+        <>
+          <div className="table-actions table-actions--inline">
+            <Pagination currentPage={currentPage} pageCount={pageCount} onPageChange={onPageChange} />
+            <ExportCsvButton onClick={exportCSV} iconOnly />
+          </div>
 
-						{/* reset */}
-						<button
-							type='button'
-							className='reset-filters-button'
-							onClick={() => {
-								setFilter('')
-								setFilterStatus('wszystkie')
-								setFilterOutcome('wszystkie')
-								setStartOn('')
-								setEndOn('')
-								resetToFirstPage(true)
-							}}
-							title='Wyczyść filtry'
-							aria-label='Wyczyść filtry'
-							style={{
-								display: 'inline-flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								height: 34,
-								width: 38,
-								borderRadius: 8,
-							}}>
-							<CircleX size={20} strokeWidth={2} />
-							<span className='sr-only'>Wyczyść</span>
-						</button>
-					</div>
-				</div>
-			}
-			footer={
-				<>
-					<div className='table-actions table-actions--inline'>
-						<Pagination currentPage={currentPage} pageCount={pageCount} onPageChange={onPageChange} />
-						<button
-							className='download-btn download-btn--primary'
-							onClick={exportCSV}
-							title='Eksportuj CSV'
-							aria-label='Eksportuj CSV'>
-							<i className='fa-solid fa-file-export' />
-						</button>
-					</div>
-
-					<div
-						className='list-summary'
-						role='status'
-						aria-label='Podsumowanie rejestru badań'
-						style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-						<ListSummary ariaLabel='Podsumowanie rejestru badań (statusy)' items={statusSummaryItems} />
-						<ListSummary ariaLabel='Podsumowanie rejestru badań (wyniki)' items={outcomeSummaryItems} />
-					</div>
-				</>
-			}>
-			<table className='data-table' aria-label='Rejestr badań'>
-				<colgroup>
-					{HEADER_COLS.map(col => (
-						<col key={col.key} />
-					))}
-					<col className='col-actions' />
-				</colgroup>
-
-				<thead>
-					<tr>
-						{HEADER_COLS.map(col =>
-							col.sortable ? (
-								<SortableTh
-									key={col.key}
-									columnKey={col.key}
-									label={col.label}
-									sortConfig={sortConfig}
-									setSortConfig={setSortConfig}
-									onAfterSort={() => resetToFirstPage(true)}
-									className={col.align === 'left' ? 'text-left' : undefined}
-								/>
-							) : (
-								<th key={col.key} className={col.align === 'left' ? 'text-left' : undefined}>
-									{col.label}
-								</th>
-							)
-						)}
-						<ActionsHeader className='actions-col' />
-					</tr>
-				</thead>
-
-				<tbody>
-					{visible.map(r => (
-						<tr
-							key={r.id}
-							className='row-clickable'
-							onClick={() => goToProgram(r)}
-							onKeyDown={e => {
-								if (e.key === 'Enter' || e.key === ' ') {
-									e.preventDefault()
-									goToProgram(r)
-								}
-							}}
-							tabIndex={0}
-							role='button'
-							aria-label={`Przejdź do Programu Badań dla ${r.orderNo || r.id}`}
-							title='Kliknij, aby przejść do Programu Badań'
-							style={{ cursor: 'pointer' }}>
-							{HEADER_COLS.map(col => (
-								<td key={col.key} className={col.align === 'left' ? 'text-left' : undefined}>
-									{col.render ? col.render(r) : toStr(r[col.key] ?? '—')}
-								</td>
-							))}
-
-							<ActionsCell
-								actions={[
-									{
-										type: 'link',
-										label: 'Program badań',
-										href: `/badania/rejestr-badan/PB/${encodeURIComponent(r.orderNo || r.id)}`,
-										title: 'Przejdź do Programu Badań',
-										icon: FileText,
-									},
-								]}
-								onActionClick={e => e.stopPropagation()}
-							/>
-						</tr>
-					))}
-
-					{visible.length === 0 && <EmptyStateRow colSpan={HEADER_COLS.length + 1} />}
-				</tbody>
-			</table>
-		</ListLayout>
-	)
+          <div className="list-summary" role="status" aria-label="Podsumowanie rejestru badań">
+            <ListSummary ariaLabel="Podsumowanie (statusy)" items={statusSummaryItems} />
+            <ListSummary ariaLabel="Podsumowanie (wyniki)" items={outcomeSummaryItems} />
+          </div>
+        </>
+      }
+    >
+      <DataTableWithActions
+        columns={columns}
+        rows={visible}
+        sortConfig={sortConfig}
+        setSortConfig={(cfg) => {
+          setSortConfig(cfg)
+          resetToFirstPage(true)
+        }}
+        actionsForRow={actionsForRow}
+        rowProps={rowProps}
+        actionsSticky
+        ariaLabel="Rejestr badań"
+      />
+    </ListLayout>
+  )
 }

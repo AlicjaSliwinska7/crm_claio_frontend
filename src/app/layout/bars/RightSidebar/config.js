@@ -1,5 +1,5 @@
 // src/app/layout/bars/RightSideBar/config.js
-export const STORAGE_KEY = 'rightSidebar.open'
+export const STORAGE_KEY = 'rightSideBar.open'
 
 export const MENU = [
   {
@@ -9,18 +9,11 @@ export const MENU = [
     label: 'Terminy',
     items: [
       { to: '/terminy/moje', label: 'Mój grafik' },
-      { to: '/terminy/zaplanuj-grafik', label: 'Zaplanuj grafik' },
+
+      // ✅ ta pozycja ma otwierać modal (a nie rout)
+      { to: '/terminy/zaplanuj-grafik', label: 'Zaplanuj grafik', action: 'schedulePlanner' },
+
       { to: '/terminy/zestawienie', label: 'Zestawienie' },
-    ],
-  },
-  {
-    id: 'narzedzia',
-    base: '/narzedzia',
-    iconClass: 'fas fa-wrench',
-    label: 'Narzędzia',
-    items: [
-      { to: '/narzedzia/wykresy', label: 'Wykresy' },
-      { to: '/narzedzia/obliczenia', label: 'Obliczenia' },
     ],
   },
   {
@@ -35,6 +28,16 @@ export const MENU = [
       { to: '/zadania/nieprzydzielone', label: 'Nieprzydzielone' },
       { to: '/zadania/harmonogram-zadan', label: 'Harmonogram zadań' },
       { to: '/zadania/zestawienie', label: 'Zestawienie' },
+    ],
+  },
+  {
+    id: 'narzedzia',
+    base: '/narzedzia',
+    iconClass: 'fas fa-wrench',
+    label: 'Narzędzia',
+    items: [
+      { to: '/narzedzia/wykresy', label: 'Wykresy' },
+      { to: '/narzedzia/obliczenia', label: 'Obliczenia' },
     ],
   },
   {

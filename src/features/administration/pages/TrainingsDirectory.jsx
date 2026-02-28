@@ -11,265 +11,270 @@ import { Modal, DeleteDialog } from '../../../shared/modals'
 import TrainingForm from '../forms/TrainingForm'
 
 import {
-	ListLayout,
-	SearchBar,
-	AddButton,
-	DataTableWithActions,
-	Pagination,
-	ListSummary,
-	ExportCsvButton,
-	useUrlPagination,
-	useListCrud,
-	useListQuery,
-	useCsvExport,
-	rowNavigateProps as makeRowNavigateProps,
-	PAGE_SIZE,
-	CSV_DELIMITER,
-	CSV_BOM,
-	SCROLL_SELECTOR,
-	csvFilename,
-	editDeleteActions,
+  ListLayout,
+  SearchBar,
+  AddButton,
+  DataTableWithActions,
+  Pagination,
+  ListSummary,
+  ExportCsvButton,
+  FilterSelect,
+  useUrlPagination,
+  useListCrud,
+  useListQuery,
+  useCsvExport,
+  rowNavigateProps as makeRowNavigateProps,
+  PAGE_SIZE,
+  CSV_DELIMITER,
+  CSV_BOM,
+  SCROLL_SELECTOR,
+  csvFilename,
+  editDeleteActions,
 } from '../../../shared/tables'
 
 import { rid } from '../../../shared/utils/id'
 import { joinArray } from '../../../shared/utils/formatters'
 
 import {
-	DEFAULT_TRAINING,
-	TRAINING_TABLE_COLS,
-	TRAINING_CSV_COLUMNS,
-	validateTraining,
-	normalizeTraining,
-	TRAINING_TYPES,
-	INITIAL_TRAININGS,
-	getSearchFields,
-	getTypeLabel,
-	getStatusLabel,
+  DEFAULT_TRAINING,
+  TRAINING_TABLE_COLS,
+  TRAINING_CSV_COLUMNS,
+  validateTraining,
+  normalizeTraining,
+  TRAINING_TYPES,
+  INITIAL_TRAININGS,
+  getSearchFields,
+  getTypeLabel,
+  getStatusLabel,
+  labelForDelete,
 } from '../config/trainings.config'
 
-const joinParticipants = arr => joinArray(arr, ', ')
+const joinParticipants = (arr) => joinArray(arr, ', ')
 
 export default function TrainingsDirectory() {
-	const navigate = useNavigate()
-	const [sp, setSp] = useSearchParams()
+  const navigate = useNavigate()
+  const [sp, setSp] = useSearchParams()
 
-	const [filterType, setFilterType] = useState('wszystkie')
-	const [filterParticipant, setFilterParticipant] = useState('wszyscy')
+  const [filterType, setFilterType] = useState('wszystkie')
+  const [filterParticipant, setFilterParticipant] = useState('wszyscy')
 
-	const validate = useCallback(draft => {
-		const normalized = normalizeTraining(draft || {})
-		const errs = validateTraining(normalized)
-		const first = Object.values(errs)[0]
-		return first || null
-	}, [])
+  const validate = useCallback((draft) => {
+    const normalized = normalizeTraining(draft || {})
+    const errs = validateTraining(normalized)
+    const first = Object.values(errs)[0]
+    return first || null
+  }, [])
 
-	const normalizeOnSave = useCallback(x => normalizeTraining(x), [])
+  const normalizeOnSave = useCallback((x) => normalizeTraining(x), [])
 
-	const {
-		list: trainings,
-		form,
-		setForm,
-		modalOpen,
-		openAdd,
-		openEdit,
-		closeModal,
-		isEditing,
-		showDeleteModal,
-		askDelete,
-		cancelDelete,
-		confirmDelete,
-		deleteLabel,
-		save,
-	} = useListCrud({
-		initialItems: INITIAL_TRAININGS,
-		idKey: 'id',
-		makeId: () => rid('TR'),
-		validate,
-		normalizeOnSave,
-	})
+  const {
+    list: trainings,
+    form,
+    setForm,
+    modalOpen,
+    openAdd,
+    openEdit,
+    closeModal,
+    isEditing,
+    showDeleteModal,
+    askDelete,
+    cancelDelete,
+    confirmDelete,
+    deleteLabel,
+    save,
+  } = useListCrud({
+    initialItems: INITIAL_TRAININGS,
+    idKey: 'id',
+    makeId: () => rid('TR'),
+    validate,
+    normalizeOnSave,
+    labelForDelete,
+  })
 
-	const { searchQuery, setSearchQuery, sortConfig, setSortConfig, filteredSorted } = useListQuery(
-		trainings,
-		TRAINING_TABLE_COLS,
-		{
-			initialSort: { key: 'date', direction: 'desc' },
-			getSearchFields,
-		}
-	)
+  const { searchQuery, setSearchQuery, sortConfig, setSortConfig, filteredSorted } = useListQuery(
+    trainings,
+    TRAINING_TABLE_COLS,
+    {
+      initialSort: { key: 'date', direction: 'desc' },
+      getSearchFields,
+    }
+  )
 
-	const participantOptions = useMemo(() => {
-		const set = new Set()
-		for (const t of trainings) {
-			for (const p of t.participants || []) set.add(p)
-		}
-		return Array.from(set).sort((a, b) => String(a).localeCompare(String(b), 'pl', { sensitivity: 'base' }))
-	}, [trainings])
+  const participantOptions = useMemo(() => {
+    const set = new Set()
+    for (const t of trainings) {
+      for (const p of t.participants || []) set.add(p)
+    }
+    return Array.from(set).sort((a, b) => String(a).localeCompare(String(b), 'pl', { sensitivity: 'base' }))
+  }, [trainings])
 
-	const filtered = useMemo(
-		() =>
-			filteredSorted.filter(t => {
-				if (filterType !== 'wszystkie' && t.type !== filterType) return false
-				if (filterParticipant !== 'wszyscy' && !(t.participants || []).includes(filterParticipant)) {
-					return false
-				}
-				return true
-			}),
-		[filteredSorted, filterType, filterParticipant]
-	)
+  const filtered = useMemo(
+    () =>
+      filteredSorted.filter((t) => {
+        if (filterType !== 'wszystkie' && t.type !== filterType) return false
+        if (filterParticipant !== 'wszyscy' && !(t.participants || []).includes(filterParticipant)) return false
+        return true
+      }),
+    [filteredSorted, filterType, filterParticipant]
+  )
 
-	const { pageCount, currentPage, visible, onPageChange, resetToFirstPage } = useUrlPagination(filtered, {
-		pageSize: PAGE_SIZE,
-		searchParams: sp,
-		setSearchParams: setSp,
-		param: 'page',
-		scrollSelector: SCROLL_SELECTOR,
-		canonicalize: true,
-	})
+  const { pageCount, currentPage, visible, onPageChange, resetToFirstPage } = useUrlPagination(filtered, {
+    pageSize: PAGE_SIZE,
+    searchParams: sp,
+    setSearchParams: setSp,
+    param: 'page',
+    scrollSelector: SCROLL_SELECTOR,
+    canonicalize: true,
+  })
 
-	const csvRows = useMemo(
-		() =>
-			filtered.map(r => ({
-				...r,
-				type: getTypeLabel(r.type),
-				status: getStatusLabel(r.status),
-				participants: joinParticipants(r.participants || []),
-			})),
-		[filtered]
-	)
+  const csvRows = useMemo(
+    () =>
+      filtered.map((r) => ({
+        ...r,
+        type: getTypeLabel(r.type),
+        status: getStatusLabel(r.status),
+        participants: joinParticipants(r.participants || []),
+      })),
+    [filtered]
+  )
 
-	const exportCSV = useCsvExport({
-		columns: TRAINING_CSV_COLUMNS,
-		rows: csvRows,
-		filename: csvFilename('szkolenia'),
-		delimiter: CSV_DELIMITER,
-		includeHeader: true,
-		addBOM: CSV_BOM,
-	})
+  const exportCSV = useCsvExport({
+    columns: TRAINING_CSV_COLUMNS,
+    rows: csvRows,
+    filename: csvFilename('szkolenia'),
+    delimiter: CSV_DELIMITER,
+    includeHeader: true,
+    addBOM: CSV_BOM,
+  })
 
-	const handleRowClick = useCallback(id => navigate(`/administracja/szkolenia/${encodeURIComponent(id)}`), [navigate])
+  const handleRowClick = useCallback((id) => navigate(`/administracja/szkolenia/${encodeURIComponent(id)}`), [navigate])
+  const rowNavProps = useCallback((id) => makeRowNavigateProps(id, handleRowClick), [handleRowClick])
 
-	const rowNavProps = useCallback(id => makeRowNavigateProps(id, handleRowClick), [handleRowClick])
+  const totalTrainings = filtered.length
+  const typeInternal = filtered.filter((t) => t.type === 'wewnętrzne').length
+  const typeExternal = filtered.filter((t) => t.type === 'zewnętrzne').length
 
-	const totalTrainings = filtered.length
-	const typeInternal = filtered.filter(t => t.type === 'wewnętrzne').length
-	const typeExternal = filtered.filter(t => t.type === 'zewnętrzne').length
+  const typeOptions = useMemo(
+    () => [{ key: 'wszystkie', value: 'wszystkie', label: 'Wszystkie' }, ...TRAINING_TYPES.map((t) => ({ key: t.key, value: t.key, label: t.label }))],
+    []
+  )
 
-	return (
-		<ListLayout
-			rootClassName='trainings-list'
-			controlsClassName='trainings-controls'
-			controls={
-				<>
-					<SearchBar
-						value={searchQuery}
-						placeholder='Znajdź szkolenie...'
-						onChange={val => {
-							setSearchQuery(val)
-							resetToFirstPage(true)
-						}}
-						onClear={() => {
-							setSearchQuery('')
-							resetToFirstPage(true)
-						}}
-					/>
+  const participantFilterOptions = useMemo(
+    () => [{ key: 'wszyscy', value: 'wszyscy', label: 'Wszyscy uczestnicy' }, ...participantOptions.map((u) => ({ key: u, value: u, label: u }))],
+    [participantOptions]
+  )
 
-					<select
-						value={filterType}
-						onChange={e => {
-							setFilterType(e.target.value)
-							resetToFirstPage(true)
-						}}
-						className='training-filter-select'
-						title='Filtr typu szkolenia'
-						aria-label='Filtr typu szkolenia'>
-						<option value='wszystkie'>Wszystkie</option>
-						{TRAINING_TYPES.map(t => (
-							<option key={t.key} value={t.key}>
-								{t.label}
-							</option>
-						))}
-					</select>
+  return (
+    <ListLayout
+      rootClassName="trainings-list"
+      controlsClassName="trainings-controls"
+      controls={
+        <>
+          <SearchBar
+            value={searchQuery}
+            placeholder="Znajdź szkolenie..."
+            onChange={(val) => {
+              setSearchQuery(val)
+              resetToFirstPage(true)
+            }}
+            onClear={() => {
+              setSearchQuery('')
+              resetToFirstPage(true)
+            }}
+          />
 
-					<select
-						value={filterParticipant}
-						onChange={e => {
-							setFilterParticipant(e.target.value)
-							resetToFirstPage(true)
-						}}
-						className='training-filter-select'
-						title='Filtr uczestnika'
-						aria-label='Filtr uczestnika'>
-						<option value='wszyscy'>Wszyscy uczestnicy</option>
-						{participantOptions.map(u => (
-							<option key={u} value={u}>
-								{u}
-							</option>
-						))}
-					</select>
+          {/* ✅ custom FilterSelect (bez legacy className "training-filter-select") */}
+          <FilterSelect
+            label={null}
+            value={filterType}
+            onChange={(e) => {
+              setFilterType(e.target.value)
+              resetToFirstPage(true)
+            }}
+            options={typeOptions}
+            includeAll={false}
+            title="Filtr typu szkolenia"
+            ariaLabel="Filtr typu szkolenia"
+            className="trainings-list__typeFilter"
+          />
 
-					<AddButton title='Dodaj szkolenie' ariaLabel='Dodaj szkolenie' onClick={() => openAdd(DEFAULT_TRAINING)} />
-				</>
-			}
-			footer={
-				<>
-					<div className='table-actions table-actions--inline'>
-						<Pagination currentPage={currentPage} pageCount={pageCount} onPageChange={onPageChange} />
-						<ExportCsvButton onClick={exportCSV} iconOnly />
-					</div>
+          <FilterSelect
+            label={null}
+            value={filterParticipant}
+            onChange={(e) => {
+              setFilterParticipant(e.target.value)
+              resetToFirstPage(true)
+            }}
+            options={participantFilterOptions}
+            includeAll={false}
+            title="Filtr uczestnika"
+            ariaLabel="Filtr uczestnika"
+            className="trainings-list__participantFilter"
+          />
 
-					<ListSummary
-						ariaLabel='Podsumowanie listy szkoleń'
-						items={[
-							['Szkolenia', totalTrainings],
-							['Wewnętrzne', typeInternal],
-							['Zewnętrzne', typeExternal],
-						]}
-					/>
-				</>
-			}>
-			<DataTableWithActions
-				columns={TRAINING_TABLE_COLS}
-				rows={visible}
-				sortConfig={sortConfig}
-				setSortConfig={cfg => {
-					setSortConfig(cfg)
-					resetToFirstPage(true)
-				}}
-				onAfterSort={() => resetToFirstPage(true)}
-				rowProps={row => ({
-					...rowNavProps(row.id),
-					className: 'row-clickable',
-				})}
-				actionsForRow={row =>
-					editDeleteActions(
-						() => openEdit(row.id),
-						() => askDelete(row.id)
-					)
-				}
-				actionsSticky
-				ariaLabel='Tabela szkoleń'
-			/>
+          <AddButton title="Dodaj szkolenie" ariaLabel="Dodaj szkolenie" onClick={() => openAdd(DEFAULT_TRAINING)} />
+        </>
+      }
+      footer={
+        <>
+          <div className="table-actions table-actions--inline">
+            <Pagination currentPage={currentPage} pageCount={pageCount} onPageChange={onPageChange} />
+            <ExportCsvButton onClick={exportCSV} iconOnly />
+          </div>
 
-			{modalOpen && (
-				<Modal title={isEditing ? 'Edytuj szkolenie' : 'Dodaj szkolenie'} onClose={closeModal} size='sm'>
-					<TrainingForm
-						newTraining={form || DEFAULT_TRAINING}
-						setNewTraining={setForm}
-						onSubmit={e => save(e, { after: () => resetToFirstPage(true) })}
-						onClose={closeModal}
-						users={participantOptions}
-						showTitle={false}
-					/>
-				</Modal>
-			)}
+          <ListSummary
+            ariaLabel="Podsumowanie listy szkoleń"
+            items={[
+              ['Szkolenia', totalTrainings],
+              ['Wewnętrzne', typeInternal],
+              ['Zewnętrzne', typeExternal],
+            ]}
+          />
+        </>
+      }
+    >
+      <DataTableWithActions
+        columns={TRAINING_TABLE_COLS}
+        rows={visible}
+        sortConfig={sortConfig}
+        setSortConfig={(cfg) => {
+          setSortConfig(cfg)
+          resetToFirstPage(true)
+        }}
+        rowProps={(row) => ({
+          ...rowNavProps(row.id),
+          className: 'row-clickable',
+        })}
+        actionsForRow={(row) =>
+          editDeleteActions(
+            () => openEdit(row.id),
+            () => askDelete(row.id)
+          )
+        }
+        actionsSticky
+        ariaLabel="Tabela szkoleń"
+      />
 
-			<DeleteDialog
-				open={showDeleteModal}
-				onConfirm={() => confirmDelete({ after: () => resetToFirstPage(true) })}
-				onClose={cancelDelete}
-				label={deleteLabel}
-				what='szkolenie'
-			/>
-		</ListLayout>
-	)
+      {modalOpen && (
+        <Modal title={isEditing ? 'Edytuj szkolenie' : 'Dodaj szkolenie'} onClose={closeModal} size="sm">
+          <TrainingForm
+            newTraining={form || DEFAULT_TRAINING}
+            setNewTraining={setForm}
+            onSubmit={(e) => save(e, { after: () => resetToFirstPage(true) })}
+            onClose={closeModal}
+            users={participantOptions}
+            showTitle={false}
+          />
+        </Modal>
+      )}
+
+      <DeleteDialog
+        open={showDeleteModal}
+        onConfirm={() => confirmDelete({ after: () => resetToFirstPage(true) })}
+        onClose={cancelDelete}
+        label={deleteLabel}
+        what="szkolenie"
+      />
+    </ListLayout>
+  )
 }

@@ -1,3 +1,5 @@
+/* src/shared/tables/styles/directories_lists_registers/controls.css */
+
 /* ==========================================================================
    Kontrolki nad listami (top bar)
    ========================================================================== */
@@ -13,6 +15,7 @@
 .samplesLogistics-controls,
 .samplesDisposal-controls,
 .testsSummary-controls,
+.tests-controls, /* ✅ DODANE: bo TestsRegister ma controlsClassName="tests-controls" */
 .offers-controls {
   display: flex;
   justify-content: space-between;
@@ -64,7 +67,7 @@
   line-height: 0;
   font-size: 18px;
   color: #585a5d;
-  transition: transform .2s ease, color .2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .search-icon:hover {
@@ -97,8 +100,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform .2s ease, background-color .2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .add-btn:hover,
@@ -109,7 +112,7 @@
 
 .add-btn:disabled,
 .add-button:disabled {
-  opacity: .6;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
@@ -128,13 +131,13 @@
   color: #fff;
   border: none;
   cursor: pointer;
-  transition: background-color .3s ease, transform .2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   padding: 6px 10px;
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   will-change: transform; /* płynniejsza animacja, bez wpływu na layout */
 }
 
@@ -175,23 +178,23 @@
 .add-samplesLogistics-btn:disabled,
 .add-samplesDisposal-btn:disabled,
 .add-offer-btn:disabled {
-  opacity: .6;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
 /* ==========================================================================
-   Selecty / filtry
+   Selecty / filtry (legacy)
    ========================================================================== */
 
 .training-filter-select {
   background: transparent;
   border: none;
   border-bottom: 2px solid #585a5d;
-  color: rgba(0,0,0,.715);
+  color: rgba(0, 0, 0, 0.715);
   font-size: 16px;
   padding: 8px 4px;
   outline: none;
-  transition: border-color .2s ease;
+  transition: border-color 0.2s ease;
   cursor: pointer;
   min-width: 160px;
 }
@@ -205,33 +208,8 @@
 }
 
 /* ==========================================================================
-   Reset filtrów – minimalistyczny wariant
-   ========================================================================== */
-
-.reset-filters-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: .3rem;
-  color: var(--nt-muted, #585a5d);
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  line-height: 1;
-  transition: transform .2s ease, color .2s ease;
-}
-
-.reset-filters-button:hover {
-  transform: scale(1.2);
-  color: #d64545;
-}
-
-.reset-filters-button:active {
-  transform: translateY(1px);
-}
-
-.reset-filters-button:focus-visible {
-  outline: 2px solid var(--nt-focus, #d64545);
-  outline-offset: 2px;
-  border-radius: 6px;
-}
+   Reset filtrów
+   ==========================================================================
+   ✅ SSOT resetu jest w filters.css (bo to element paska filtrów).
+   Tu celowo NIE trzymamy .reset-filters-button, żeby nie było duplikatów/starych styli.
+*/

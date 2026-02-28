@@ -1,0 +1,62 @@
+// src/features/messages/hooks/inbox.constants.js
+
+export const users = {
+  u1: 'Alicja Śliwińska',
+  u2: 'Jan Kowalski',
+  u3: 'Anna Nowak',
+  u4: 'Piotr Zieliński',
+  u5: 'Maria Wiśniewska',
+  u6: 'Tomasz Nowak',
+  u7: 'Katarzyna Lewandowska',
+  u8: 'Paweł Kaczmarek',
+  u9: 'Ewa Wojciechowska',
+}
+
+export const loggedInUserId = 'u1'
+
+export const dummyConversations = [
+  {
+    id: 'chat1',
+    name: 'Rozmowa z Anną',
+    members: ['u1', 'u3'],
+    messages: [
+      {
+        id: 'm1',
+        sender: 'u1',
+        text: 'Cześć, jak idą badania?',
+        timestamp: '2025-07-04T10:01:00.000Z',
+        read: true,
+        reactions: {},
+        replyToId: null,
+        attachments: [],
+      },
+      {
+        id: 'm2',
+        sender: 'u3',
+        text: 'Już prawie skończone!',
+        timestamp: '2025-07-04T10:02:00.000Z',
+        read: true,
+        reactions: {},
+        replyToId: null,
+        attachments: [],
+      },
+    ],
+  },
+  {
+    id: 'chat2',
+    name: 'Zespół projektowy',
+    members: ['u1', 'u2', 'u6'],
+    messages: [
+      {
+        id: 'm3',
+        sender: 'u6',
+        text: 'Kto odpowiada za ofertę dla firmy X?',
+        timestamp: '2025-07-03T12:15:00.000Z',
+        read: false,
+        reactions: {},
+        replyToId: null,
+        attachments: [],
+      },
+    ],
+  },
+]

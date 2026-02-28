@@ -1,43 +1,25 @@
-import React, { memo } from 'react';
+// src/features/administration/components/LabSchedule/GridCellSelect.jsx
+import React, { memo } from 'react'
+import ScheduleGridCell from '../../../../shared/schedules/components/ScheduleGridCell'
 
-/**
- * Komórka bez inputów – tylko wybór/zaznaczenie.
- * Wartość pokazujemy w <div>, a aktywność i zaznaczenie stylujemy klasami.
- */
-function GridCellSelect({
-  name,
-  dateKey,
-  value,
-  holiday,
-  isSelected,
-  isActive,
-  onClick,
-}) {
-  const cellClass = `
-    ${holiday ? 'holiday-column' : ''}
-    ${value === '1' ? 'shift-1' : ''}
-    ${value === '2' ? 'shift-2' : ''}
-    ${value === '3' ? 'shift-3' : ''}
-    ${value === 'u' ? 'shift-u' : ''}
-    ${value === 'l' ? 'shift-l' : ''}
-    ${isSelected ? 'selected-cell' : ''}
-    ${isActive ? 'active-cell' : ''}
-  `;
-
-  return (
-    <td
-      role="gridcell"
-      className={cellClass}
-      data-name={name}
-      data-date={dateKey}
-      onClick={(e) => onClick?.(name, dateKey, e)}
-      tabIndex={-1}                 // fokus trzymamy na wrapperze tabeli
-      aria-selected={!!isActive}
-      title={value || ''}
-    >
-      <div className="cell-readonly">{value ?? ''}</div>
-    </td>
-  );
+const valueToClass = (raw) => {
+  const v = (raw ?? '').toString()
+  if (v === '1') return 'shift-1'
+  if (v === '2') return 'shift-2'
+  if (v === '3') return 'shift-3'
+  if (v === 'u') return 'shift-u'
+  if (v === 'l') return 'shift-l'
+  return ''
 }
 
-export default memo(GridCellSelect);
+function GridCellSelect(props) {
+  return (
+    <ScheduleGridCell
+      {...props}
+      valueToClass={valueToClass}
+      displayValue={(v) => (v ?? '')}
+    />
+  )
+}
+
+export default memo(GridCellSelect)

@@ -38,7 +38,7 @@ export default function Kpis({ kpis }) {
 
 				<div className='es-kpi'>
 					<div className='es-kpi__value'>{kpis.failCount}</div>
-					<div className='es-kpi__label'>Awarii</div>
+					<div className='es-kpi__label'>Awarie</div>
 				</div>
 
 				<div className='es-kpi'>

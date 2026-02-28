@@ -1,0 +1,160 @@
+/* src/features/messages/styles/message-inbox/_reply.css */
+
+/* ============================ REPLY PREVIEW (inside bubble) ============================ */
+.message-inbox .reply-preview {
+  width: 100%;
+  text-align: left;
+
+  border: 1px solid rgba(190, 208, 224, 0.55);
+  background: rgba(255,255,255,0.62);
+  border-radius: 14px;
+
+  padding: 8px 10px;
+  margin: 0 0 10px;
+
+  cursor: pointer;
+  transition: transform .10s ease, background .16s ease, border-color .16s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+}
+
+.message-inbox .message.own .reply-preview {
+  background: rgba(255,255,255,0.52);
+}
+
+.message-inbox .reply-preview:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.78);
+  border-color: rgba(150, 184, 214, 0.65);
+}
+
+.message-inbox .reply-preview:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--pri) 55%, #fff 45%);
+  outline-offset: 2px;
+}
+
+.message-inbox .reply-preview__who {
+  font-size: 12px;
+  font-weight: 900;
+  color: #2e4f70;
+  letter-spacing: .15px;
+  margin-bottom: 2px;
+}
+
+.message-inbox .reply-preview__text {
+  font-size: 12.5px;
+  color: rgba(46, 79, 112, 0.84);
+  line-height: 1.35;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================ REPLY BAR (above composer) ============================ */
+.message-inbox .reply-bar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 10px 12px;
+  margin-top: 10px;
+
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(244, 248, 255, 0.92), rgba(235, 243, 252, 0.92));
+  border: 1px solid rgba(190, 208, 224, 0.65);
+  box-shadow: 0 8px 18px rgba(24, 34, 49, 0.08);
+}
+
+.message-inbox .reply-bar__left {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.message-inbox .reply-bar__meta {
+  font-size: 12.5px;
+  color: rgba(38, 67, 94, 0.85);
+  line-height: 1.2;
+}
+
+.message-inbox .reply-bar__meta b {
+  color: #26435e;
+  font-weight: 900;
+}
+
+.message-inbox .reply-bar__text {
+  font-size: 12.5px;
+  color: rgba(38, 67, 94, 0.75);
+  line-height: 1.25;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.message-inbox .reply-bar__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.message-inbox .reply-bar__jump {
+  appearance: none;
+  border: 1px solid rgba(150, 184, 214, 0.7);
+  background: rgba(255,255,255,0.75);
+  color: #2e4f70;
+
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-weight: 850;
+  font-size: 12.5px;
+  cursor: pointer;
+
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+  transition: transform .08s ease, background .16s ease;
+}
+
+.message-inbox .reply-bar__jump:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.92);
+}
+
+.message-inbox .reply-bar__cancel {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(255, 107, 107, 0.42);
+  background: rgba(255, 107, 107, 0.10);
+  color: #b91c1c;
+
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .08s ease, background .16s ease;
+}
+
+.message-inbox .reply-bar__cancel:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 107, 107, 0.16);
+}
+
+/* ============================ CRITICAL FIX: reply arrow clickable ============================ */
+.message-inbox .message-time {
+  position: relative;
+  z-index: 30; /* ✅ ponad reaction-bar */
+}
+
+.message-inbox .msg-reply-btn {
+  position: relative;
+  z-index: 31;
+}

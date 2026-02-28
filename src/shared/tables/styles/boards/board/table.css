@@ -1,0 +1,223 @@
+/* src/shared/tables/styles/boards/table.css
+   Board table skin for shared/tables (DataTableWithActions)
+   Scope: .board-wrapper
+*/
+
+/* =========================================================
+   Tokens (tylko dla Board)
+   ========================================================= */
+.board-wrapper {
+  --bt-bg: rgba(255, 255, 255, 0.60);
+  --bt-bg-2: rgba(255, 255, 255, 0.44);
+
+  --bt-border: rgba(120, 140, 175, 0.22);
+  --bt-border-strong: rgba(120, 140, 175, 0.30);
+
+  --bt-text: rgba(18, 28, 50, 0.88);
+  --bt-muted: rgba(18, 28, 50, 0.62);
+
+  --bt-head-bg: rgba(95, 125, 165, 0.18);
+  --bt-head-bg-hover: rgba(95, 125, 165, 0.24);
+  --bt-head-text: rgba(18, 28, 50, 0.82);
+
+  --bt-row-hover: rgba(95, 125, 165, 0.10);
+  --bt-row-zebra: rgba(0, 0, 0, 0.02);
+
+  --bt-shadow: 0 12px 28px rgba(15, 20, 35, 0.10);
+  --bt-radius: 16px;
+}
+
+/* =========================================================
+   Container / shell
+   ========================================================= */
+.board-wrapper .table-container,
+.board-wrapper .table-container.bl-table-container {
+  border-top: 1px solid #2c3e50;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   Table base
+   ========================================================= */
+.board-wrapper table.data-table {
+  box-shadow: none;            /* wyłączamy bazowy cień */
+  border-spacing: 0;
+  background: transparent;
+  width: max-content;
+  min-width: 100%;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.board-wrapper .data-table thead {
+  background: transparent;
+
+}
+
+.board-wrapper .data-table thead th {
+        border-bottom: 2px solid #2c3e50;
+    font-family: system-ui;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.28px;
+  color: #2c3e50;
+  text-transform: none;
+  text-align: center;
+}
+
+.board-wrapper .data-table thead th .th-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* sortable hover */
+.board-wrapper .data-table thead th.sortable:hover {
+  background: transparent;
+  font-size: 13px;
+}
+
+/* sort indicator (wspieramy Twój mechanizm ▲▼ z bazowego CSS) */
+.board-wrapper .data-table thead th.sortable.sorted-asc .th-label::after,
+.board-wrapper .data-table thead th.sortable.sorted-desc .th-label::after {
+  opacity: 0.9;
+  color: #2c3e50;
+}
+
+/* =========================================================
+   Body / rows
+   ========================================================= */
+.board-wrapper .data-table tbody td {
+  padding: 10px 12px;
+  font: system-ui;
+  font-size: 12px;
+  color: #2c3e50;
+  border-bottom: 1px solid #2c3e50;
+  text-align: center; /* overriding base centered style */
+  vertical-align: top;
+  line-height: 1.25;
+}
+
+/* zebra */
+.board-wrapper .data-table tbody tr:nth-child(odd) td {
+  background: var(--bt-row-zebra);
+}
+
+/* hover */
+.board-wrapper .data-table tbody tr:hover td {
+  background: var(--bt-row-hover);
+}
+
+/* focus (klawiatura / rowNavigateProps) */
+.board-wrapper .data-table tbody tr:focus-within td {
+  outline: 2px solid rgba(70, 110, 160, 0.35);
+  outline-offset: -2px;
+}
+
+/* =========================================================
+   Align helpers from DataCell (align-left/center/right)
+   ========================================================= */
+.board-wrapper .data-table :is(td, th).align-center,
+.board-wrapper .data-table :is(td, th)[data-align='center'] {
+  text-align: center;
+}
+
+.board-wrapper .data-table :is(td, th).align-right,
+.board-wrapper .data-table :is(td, th)[data-align='right'] {
+  text-align: right;
+}
+
+.board-wrapper .data-table :is(td, th).align-left,
+.board-wrapper .data-table :is(td, th)[data-align='left'] {
+  text-align: left;
+}
+
+/* =========================================================
+   Cells specifics (daty / “bold” title)
+   ========================================================= */
+.board-wrapper .data-table td.td--date .date-cell {
+  color: rgba(18, 28, 50, 0.72);
+  font-variant-numeric: tabular-nums;
+}
+
+.board-wrapper .data-table td.bl-td--bold {
+  font-weight: 850;
+  letter-spacing: 0.1px;
+}
+
+/* delikatne wyciszenie placeholderów */
+.board-wrapper .data-table td:empty,
+.board-wrapper .data-table td .muted {
+  color: var(--bt-muted);
+}
+
+/* =========================================================
+   Actions column (nadpisujemy tylko wygląd, nie mechanikę)
+   ========================================================= */
+.board-wrapper th.actions-col,
+.board-wrapper td.actions-col {
+  width: 56px;
+  min-width: 56px;
+  padding: 8px 8px;
+  text-align: center;
+}
+
+/* lekko “sticky” feeling przez tło w actions */
+.board-wrapper .data-table tbody tr:nth-child(odd) td.actions-col {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.board-wrapper .data-table tbody tr:hover td.actions-col {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* button look */
+.board-wrapper .row-actions .action-btn,
+.board-wrapper .action-btn {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(120, 140, 175, 0.26);
+  background: rgba(255, 255, 255, 0.65);
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.board-wrapper .row-actions .action-btn:hover,
+.board-wrapper .action-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(120, 140, 175, 0.36);
+}
+
+/* =========================================================
+   Empty row
+   ========================================================= */
+.board-wrapper .data-table .empty-cell,
+.board-wrapper .data-table .empty-row td {
+  padding: 18px 14px;
+  color: rgba(18, 28, 50, 0.60);
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 980px) {
+  .board-wrapper .data-table thead th,
+  .board-wrapper .data-table tbody td {
+    padding: 9px 10px;
+  }
+
+  .board-wrapper th.actions-col,
+  .board-wrapper td.actions-col {
+    width: 52px;
+    min-width: 52px;
+  }
+}

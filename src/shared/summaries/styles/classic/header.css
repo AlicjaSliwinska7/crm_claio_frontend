@@ -1,0 +1,67 @@
+/* src/shared/summaries2/styles/classic/_header.css */
+
+/* -------------------- Card header (icon + title + actions) -------------------- */
+.es-root .es-card__sectionHead,
+.es-root .es-section__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--es-border);
+}
+
+/* tytuł po lewej (ikonka + tekst) */
+.es-root .es-section__titlewrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+}
+
+/* ikona z lewej (opcjonalna) + ujednolicenie rozmiaru */
+.es-root .es-section__icon,
+.es-root .es-headIcon {
+  color: var(--es-blue);
+  display: inline-flex;
+  line-height: 0;
+  width: 18px;
+  height: 18px;
+}
+.es-root .es-headIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ujednolicone style nagłówków */
+.es-root .es-card__sectionTitle,
+.es-root .es-section__title,
+.es-root .ts-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--es-slate);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* akcje po prawej (np. selecty, przyciski) */
+.es-root .es-headActions {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* podtytuł sekcji */
+.es-root .es-section__sub,
+.es-root .ts-subline,
+.es-root .es-subtitle {
+  margin: -4px 2px 6px;
+  color: var(--es-muted);
+  font-size: 12px;
+  text-align: center;
+}

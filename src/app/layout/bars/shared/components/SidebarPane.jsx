@@ -1,30 +1,54 @@
 import React from 'react'
-import './styles/scroll-bars.css'
+import PropTypes from 'prop-types'
 
+// ❗ NIE importujemy lokalnie scroll-bars.css,
+// bo ma być jeden SSOT (np. ../shared/styles/scroll-bars.css importowany w sidebarach)
+
+import ScrollArea from './ScrollArea'
 /**
- * Uniwersalny wrapper na sidebary.
- * - side="left"  => scrollbar po PRAWEJ (domyślnie LTR)
- * - side="right" => scrollbar po LEWEJ (direction: rtl na scrollerze)
+ * SidebarPane — wrapper na sidebary z custom scrollbar (bars/ScrollArea)
  *
- * Uwaga: scrollbar rysuje się na elemencie .sidebar-scroll (to on ma overflow).
+ * - side="left"  => custom bar po PRAWEJ  (default)
+ * - side="right" => custom bar po LEWEJ
+ *
+ * Uwaga:
+ * - Nie używamy direction: rtl (to hack pod native scrollbar).
+ * - scrollbar rysuje ScrollArea + sa-vbar (custom).
  */
 export default function SidebarPane({
   side = 'left',           // 'left' | 'right'
   className = '',
   style = {},
   children,
+  gateKey = null,          // ✅ SSOT dla bramki (np. openSectionId)
 }) {
-  const sideClass = side === 'right' ? 'sidebar--right' : 'sidebar--left'
+  // Mapowanie: w ScrollArea side="left" oznacza bar po LEWEJ,
+  // a u Ciebie w komentarzach bywało odwrotnie. Ujednolicamy:
+  // - jeśli to lewy sidebar (pane po lewej ekranu) i chcesz bar po PRAWEJ => ScrollArea side="right"
+  // - jeśli to prawy sidebar i chcesz bar po LEWEJ => ScrollArea side="left"
+  const scrollSide = side === 'left' ? 'right' : 'left'
+  const paneClass = side === 'right' ? 'sidebar--right' : 'sidebar--left'
 
   return (
-    <aside className={`sidebar-pane ${sideClass} ${className}`} style={style}>
-      {/* Element SCROLLUJĄCY – to na nim celujemy pseudo-elementami */}
-      <div className="sidebar-scroll" data-side={side}>
-        {/* Przywracamy normalny kierunek treści (ważne dla side='right') */}
+    <aside className={`sidebar-pane ${paneClass} ${className}`.trim()} style={style}>
+      <ScrollArea
+        side={scrollSide}
+        className="sidebar-scroll"
+        gateKey={gateKey}
+        style={{ height: '100%', width: '100%', minHeight: 0 }}
+      >
         <div className="sidebar-content">
           {children}
         </div>
-      </div>
+      </ScrollArea>
     </aside>
   )
+}
+
+SidebarPane.propTypes = {
+  side: PropTypes.oneOf(['left', 'right']),
+  className: PropTypes.string,
+  style: PropTypes.object,
+  children: PropTypes.node,
+  gateKey: PropTypes.any,
 }

@@ -1,0 +1,41 @@
+/* ============================ CONFIRM MODAL ======================= */
+.confirm-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2000;
+	backdrop-filter: blur(2px);
+}
+
+.confirm-modal {
+	background: var(--bg-card);
+	width: 100%;
+	max-width: 440px;
+	border-radius: var(--r-md);
+	padding: 18px 18px 16px;
+	box-shadow: var(--shadow-lg);
+	border: 1px solid var(--hair);
+}
+.confirm-modal h3 {
+	margin: 0 0 6px;
+	font-size: 18px;
+	color: var(--pri-strong);
+}
+.confirm-message { margin: 0 0 14px; color: var(--text); }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+.confirm-modal .btn {
+	padding: 8px 14px;
+	border-radius: var(--r-sm);
+	cursor: pointer;
+	border: 1px solid var(--border);
+	background: #fff;
+	color: var(--text);
+	box-shadow: var(--shadow-sm);
+}
+.confirm-modal .btn-ghost { background: #fff; }
+.confirm-modal .btn-danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+.confirm-modal .btn-danger:hover { filter: brightness(.97); }

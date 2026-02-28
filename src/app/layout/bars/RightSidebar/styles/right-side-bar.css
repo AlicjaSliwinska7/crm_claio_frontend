@@ -1,77 +1,77 @@
-/* =========================================================
-   Right sidebar — container
-   (scroll robi ScrollArea wewnątrz)
-   ========================================================= */
+/* ==========================================================================
+   Right Sidebar — layout-only skin
+   ========================================================================== */
 
 .right-sidebar {
-  position: fixed;                /* top/height ustawiasz inline w hooku */
+  position: fixed;
   right: 0;
+  top: 0;
+  height: 100vh;
   width: var(--right-sidebar-width, 14rem);
 
   display: flex;
   flex-direction: column;
   min-height: 0;
-  overflow: hidden;               /* przewija tylko wrapper scrolla */
 
+  overflow: hidden;
+  padding: 0;
   background: transparent;
-  padding: 5px 10px 10px;
   box-sizing: border-box;
+
   z-index: var(--right-sidebar-z, 998);
-  font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 }
 
-/* =========================================================
-   Navigation wrapper
-   (linki/submenu ogarnia sidebar-core.css; dodaj .is-right na <nav>)
-   ========================================================= */
-.right-sidebar-nav {
+/* ---- ScrollArea frame ----------------------------------------------- */
+.right-sidebar .scroll-area-frame {
+  height: 100%;
   width: 100%;
+  overflow: hidden;
+
   display: flex;
   flex-direction: column;
+  min-height: 0;
+
+  --sa-width: 7px;
+  --sa-radius: 10px;
 }
 
-/* Opcjonalnie: lekkie odsadzenie kalendarza od menu */
+/* ---- Scroller ------------------------------------------------------- */
+.right-sidebar .scroll-area {
+  height: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+/* ---- Inner ---------------------------------------------------------- */
+.right-sidebar .scroll-area__inner {
+  box-sizing: border-box;
+  min-height: 100%;
+
+  padding-top: calc(var(--sidebar-dock-top, 0px) + 14px);
+  padding-bottom: 14px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* ---- Calendar: kompensacja scrollbar padding ------------------------ */
 .right-sidebar-calendar {
+  margin-left: calc(-1 * (var(--sa-width) + var(--sa-pad)));
+  padding-left: calc(var(--sa-width) + var(--sa-pad));
+
   margin-bottom: 8px;
 }
 
-/* =========================================================
-   Scroll wrapper
-   - przenosi scrollbar na LEWĄ stronę
-   - łączy nasze klasy z „shared” ScrollArea, aby złapać scroll-bars.css
-   ========================================================= */
-
-/* Element przewijany – scrollbar po LEWEJ */
-.rs-scroll,
-.right-sidebar .scroll-area {
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  direction: rtl;                     /* pasek przewijania po LEWEJ */
-  /* węższy pasek w sidebarach (spójne ze scroll-bars.css) */
-  --sa-width: 2px;
-  --sa-radius: 6px;
+/* ---- Nav ------------------------------------------------------------ */
+.right-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-/* Treść wraca do normalnego kierunku */
-.rs-inner,
-.right-sidebar .scroll-area__inner {
-  direction: ltr;
-  height: 100%;
-  max-height: 100%;
-  box-sizing: border-box;
-  padding-block: var(--right-sidebar-inner-pad, 14px);
-}
-
-/* Przytnij „czapki” scrolla (spójnie z lewym sidebar) */
-.right-sidebar .scroll-area,
-.right-sidebar .rs-scroll {
-  clip-path: inset(14px 0 14px 0);
-}
-
-/* =========================================================
-   Responsive
-   ========================================================= */
+/* ---- Responsive ----------------------------------------------------- */
 @media (max-width: 768px) {
-  .right-sidebar { display: none; }
+  .right-sidebar {
+    display: none;
+  }
 }

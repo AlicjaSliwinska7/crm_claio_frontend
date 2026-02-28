@@ -1,0 +1,63 @@
+/* src/shared/summaries2/styles/classic/_tables.css */
+
+/* -------------------- Tables -------------------- */
+.es-root .tss-table-wrap {
+  background: #fff;
+  border: 1px solid var(--es-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.es-root .tss-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.es-root .tss-table thead {
+  background-color: color-mix(in oklab, var(--es-blue) 18%, white);
+  color: #17324b;
+}
+.es-root .tss-table thead th {
+  padding: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  user-select: none;
+  white-space: nowrap;
+  text-align: left;
+  border-bottom: 1px solid var(--es-border);
+}
+.es-root .tss-table thead th[title*='Sortuj'] { cursor: pointer; }
+
+.es-root .tss-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid var(--es-border);
+  font-size: 14px;
+  color: var(--es-slate);
+}
+.es-root .tss-table tbody tr:hover td { background: #fafcff; }
+
+/* linki w tabeli */
+.es-root .tss-link {
+  color: var(--es-blue);
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in oklab, var(--es-blue) 40%, white);
+}
+.es-root .tss-link:hover {
+  color: color-mix(in oklab, var(--es-blue) 85%, black);
+  border-bottom-style: solid;
+}
+
+/* akcje pod tabelą */
+.es-root .tss-table-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--es-border);
+  background: #fff;
+}
+
+@media (max-width: 520px) {
+  .es-root .tss-table thead th { font-size: 12px; }
+  .es-root .tss-table tbody td { font-size: 13px; }
+}

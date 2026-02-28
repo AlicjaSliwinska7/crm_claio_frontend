@@ -1,0 +1,32 @@
+/* src/shared/diagrams2/styles/_utils.css */
+
+.d2-root .muted { color: var(--es-muted); }
+
+.d2-root .ts-subtitle,
+.d2-root .d2-subtitle--left {
+  margin: 8px 2px 6px;
+  color: var(--es-slate);
+  font-size: 13px;
+  text-align: left;
+}
+
+/* local overrides: nagłówki wyrównane do lewej */
+.d2-root h1,
+.d2-root h2,
+.d2-root h3,
+.d2-root h4,
+.d2-root h5,
+.d2-root h6 {
+  text-align: left;
+}
+
+/* label fix dla importowanych filtrów */
+.d2-root .sum-filter,
+.d2-root .sum-filter label,
+.d2-root .filters-bar label,
+.d2-root .filtersbar label {
+  color: var(--es-muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}

@@ -39,6 +39,16 @@ export function useBoardLogic(initialPosts, loggedInUser, initialTags = []) {
     return String(Date.now())
   }, [])
 
+  // ✅ reset filtrów jako wspólna akcja
+  const resetFilters = useCallback(() => {
+    setFilterType('all')
+    setFilterAuthor('')
+    setFilterMentioned('')
+    setFilterPriority('')
+    setFilterTag('')
+    setGotoDate('')
+  }, [])
+
   // ✅ selector (funkcja) — stabilny i defensywny
   const filteredEntries = useCallback(
     (entries) => {
@@ -127,7 +137,9 @@ export function useBoardLogic(initialPosts, loggedInUser, initialTags = []) {
         tags: normTags(base.tags),
       }
 
-      setPosts((prev) => (Array.isArray(prev) ? prev : []).map((p) => (p.id === updatedPost.id ? updatedPost : p)))
+      setPosts((prev) =>
+        (Array.isArray(prev) ? prev : []).map((p) => (p.id === updatedPost.id ? updatedPost : p)),
+      )
       setEditMode(false)
       setSelectedPost(null)
     },
@@ -178,6 +190,8 @@ export function useBoardLogic(initialPosts, loggedInUser, initialTags = []) {
     gotoDate,
     setGotoDate,
     filteredEntries,
+
+    resetFilters,
 
     handleAddPost,
 

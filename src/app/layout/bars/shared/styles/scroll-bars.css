@@ -1,89 +1,101 @@
 /* ==========================================================================
-   SIDEBAR SCROLLBARS (Chrome/Edge/WebKit + Firefox)
-   Docelowy scroller to .scroll-area (musi mieć overflow-y: auto)
-   Prawy pasek po LEWEJ stronie: sztuczka z direction: rtl na kontenerze
-   i przywrócenie direction: ltr na .scroll-area__inner
+   Sidebars (layout/bars) — CUSTOM vertical scrollbar (scoped)
+   Path: src/app/layout/bars/shared/styles/scroll-bars.css
    ========================================================================== */
 
-/* ---------- Baza (Firefox + wspólne) ---------- */
-.scroll-area {
-	/* FF: kolor kciuka i brak tła toru */
-	scrollbar-color: var(--sa-thumb, rgba(139, 179, 211, 0.28)) transparent;
-	/* FF: grubość paska (auto | thin | none) */
-	scrollbar-width: var(--sa-width-ff, thin);
+/* ====== FRAME (wrapper) ====== */
+/* podbijamy specyficzność, żeby wygrać z: .left-sidebar .scroll-area-frame */
+.left-sidebar .scroll-area-frame[data-bars-scroll="1"],
+.right-sidebar .scroll-area-frame[data-bars-scroll="1"],
+[data-bars-scroll="1"].scroll-area-frame {
+  --sa-width: 6px !important;
+  --sa-pad: 10px;
+  --sa-radius: 10px !important;
+
+  --sa-track: transparent;
+  --sa-thumb: var(--kb-blue, transparent);
+  --sa-thumb-hover: var(--kb-blue, transparent);
+  --sa-thumb-active: var(--kb-blue, transparent);
+
+  position: relative;
+  min-height: 0;
 }
 
-/* ---------- WebKit (Chrome/Edge/Safari) ---------- */
-.scroll-area::-webkit-scrollbar {
-	width: var(--sa-width, 8px);
-	height: var(--sa-width, 8px);
+/* ====== SCROLLER ====== */
+[data-bars-scroll="1"] .scroll-area {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+
+  /* ukryj natywny pasek */
+  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  /* old Edge/IE */
 }
 
-.scroll-area::-webkit-scrollbar-track,
-.scroll-area::-webkit-scrollbar-corner {
-	background: transparent;
+[data-bars-scroll="1"] .scroll-area::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
 }
 
-.scroll-area::-webkit-scrollbar-thumb {
-	background: var(--sa-thumb, rgba(0, 0, 0, 0.28));
-	border-radius: var(--sa-radius, 2px);
-	/* „cieńszy” optycznie pasek — przez przezroczystą ramkę */
-	border: 1px solid transparent;
-	background-clip: padding-box;
+/* ====== INNER padding (żeby treść nie wchodziła pod custom bar) ====== */
+[data-bars-scroll="1"] .scroll-area__inner {
+  box-sizing: border-box;
+  min-height: 100%;
 }
 
-.scroll-area::-webkit-scrollbar-thumb:hover {
-	background: var(--sa-thumb-hover, rgba(0, 0, 0, 0.36));
-}
-.scroll-area::-webkit-scrollbar-thumb:active {
-	background: var(--sa-thumb-active, rgba(0, 0, 0, 0.46));
-}
-
-/* Niektóre buildy Chrome rysują „czapki” jako fragment toru — wyłącz */
-.scroll-area::-webkit-scrollbar-track-piece,
-.scroll-area::-webkit-scrollbar-track-piece:start,
-.scroll-area::-webkit-scrollbar-track-piece:end {
-	background: transparent !important;
-	border: 0 !important;
-	margin: 0 !important;
+/* semantyka side:
+   - scroll-area--right => bar po PRAWEJ
+   - scroll-area--left  => bar po LEWEJ */
+[data-bars-scroll="1"] .scroll-area--right .scroll-area__inner {
+  padding-right: calc(var(--sa-width) + var(--sa-pad));
 }
 
-/* ---------- Kadrowanie „czapek” w sidebarach + wewnętrzne paddingi ---------- */
-.left-sidebar .scroll-area,
-.right-sidebar .scroll-area {
-	/* Przytnij „czapki” paska na górze i dole, by nie zachodziły pod header/footer sidebara */
-	clip-path: inset(14px 0 14px 0);
+[data-bars-scroll="1"] .scroll-area--left .scroll-area__inner {
+  padding-left: calc(var(--sa-width) + var(--sa-pad));
 }
 
-.left-sidebar .scroll-area__inner,
-.right-sidebar .scroll-area__inner {
-	padding-block: 14px; /* aby treść nie wchodziła pod przycięte rejony */
+/* ====== CUSTOM BAR ====== */
+[data-bars-scroll="1"] .sa-vbar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--sa-width);
+  z-index: 20;
+
+  background: transparent;
+  border-radius: var(--sa-radius);
+
+  pointer-events: auto;
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-/* ---------- Położenie paska: PRAWA w lewym sidebarze, LEWA w prawym ---------- */
-.left-sidebar .scroll-area {
-	direction: ltr;
-} /* scrollbar po PRAWEJ (domyślnie) */
+[data-bars-scroll="1"] .sa-vbar--right { right: 4px; }
+[data-bars-scroll="1"] .sa-vbar--left  { left: 4px; }
 
-.right-sidebar .scroll-area {
-	direction: rtl;
-} /* przenieś scrollbar na LEWĄ */
-.right-sidebar .scroll-area__inner {
-	direction: ltr;
-} /* treść normalnie LTR */
+[data-bars-scroll="1"] .sa-vbar.is-hidden { display: none; }
 
-/* ---------- Cieńszy pasek w sidebarach (nadpisywalne) ---------- */
-.left-sidebar .scroll-area,
-.right-sidebar .scroll-area {
-	--sa-width: 2px; /* zmień na 4px, jeśli chcesz troszkę grubszy */
-	--sa-radius: 6px; /* łagodne zaokrąglenie */
-	--sa-width-ff: thin; /* spójnie dla Firefoxa */
+[data-bars-scroll="1"] .sa-vbar__thumb {
+  width: 100%;
+  border-radius: var(--sa-radius);
+  background: #c0cad5;
+  box-shadow: var(--sa-thumb-shadow);
+
+  opacity: 0.9;
+  transition: opacity 120ms ease, filter 120ms ease, background-color 140ms ease;
 }
 
-/* OPTIONAL (ciemny motyw) — jeśli chcesz subtelniejsze defaulty
-@media (prefers-color-scheme: dark) {
-  .scroll-area {
-    scrollbar-color: var(--sa-thumb, rgba(140, 171, 207, 0.35)) transparent;
-  }
+[data-bars-scroll="1"] .sa-vbar:hover .sa-vbar__thumb {
+  opacity: 1;
+  background: rgb(143 165 186);
 }
-*/
+
+[data-bars-scroll="1"] .sa-vbar:active .sa-vbar__thumb,
+[data-bars-scroll="1"] .sa-vbar__thumb:active {
+  opacity: 1;
+  background: rgb(143 165 186);
+  filter: saturate(1.05);
+}

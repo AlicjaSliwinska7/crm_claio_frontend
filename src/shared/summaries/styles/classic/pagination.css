@@ -1,0 +1,26 @@
+/* src/shared/summaries2/styles/classic/_pagination.css */
+
+/* -------------------- Pagination -------------------- */
+.es-root .tss-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+  border-top: 1px solid var(--es-border);
+  background: #fff;
+}
+.es-root .tss-pagination__info {
+  font-size: 12px;
+  color: var(--es-muted);
+}
+.es-root .tss-pagination__controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.es-root .tss-page-indicator {
+  min-width: 64px;
+  text-align: center;
+  font-weight: 600;
+}

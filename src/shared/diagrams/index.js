@@ -1,12 +1,13 @@
-export { default as BarChartCounts } from './components/BarChartCounts'
-export { default as StackedBarsByMonth } from './components/StackedBarsByMonth'
-export { default as LineChartByMonth } from './components/LineChartByMonth'
-export { buildChartData } from './utils/buildChartData'
+// src/shared/diagrams2/index.js
+import './styles/index.css'
 
-// re-eksport palety
-export * from './palette'
+// Charts (raw / base)
+export { default as LineChartBase } from './charts/LineChartBase'
+export { default as BarChartBase } from './charts/BarChartBase'
+export { default as PieChartBase } from './charts/PieChartBase'
+export { default as GanttChartBase } from './charts/GanttChartBase'
+export { default as GanttRangeChartBase } from './charts/GanttRangeChartBase'
 
-export { makeChartTheme, useChartTheme, intPL, plnPL, fmtInt, fmtDateYMD } from './components/ChartTheme'
-export { default as LegendChips } from './components/LegendChips'
-export { default as ChartCard } from './components/ChartCard'
-export { LinearGradient } from './components/Gradients'
+// Utils (opcjonalnie public)
+export * as d2Colors from './utils/colors'
+export * as d2Charts from './utils/charts'

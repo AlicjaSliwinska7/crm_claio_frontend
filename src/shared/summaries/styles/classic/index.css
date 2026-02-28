@@ -1,0 +1,13 @@
+/* src/shared/summaries2/styles/classic/index.css */
+
+@import './root.css';
+@import './section.css';
+@import './card.css';
+@import './header.css';
+@import './controls.css';
+@import './kpis.css';
+@import './charts.css';
+@import './tables.css';
+@import './pagination.css';
+@import './utilities.css';
+@import './labels-fix.css';

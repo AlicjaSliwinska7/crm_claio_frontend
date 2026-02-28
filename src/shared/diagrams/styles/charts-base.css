@@ -1,0 +1,22 @@
+/* src/shared/diagrams2/styles/_charts-base.css */
+
+.d2-root .d2-chart {
+  width: 100%;
+  height: 320px;
+}
+
+.d2-root .d2-chart.big { height: 360px; }
+.d2-root .d2-chart.mini { height: 160px; }
+
+.d2-root .ts-chart { width: 100%; height: 320px; }
+.d2-root .ts-chart.big { height: 360px; }
+.d2-root .ts-chart.mini { height: 160px; }
+
+.d2-root .ts-empty,
+.d2-root .es-empty,
+.d2-root .tss-empty,
+.d2-root .d2-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--es-muted);
+}

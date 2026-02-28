@@ -1,0 +1,49 @@
+/* ============================= */
+/* Inputs renderowane w tabelach */
+/* ============================= */
+
+.table input[type="date"],
+.data-table input[type="date"] {
+  height: 32px;
+  padding: 4px 8px;
+  font-size: 13px;
+  line-height: 1.2;
+border: none;
+  background-color: transparent;
+  color: inherit;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 120px;
+
+  /* reset native styles */
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* ikona kalendarza – Safari / Chrome */
+.table input[type="date"]::-webkit-calendar-picker-indicator,
+.data-table input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.65;
+}
+
+.table input[type="date"]:hover,
+.data-table input[type="date"]:hover {
+  border-color: var(--border-hover-color, #9aa4af);
+}
+
+.table input[type="date"]:focus,
+.data-table input[type="date"]:focus {
+  outline: none;
+  border-color: var(--primary-color, #2563eb);
+  box-shadow: 0 0 0 1px var(--primary-color, #2563eb);
+}
+
+/* disabled / readonly */
+.table input[type="date"]:disabled,
+.data-table input[type="date"]:disabled {
+  background-color: #f5f7fa;
+  color: #9aa4af;
+  cursor: not-allowed;
+}

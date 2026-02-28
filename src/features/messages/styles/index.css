@@ -1,0 +1,18 @@
+/* src/features/messages/styles/message-inbox/message-inbox.css */
+
+@import './tokens.css';
+@import './layout.css';
+@import './sidebar.css';
+@import './chat.css';
+@import './reactions.css';
+@import './input.css';
+@import './confirm.css';
+@import './empty.css';
+@import './responsive.css';
+@import './modal-variant.css';
+@import './conversation-search.css';
+@import './attachments.css';
+@import './reply.css';
+@import './dnd.css';
+@import './new-conversation.css';
+@import './emoji-popover.css';

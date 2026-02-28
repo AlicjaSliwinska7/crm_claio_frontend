@@ -15,6 +15,12 @@
 	inset: 0;
 	z-index: var(--shift-z-root);
 	pointer-events: none; /* klikają tylko dzieci */
+
+	/* ✅ NEON RED (SSOT) */
+	--neon-accent: #ff2a2a;
+	--neon-accent-soft: rgba(255, 42, 42, 0.22);
+	--neon-accent-border: rgba(255, 42, 42, 0.66);
+	--neon-accent-glow: rgba(255, 42, 42, 0.32);
 }
 
 /* ---------- UCHWYT ---------- */
@@ -78,7 +84,16 @@
 	transform: translateY(0);
 }
 
-/* ---------- SIATKA ---------- */
+/* =========================================================
+   Panel content wrapper (NOWE)
+   Panel już nie narzuca .shift-groups na całą zawartość,
+   więc potrzebujemy neutralnego wrappera.
+   ========================================================= */
+.shift-panel__content {
+	display: block; /* celowo neutralnie */
+}
+
+/* ---------- SIATKA (ZMIANY) ---------- */
 .shift-groups {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -144,7 +159,7 @@
 		inset 0 0 10px rgba(255, 255, 255, 0.06);
 }
 
-/* ---------- PALETY NEON ---------- */
+/* ---------- PALETY NEON (zmiany) ---------- */
 .shift-group--1 .shift-title {
 	color: #6ff3ff;
 	text-shadow: 0 0 8px rgba(111, 243, 255, 0.45);
@@ -243,4 +258,178 @@ html.has-open-modal {
 	--shift-z-root: 9000;
 	--shift-z-base: 9100;
 	--shift-z-panel: 9200;
+}
+
+/* =========================================================
+   Sekcja sprzątania — POD zmianami
+   ========================================================= */
+
+.shift-drawer__section {
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.shift-drawer__section-title {
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.2px;
+	margin: 0 0 8px;
+	color: #b7c4d6;
+}
+
+/* ✅ Sprzątanie: budynki OBOK SIEBIE (4 kafle) */
+.shift-groups.shift-groups--cleaning {
+	margin-top: 10px;
+	display: grid;
+	gap: 12px;
+	align-items: start;
+
+	grid-template-columns: repeat(4, minmax(180px, 1fr));
+	justify-content: stretch;
+	width: 100%;
+}
+
+/* responsywność: 2 kolumny / 1 kolumna */
+@media (max-width: 980px) {
+	.shift-groups.shift-groups--cleaning {
+		grid-template-columns: repeat(2, minmax(180px, 1fr));
+	}
+}
+@media (max-width: 520px) {
+	.shift-groups.shift-groups--cleaning {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* =========================================================
+   ✅ Kolory per budynek (A/B/C/D) — po kolejności kafli
+   Zakładamy: 1=A, 2=B, 3=C, 4=D
+   ========================================================= */
+
+/* A — TURQUOISE */
+.shift-groups--cleaning .shift-group:nth-of-type(1) .shift-title {
+	color: #55f0ff;
+	text-shadow: 0 0 8px rgba(85, 240, 255, 0.35);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(1) .shift-count {
+	color: rgba(255, 255, 255, 0.75);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(1) .shift-person {
+	background: rgba(85, 240, 255, 0.12);
+	border-color: rgba(85, 240, 255, 0.58);
+	box-shadow: 0 0 0 1px rgba(85, 240, 255, 0.18), 0 0 12px rgba(85, 240, 255, 0.22),
+		inset 0 0 8px rgba(255, 255, 255, 0.04);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(1) .shift-person:hover {
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 16px rgba(85, 240, 255, 0.32),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+/* B — BLUE */
+.shift-groups--cleaning .shift-group:nth-of-type(2) .shift-title {
+	color: #5aa6ff;
+	text-shadow: 0 0 8px rgba(90, 166, 255, 0.35);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(2) .shift-count {
+	color: rgba(255, 255, 255, 0.75);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(2) .shift-person {
+	background: rgba(90, 166, 255, 0.12);
+	border-color: rgba(90, 166, 255, 0.58);
+	box-shadow: 0 0 0 1px rgba(90, 166, 255, 0.18), 0 0 12px rgba(90, 166, 255, 0.22),
+		inset 0 0 8px rgba(255, 255, 255, 0.04);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(2) .shift-person:hover {
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 16px rgba(90, 166, 255, 0.32),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+.shift-groups--cleaning .shift-group:nth-of-type(3) .shift-title {
+color: #8a7fff;
+    text-shadow: 0 0 8px rgba(138, 127, 255, 0.45);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(3) .shift-count {
+	color: #ffffff;
+}
+.shift-groups--cleaning .shift-group:nth-of-type(3) .shift-person {
+    background: rgba(138, 127, 255, 0.12);
+    border-color: rgba(138, 127, 255, 0.68);
+    box-shadow: 0 0 0 1px rgba(138, 127, 255, 0.24), 0 0 14px rgba(138, 127, 255, 0.38), inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(3) .shift-person:hover {
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 16px rgba(65, 240, 138, 0.32),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+/* D — RED */
+.shift-groups--cleaning .shift-group:nth-of-type(4) .shift-title {
+	color: rgba(84, 124, 255, 0.75);
+	text-shadow: rgba(60, 42, 255, 0.664);;
+}
+.shift-groups--cleaning .shift-group:nth-of-type(4) .shift-count {
+	color: rgba(255, 255, 255, 0.75);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(4) .shift-person {
+    background: rgba(90, 166, 255, 0.12);
+    border-color: rgba(58, 104, 255, 0.75);
+    box-shadow: 0 0 0 1px rgba(90, 166, 255, 0.18), 0 0 12px rgba(90, 166, 255, 0.22), inset 0 0 8px rgba(255, 255, 255, 0.04);
+}
+.shift-groups--cleaning .shift-group:nth-of-type(4) .shift-person:hover {
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 16px rgba(255, 42, 42, 0.32),
+		inset 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+/* =========================================================
+   Sekcja dodatkowa pod zmianami (Sprzątanie — dziś) — TOGGLE
+   ========================================================= */
+
+.shift-section-toggle {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	align-items: center;
+	gap: 10px;
+
+	padding: 8px 10px;
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.10);
+	background: rgba(255, 255, 255, 0.06);
+
+	color: #eaf1ff;
+	cursor: pointer;
+	pointer-events: auto;
+
+	transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.shift-section-toggle:hover {
+	background: rgba(255, 255, 255, 0.085);
+	border-color: rgba(255, 255, 255, 0.14);
+}
+
+.shift-section-title {
+	font-size: 12px;
+	font-weight: 850;
+	letter-spacing: 0.2px;
+}
+
+.shift-section-sub {
+	font-size: 11px;
+	color: rgba(234, 241, 255, 0.70);
+}
+
+.shift-section-chev {
+	transition: transform 0.18s ease;
+	opacity: 0.9;
+	color: rgb(255, 255, 255);
+}
+
+.shift-section-toggle.is-open .shift-section-chev {
+	transform: rotate(180deg);
+}
+
+.shift-section-toggle.is-open {
+	border-color: rgba(57, 96, 168, 0.7);
+	box-shadow: 0 0 0 1px rgba(41, 71, 221, 0.1), 0 0 14px rgba(42, 113, 255, 0.16);
 }

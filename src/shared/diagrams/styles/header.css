@@ -1,0 +1,72 @@
+/* src/shared/diagrams2/styles/_header.css */
+
+.d2-root .es-card__sectionHead,
+.d2-root .es-section__header,
+.d2-root .d2-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--es-border);
+}
+
+/* left side: icon + title */
+.d2-root .es-section__titlewrap,
+.d2-root .d2-head__titlewrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+}
+
+.d2-root .es-section__icon,
+.d2-root .es-headIcon,
+.d2-root .d2-head__icon {
+  color: var(--es-blue);
+  display: inline-flex;
+  line-height: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.d2-root .es-headIcon svg,
+.d2-root .d2-head__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.d2-root .es-card__sectionTitle,
+.d2-root .es-section__title,
+.d2-root .ts-title,
+.d2-root .d2-head__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--es-slate);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* right-side actions */
+.d2-root .es-headActions,
+.d2-root .d2-head__actions {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* subtitle */
+.d2-root .es-section__sub,
+.d2-root .ts-subline,
+.d2-root .es-subtitle,
+.d2-root .d2-subtitle {
+  margin: -4px 2px 6px;
+  color: var(--es-muted);
+  font-size: 12px;
+  text-align: center;
+}

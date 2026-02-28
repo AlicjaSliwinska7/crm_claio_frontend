@@ -1,0 +1,150 @@
+/* src/shared/tables/styles/boards/register.css */
+
+/* =========================================================
+   BOARD – rejestr (shared/tables)
+   Cel: własny “boardowy” look, ale bez rozwalenia reszty rejestrów
+   ========================================================= */
+
+.board-register {
+  --board-muted: rgba(25, 35, 55, 0.55);
+  --board-chip-bg: rgba(100, 120, 160, 0.12);
+  --board-chip-border: rgba(110, 135, 175, 0.24);
+  --board-chip-text: rgba(25, 35, 55, 0.85);
+
+  --board-tag-bg: rgba(120, 135, 170, 0.10);
+  --board-tag-border: rgba(120, 135, 170, 0.24);
+
+  --board-badge-post-bg: rgba(85, 140, 220, 0.14);
+  --board-badge-post-bd: rgba(85, 140, 220, 0.28);
+
+  --board-badge-task-bg: rgba(240, 170, 80, 0.16);
+  --board-badge-task-bd: rgba(240, 170, 80, 0.28);
+
+  --board-prio-low-bg: rgba(120, 170, 120, 0.14);
+  --board-prio-low-bd: rgba(120, 170, 120, 0.28);
+
+  --board-prio-medium-bg: rgba(240, 200, 90, 0.16);
+  --board-prio-medium-bd: rgba(240, 200, 90, 0.30);
+
+  --board-prio-high-bg: rgba(240, 110, 110, 0.14);
+  --board-prio-high-bd: rgba(240, 110, 110, 0.28);
+}
+
+.board-register .muted {
+  color: var(--board-muted);
+}
+
+.board-register__toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0 8px;
+}
+
+.board-register__table {
+  margin-top: 6px;
+}
+
+/* klik w wiersz */
+.board-register-table tbody tr[role='button'] {
+  cursor: pointer;
+}
+
+/* tytuł */
+.board-title-cell {
+  font-weight: 650;
+  letter-spacing: 0.1px;
+}
+
+/* badge */
+.board-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid transparent;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.board-badge--post {
+  background: var(--board-badge-post-bg);
+  border-color: var(--board-badge-post-bd);
+}
+
+.board-badge--task {
+  background: var(--board-badge-task-bg);
+  border-color: var(--board-badge-task-bd);
+}
+
+.board-badge--prio {
+  font-weight: 750;
+}
+
+.board-badge--low {
+  background: var(--board-prio-low-bg);
+  border-color: var(--board-prio-low-bd);
+}
+
+.board-badge--medium {
+  background: var(--board-prio-medium-bg);
+  border-color: var(--board-prio-medium-bd);
+}
+
+.board-badge--high {
+  background: var(--board-prio-high-bg);
+  border-color: var(--board-prio-high-bd);
+}
+
+/* chips: mentions */
+.board-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.board-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--board-chip-bg);
+  border: 1px solid var(--board-chip-border);
+  color: var(--board-chip-text);
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.board-chip--more {
+  opacity: 0.85;
+}
+
+/* tags */
+.board-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--board-tag-bg);
+  border: 1px solid var(--board-tag-border);
+  color: rgba(25, 35, 55, 0.82);
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.board-tag--more {
+  opacity: 0.85;
+}
+
+/* drobne dopasowanie paginacji w board */
+.board-register .list-pagination {
+  margin-top: 10px;
+}

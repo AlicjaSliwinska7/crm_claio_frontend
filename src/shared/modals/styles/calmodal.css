@@ -1,0 +1,175 @@
+/* src/shared/modals/styles/calmodal.css */
+
+/* Overlay + karta – spójne z Twoją paletą (#eef3f8 / #26435e) */
+.calmodal__overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(18, 28, 38, 0.45);
+	backdrop-filter: blur(2px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1100;
+	animation: calmodal-fade 0.18s ease;
+}
+
+.calmodal__content {
+	width: min(980px, 96vw);
+	max-height: 86vh;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid #ccd6e0;
+	animation: calmodal-up 0.2s ease;
+	font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+}
+
+/* Header */
+.calmodal__header {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+	padding: 16px 18px;
+	border-bottom: 1px solid #e3eaf2;
+	background: linear-gradient(180deg, #f7faff, #f2f6fb);
+}
+.calmodal__titlewrap h3 {
+	margin: 0;
+	font-size: 18px;
+	color: #26435e;
+	letter-spacing: 0.2px;
+}
+.calmodal__subtitle {
+	display: block;
+	font-size: 12px;
+	color: #627891;
+	margin-top: 2px;
+}
+.calmodal__close {
+	border: none;
+	background: transparent;
+	color: #627891;
+	font-size: 26px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 4px 8px;
+	border-radius: 8px;
+	transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+.calmodal__close:hover {
+	background: #eaf1f8;
+	color: #284a69;
+	transform: scale(1.03);
+}
+.calmodal__close:focus {
+	outline: 2px solid #97b4d4;
+	outline-offset: 2px;
+}
+
+/* Body — bazowo scroll + padding (jak DayOverview) */
+.calmodal__body {
+	padding: 14px;
+	overflow: auto;
+}
+
+/* Helper: pełne “edge-to-edge” w środku modala (dla Inbox) */
+.calmodal__body--flush {
+	padding: 0;
+}
+
+/* Animacje */
+@keyframes calmodal-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes calmodal-up {
+	from {
+		transform: translateY(6px);
+		opacity: 0.98;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+/* =========================================================
+   (Opcjonalnie) style “chip/badge/btn/linklike” – tylko W MODALU
+   Jeśli w Inbox/Compose ich używasz, masz 1:1 jak DayOverview.
+   ========================================================= */
+
+.calmodal__content .chip {
+	font-size: 12px;
+	color: #254662;
+	border: 1px solid #cfe0ef;
+	background: #ffffff;
+	border-radius: 999px;
+	padding: 6px 10px;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+}
+.calmodal__content .chip:hover {
+	background: #f0f6ff;
+	border-color: #bcd1e6;
+	transform: translateY(-1px);
+}
+.calmodal__content .badge {
+	font-size: 11px;
+	background: #e7eef7;
+	color: #2d4f71;
+	border-radius: 999px;
+	padding: 2px 6px;
+}
+
+.calmodal__content .btn {
+	border: 1px solid #cfe0ef;
+	background: #ffffff;
+	color: #294a68;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-size: 13px;
+	cursor: pointer;
+	transition: background 0.12s ease, border-color 0.12s ease, transform 0.06s ease;
+}
+.calmodal__content .btn:hover {
+	background: #f1f6fc;
+	border-color: #bcd1e6;
+	transform: translateY(-1px);
+}
+.calmodal__content .btn--primary {
+	background: #2b5b8d;
+	color: #fff;
+	border-color: #2b5b8d;
+}
+.calmodal__content .btn--primary:hover {
+	background: #244e79;
+	border-color: #244e79;
+}
+.calmodal__content .btn--ghost {
+	background: #f6f9fd;
+	border-style: dashed;
+}
+
+.calmodal__content .linklike {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	color: #1f4c80;
+	cursor: pointer;
+	font-size: 14px;
+	text-align: left;
+}
+.calmodal__content .linklike:hover {
+	text-decoration: underline;
+}

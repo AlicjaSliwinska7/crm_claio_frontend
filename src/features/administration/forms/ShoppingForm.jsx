@@ -1,285 +1,177 @@
-// src/features/administration/pages/ShoppingListRegister.jsx
-import React, { useMemo, useState, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+// src/features/administration/forms/ShoppingForm.jsx
+import React, { useCallback, useMemo } from 'react'
+import { CATEGORIES, STATUSES } from '../config/shopping.config'
 
-// style „registers”
-import '../../../shared/tables/styles/directories_lists_registers/index.css'
+export default function ShoppingForm({ draft, setDraft, onSubmit, onClose }) {
+  const d = draft || {}
 
-// modale
-import { Modal, DeleteDialog } from '../../../shared/modals'
+  const categories = useMemo(() => CATEGORIES ?? [], [])
+  const statuses = useMemo(() => STATUSES ?? [], [])
 
-// wspólne listowe klocki (barrel)
-import {
-	ListLayout,
-	SearchBar,
-	AddButton,
-	Pagination,
-	ListSummary,
-	ExportCsvButton,
-	DataTableWithActions,
-	useUrlPagination,
-	useListQuery,
-	useCsvExport,
-	useListCrud,
-	PAGE_SIZE,
-	CSV_DELIMITER,
-	CSV_BOM,
-	SCROLL_SELECTOR,
-	editDeleteActions,
-} from '../../../shared/tables'
+  const update = useCallback(
+    (patch) => setDraft((prev) => ({ ...(prev || {}), ...patch })),
+    [setDraft]
+  )
 
-// dodatkowe utilsy współdzielone
-import { makeEmptyRecord } from '../../../shared/utils/records'
-import { countBy, mapCountsToLabels } from '../../../shared/utils/arrays'
+  const onText = useCallback(
+    (e) => update({ [e.target.name]: e.target.value }),
+    [update]
+  )
 
-// formularz
-import ShoppingForm from '../forms/ShoppingForm'
+  const onSelect = useCallback(
+    (e) => update({ [e.target.name]: e.target.value }),
+    [update]
+  )
 
-// konfiguracja (SSOT)
-import {
-	CATEGORIES,
-	STATUSES,
-	HEADER_COLS,
-	CSV_COLUMNS,
-	initialItems,
-	catLabel,
-	statusLabel,
-	normalizeUrl,
-	resolveCurrentUserName,
-	validateItem,
-	getSearchFields,
-} from '../config/shopping.config'
+  const onQty = useCallback(
+    (e) => {
+      const raw = e.target.value
+      if (raw === '') return update({ quantity: '' })
+      const n = parseInt(raw, 10)
+      update({ quantity: Number.isFinite(n) ? n : 1 })
+    },
+    [update]
+  )
 
-// ========= Fabryka pustego rekordu =========
-const makeEmptyItem = makeEmptyRecord(ctx => ({
-	name: '',
-	category: 'biuro',
-	quantity: 1,
-	link: '',
-	status: 'todo',
-	addedBy: ctx.currentUserName,
-	note: '',
-}))
+  return (
+    <form className="m-form" onSubmit={onSubmit} autoComplete="off">
+      {/* ===== Nazwa ===== */}
+      <div className="m-field">
+        <label className="m-label" htmlFor="shopping-name">
+          Nazwa <span className="req">*</span>
+        </label>
+        <input
+          id="shopping-name"
+          name="name"
+          className="m-input"
+          type="text"
+          value={d.name || ''}
+          onChange={onText}
+          placeholder="np. rękawiczki nitrylowe, papier A4…"
+          required
+        />
+        <div className="m-help">Wpisz nazwę produktu/usługi do kupienia.</div>
+      </div>
 
-export default function ShoppingListRegister({ currentUser }) {
-	const currentUserName = resolveCurrentUserName(currentUser)
+      {/* ===== Kategoria + Ilość ===== */}
+      <div className="m-row">
+        <div className="m-field">
+          <label className="m-label" htmlFor="shopping-category">
+            Kategoria
+          </label>
+          <select
+            id="shopping-category"
+            name="category"
+            className="m-select"
+            value={d.category || 'biuro'}
+            onChange={onSelect}
+          >
+            {categories.map((c) => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-	// URL params
-	const [searchParams, setSearchParams] = useSearchParams()
+        <div className="m-field">
+          <label className="m-label" htmlFor="shopping-quantity">
+            Ilość
+          </label>
+          <input
+            id="shopping-quantity"
+            name="quantity"
+            className="m-input"
+            type="number"
+            min={1}
+            step={1}
+            inputMode="numeric"
+            value={d.quantity ?? 1}
+            onChange={onQty}
+          />
+        </div>
+      </div>
 
-	// filtry UI
-	const [filterCategory, setFilterCategory] = useState('all')
-	const [filterStatus, setFilterStatus] = useState('all')
+      {/* ===== Link ===== */}
+      <div className="m-field">
+        <label className="m-label" htmlFor="shopping-link">
+          Link
+        </label>
+        <input
+          id="shopping-link"
+          name="link"
+          className="m-input"
+          type="url"
+          value={d.link || ''}
+          onChange={onText}
+          placeholder="https://… (opcjonalnie)"
+        />
+        <div className="m-help">Możesz wkleić link do produktu/oferty.</div>
+      </div>
 
-	// ===== CRUD =====
-	const validate = useCallback(validateItem, [])
+      {/* ===== Status + Dodał(a) ===== */}
+      <div className="m-row">
+        <div className="m-field">
+          <label className="m-label" htmlFor="shopping-status">
+            Status
+          </label>
+          <select
+            id="shopping-status"
+            name="status"
+            className="m-select"
+            value={d.status || 'todo'}
+            onChange={onSelect}
+          >
+            {statuses.map((s) => (
+              <option key={s.key} value={s.key}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-	const normalizeOnSave = useCallback(
-		x => ({
-			...x,
-			name: (x.name || '').trim(),
-			quantity: Math.max(1, parseInt(x.quantity, 10) || 1),
-			link: normalizeUrl(x.link),
-			addedBy: (x.addedBy || currentUserName).trim(),
-		}),
-		[currentUserName]
-	)
+        <div className="m-field">
+          <label className="m-label" htmlFor="shopping-addedBy">
+            Dodał(a)
+          </label>
+          <input
+            id="shopping-addedBy"
+            name="addedBy"
+            className="m-input"
+            type="text"
+            value={d.addedBy || ''}
+            onChange={onText}
+            placeholder="np. Alicja Śliwińska"
+          />
+        </div>
+      </div>
 
-	const {
-		list: items,
-		form,
-		setForm,
-		modalOpen,
-		openAdd,
-		openEdit,
-		closeModal,
-		isEditing,
-		showDeleteModal,
-		askDelete,
-		cancelDelete,
-		confirmDelete,
-		deleteLabel,
-		save,
-	} = useListCrud({
-		initialItems,
-		idKey: 'id',
-		makeId: () => Date.now(),
-		validate,
-		normalizeOnSave,
-	})
+      {/* ===== Notatka ===== */}
+      <div className="m-field">
+        <label className="m-label" htmlFor="shopping-note">
+          Notatka
+        </label>
+        <textarea
+          id="shopping-note"
+          name="note"
+          className="m-textarea"
+          value={d.note || ''}
+          onChange={onText}
+          placeholder="np. parametry, marka, pilność…"
+          rows={4}
+        />
+        <div className="m-help">Opcjonalne szczegóły dla osoby zamawiającej.</div>
+      </div>
 
-	// ===== Wyszukiwanie + sort =====
-	const { searchQuery, setSearchQuery, sortConfig, setSortConfig, filteredSorted } = useListQuery(items, HEADER_COLS, {
-		initialSort: { key: 'category', direction: 'asc' },
-		getSearchFields,
-	})
-
-	// dodatkowe filtry kategorii i statusu
-	const filteredByFilters = useMemo(
-		() =>
-			filteredSorted.filter(r => {
-				if (filterCategory !== 'all' && r.category !== filterCategory) return false
-				if (filterStatus !== 'all' && r.status !== filterStatus) return false
-				return true
-			}),
-		[filteredSorted, filterCategory, filterStatus]
-	)
-
-	// ===== Paginacja (URL) =====
-	const { pageCount, currentPage, visible, onPageChange, resetToFirstPage } = useUrlPagination(filteredByFilters, {
-		pageSize: PAGE_SIZE,
-		searchParams,
-		setSearchParams,
-		param: 'page',
-		scrollSelector: SCROLL_SELECTOR,
-		canonicalize: true,
-	})
-
-	// ===== CSV =====
-	const csvRows = useMemo(
-		() =>
-			filteredByFilters.map(r => ({
-				...r,
-				category: catLabel(r.category),
-				status: statusLabel(r.status),
-			})),
-		[filteredByFilters]
-	)
-
-	const exportCSV = useCsvExport({
-		columns: CSV_COLUMNS,
-		rows: csvRows,
-		filename: 'lista_zakupow.csv',
-		delimiter: CSV_DELIMITER,
-		includeHeader: true,
-		addBOM: CSV_BOM,
-	})
-
-	// ===== Summary =====
-	const total = filteredByFilters.length
-
-	const catCountsLabeled = useMemo(() => {
-		const raw = countBy(filteredByFilters, r => r.category)
-		return mapCountsToLabels(raw, catLabel)
-	}, [filteredByFilters])
-
-	const summaryItems = useMemo(() => {
-		const arr = [['Zamówienia', total]]
-		for (const c of CATEGORIES) {
-			const n = catCountsLabeled.get(c.label) || 0
-			if (n > 0) arr.push([c.label, n])
-		}
-		return arr
-	}, [total, catCountsLabeled])
-
-	// ===== Render =====
-	return (
-		<ListLayout
-			rootClassName='shopping-list'
-			controlsClassName='shopping-controls'
-			controls={
-				<>
-					<SearchBar
-						value={searchQuery}
-						placeholder='Szukaj w zakupach...'
-						onChange={val => {
-							setSearchQuery(val)
-							resetToFirstPage(true)
-						}}
-						onClear={() => {
-							setSearchQuery('')
-							resetToFirstPage(true)
-						}}
-					/>
-
-					<select
-						value={filterCategory}
-						onChange={e => {
-							setFilterCategory(e.target.value)
-							resetToFirstPage(true)
-						}}
-						className='training-filter-select'
-						title='Filtr kategorii'
-						aria-label='Filtr kategorii'>
-						<option value='all'>Wszystkie kategorie</option>
-						{CATEGORIES.map(c => (
-							<option key={c.key} value={c.key}>
-								{c.label}
-							</option>
-						))}
-					</select>
-
-					<select
-						value={filterStatus}
-						onChange={e => {
-							setFilterStatus(e.target.value)
-							resetToFirstPage(true)
-						}}
-						className='training-filter-select'
-						title='Filtr statusu'
-						aria-label='Filtr statusu'>
-						<option value='all'>Wszystkie statusy</option>
-						{STATUSES.map(s => (
-							<option key={s.key} value={s.key}>
-								{s.label}
-							</option>
-						))}
-					</select>
-
-					<AddButton
-						className='add-contact-btn'
-						label='Dodaj pozycję'
-						onClick={() => openAdd(makeEmptyItem({ currentUserName }))}
-					/>
-				</>
-			}
-			footer={
-				<>
-					<div className='table-actions table-actions--inline'>
-						<Pagination currentPage={currentPage} pageCount={pageCount} onPageChange={onPageChange} />
-						<ExportCsvButton onClick={exportCSV} iconOnly />
-					</div>
-
-					<ListSummary ariaLabel='Podsumowanie listy zakupów' items={summaryItems} />
-				</>
-			}>
-			<DataTableWithActions
-				columns={HEADER_COLS}
-				rows={visible}
-				sortConfig={sortConfig}
-				setSortConfig={cfg => {
-					setSortConfig(cfg)
-					resetToFirstPage(true)
-				}}
-				onAfterSort={() => resetToFirstPage(true)}
-				actionsForRow={row =>
-					editDeleteActions(
-						() => openEdit(row.id),
-						() => askDelete(row.id)
-					)
-				}
-				actionsSticky
-				ariaLabel='Tabela zakupów'
-			/>
-
-			{modalOpen && (
-				<Modal title={isEditing ? 'Edytuj pozycję' : 'Dodaj pozycję'} onClose={closeModal} size='sm'>
-					<ShoppingForm
-						draft={form || makeEmptyItem({ currentUserName })}
-						setDraft={setForm}
-						onSubmit={e => save(e, { after: () => resetToFirstPage(true) })}
-						onClose={closeModal}
-					/>
-				</Modal>
-			)}
-
-			<DeleteDialog
-				open={showDeleteModal}
-				onConfirm={() => confirmDelete({ after: () => resetToFirstPage(true) })}
-				onClose={cancelDelete}
-				label={deleteLabel}
-				what='pozycję'
-			/>
-		</ListLayout>
-	)
+      {/* ===== Akcje ===== */}
+      <div className="m-actions--footer">
+        <button type="button" className="m-btn m-btn--secondary" onClick={onClose}>
+          Anuluj
+        </button>
+        <button type="submit" className="m-btn m-btn--primary">
+          Zapisz
+        </button>
+      </div>
+    </form>
+  )
 }

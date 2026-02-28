@@ -1,0 +1,39 @@
+/* _dnd.css */
+
+.dnd-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(18, 28, 38, 0.35);
+	backdrop-filter: blur(2px);
+}
+
+.dnd-card {
+	width: min(520px, 92%);
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	background: rgba(255, 255, 255, 0.92);
+	box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+	padding: 18px;
+	text-align: center;
+}
+
+.dnd-icon {
+	font-size: 32px;
+	margin-bottom: 8px;
+}
+
+.dnd-title {
+	font-size: 16px;
+	font-weight: 900;
+	color: #274a6c;
+	margin-bottom: 4px;
+}
+
+.dnd-sub {
+	font-size: 13px;
+	color: #607792;
+}

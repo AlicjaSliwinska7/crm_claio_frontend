@@ -2,6 +2,7 @@
 // SSOT: konfiguracja laboratoriów wzorcowania + stałe dla CalibrationSchedule
 // Wersja BEZ statusów laboratoriów.
 
+import React from 'react'
 import { renderers, makeSearchFields } from '../../../shared/tables'
 import { safeString } from '../../../shared/utils/formatters'
 
@@ -47,6 +48,7 @@ export const HEADER_COLS = [
 		label: 'Nazwa',
 		sortable: true,
 		type: 'string',
+		minWidth: 220,
 		...renderers.textRenderer('name'),
 	},
 	{
@@ -54,20 +56,26 @@ export const HEADER_COLS = [
 		label: 'Miasto',
 		sortable: true,
 		type: 'string',
+		minWidth: 140,
 		...renderers.textRenderer('city'),
 	},
+
+	// ✅ lepiej jako mailto
 	{
 		key: 'email',
 		label: 'E-mail',
 		sortable: true,
 		type: 'string',
-		...renderers.textRenderer('email'),
+		minWidth: 220,
+		...renderers.emailRenderer('email'),
 	},
+
 	{
 		key: 'phone',
 		label: 'Telefon',
 		sortable: true,
 		type: 'string',
+		minWidth: 140,
 		...renderers.textRenderer('phone'),
 	},
 	{
@@ -75,13 +83,15 @@ export const HEADER_COLS = [
 		label: 'Zakres',
 		sortable: true,
 		type: 'string',
-		...renderers.textRenderer('scope'),
+		minWidth: 240,
+		...renderers.textWithTitleRenderer('scope'),
 	},
 	{
 		key: 'accreditation',
 		label: 'Akredytacja',
 		sortable: true,
 		type: 'string',
+		minWidth: 140,
 		...renderers.textRenderer('accreditation'),
 	},
 ]
@@ -134,6 +144,20 @@ export const normalizeOnSave = (obj = {}) => ({
 })
 
 export const labelForDelete = row => row?.name || row?.id || ''
+
+/* =========================================================
+   Pusty formularz (żeby openAdd nie dawał {})
+   ========================================================= */
+
+export const EMPTY_LAB = {
+	id: '',
+	name: '',
+	city: '',
+	email: '',
+	phone: '',
+	scope: '',
+	accreditation: '',
+}
 
 /* =========================================================
    Dane przykładowe

@@ -1,0 +1,24 @@
+/* ============================ RESPONSIVE ========================== */
+@media (max-width: 992px) {
+	.message-inbox {
+		flex-direction: column;
+		margin: 10px;
+		height: 90vh;
+	}
+	.sidebar {
+		width: 100%;
+		border-right: none;
+		border-bottom: 1px solid var(--hair);
+	}
+	.chat-window { border-left: none; border-radius: 0 0 var(--r-md) var(--r-md); }
+	.message-block { max-width: 92%; }
+}
+
+/* ===================== Reduced motion ============================ */
+@media (prefers-reduced-motion: reduce) {
+	* { animation: none !important; transition: none !important; }
+}
+
+/* ============================ ANIMATIONS ========================== */
+.fade-in { animation: fadeIn .2s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: scale(1); } }

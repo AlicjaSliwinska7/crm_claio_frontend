@@ -10,12 +10,6 @@ export default function AccountData() {
   const { initial: user, clear } = useAccountProfile()
 
   const handleEdit = () => navigate('/ustawienia/profil')
-  const handleReset = () => {
-    if (window.confirm('Przywrócić dane domyślne profilu?')) {
-      clear()
-      window.location.reload()
-    }
-  }
 
   return (
     <div className='account-page'>
@@ -34,14 +28,6 @@ export default function AccountData() {
           </div>
 
           <div className='account-actions'>
-            <button
-              className='btn btn--secondary'
-              onClick={handleReset}
-              title='Przywróć domyślne'
-            >
-              <RefreshCw size={16} />
-              Przywróć
-            </button>
             <button
               className='btn btn--primary'
               onClick={handleEdit}

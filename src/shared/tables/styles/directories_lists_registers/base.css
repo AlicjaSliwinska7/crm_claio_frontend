@@ -18,7 +18,7 @@
 .contact-list,
 .documents-list,
 .trainings-list,
-.appointments-register,   /* ✅ było: .appointments-list */
+.appointments-register, /* ✅ było: .appointments-list */
 .ordersRegister-list,
 .samplesRegister-list,
 .samplesLogistics-list,
@@ -29,7 +29,12 @@
   line-height: 1.4; /* stabilna wysokość wierszy bez zmiany wyglądu */
 }
 
+/* (zostawiam pusty selector jeśli go używasz w HTML/JSX) */
 .list-page {}
+
+/* =========================================================
+   Header
+   ========================================================= */
 
 .list-header {
   margin-bottom: 12px;
@@ -40,6 +45,10 @@
   font-size: 1.25rem;
   font-weight: 600;
 }
+
+/* =========================================================
+   Controls
+   ========================================================= */
 
 .list-controls {
   display: flex;

@@ -11,12 +11,13 @@ export const MENU = [
     label: 'Administracja',
     base: '/administracja',
     items: [
-      { to: '/administracja/harmonogram',   label: 'Harmonogram laboratorium' },
-      { to: '/administracja/kontakty',      label: 'Lista kontaktowa' },
-      { to: '/administracja/dokumenty',     label: 'Dokumenty' },
-      { to: '/administracja/szkolenia',     label: 'Szkolenia' },
-      { to: '/administracja/spotkania',     label: 'Spotkania' },
-      { to: '/administracja/zamowienia',    label: 'Zamówienia' },
+      { to: '/administracja/harmonogram', label: 'Harmonogram laboratorium' },
+      { to: '/administracja/grafik_sprzatania', label: 'Grafik sprzątania' },
+      { to: '/administracja/kontakty', label: 'Lista kontaktowa' },
+      { to: '/administracja/dokumenty', label: 'Dokumenty' },
+      { to: '/administracja/szkolenia', label: 'Szkolenia' },
+      { to: '/administracja/spotkania', label: 'Spotkania' },
+      { to: '/administracja/zamowienia', label: 'Zamówienia' },
     ],
   },
   {
@@ -25,11 +26,11 @@ export const MENU = [
     label: 'Sprzedaż',
     base: '/sprzedaz',
     items: [
-      { to: '/sprzedaz/klienci',        label: 'Klienci' },
-      { to: '/sprzedaz/oferty',         label: 'Oferty' },
+      { to: '/sprzedaz/klienci', label: 'Klienci' },
+      { to: '/sprzedaz/oferty', label: 'Oferty' },
       { to: '/sprzedaz/rejestr-zlecen', label: 'Rejestr zleceń' },
-      { to: '/sprzedaz/cennik',         label: 'Cennik' },
-      { to: '/sprzedaz/zestawienia',    label: 'Zestawienia' },
+      { to: '/sprzedaz/cennik', label: 'Cennik' },
+      { to: '/sprzedaz/zestawienia', label: 'Zestawienia' },
     ],
   },
   {
@@ -38,10 +39,10 @@ export const MENU = [
     label: 'Próbki',
     base: '/probki',
     items: [
-      { to: '/probki/rejestr-probek',   label: 'Rejestr próbek' },
+      { to: '/probki/rejestr-probek', label: 'Rejestr próbek' },
       { to: '/probki/dostawa-i-odbior', label: 'Dostawa i odbiór' },
-      { to: '/probki/utylizacja',       label: 'Utylizacja' },
-      { to: '/probki/zestawienie',      label: 'Zestawienie' },
+      { to: '/probki/utylizacja', label: 'Utylizacja' },
+      { to: '/probki/zestawienie', label: 'Zestawienie' },
     ],
   },
   {
@@ -51,8 +52,8 @@ export const MENU = [
     base: '/badania',
     items: [
       { to: '/badania/rejestr-badan', label: 'Rejestr badań' },
-      { to: '/badania/harmonogram',   label: 'Harmonogram badań' },
-      { to: '/badania/zestawienie',   label: 'Zestawienie' },
+      { to: '/badania/harmonogram', label: 'Harmonogram badań' },
+      { to: '/badania/zestawienie', label: 'Zestawienie' },
     ],
   },
   {
@@ -61,10 +62,10 @@ export const MENU = [
     label: 'Wyposażenie',
     base: '/wyposazenie',
     items: [
-      { to: '/wyposazenie/rejestr-wyposazenia',    label: 'Rejestr wyposażenia badawczego' },
-      { to: '/wyposazenie/laboratoria-wzorcowania',label: 'Laboratoria wzorcowania' },
-      { to: '/wyposazenie/harmonogram-wzorcowania',label: 'Harmonogram wzorcowania' },
-      { to: '/wyposazenie/zestawienie',            label: 'Zestawienie' },
+      { to: '/wyposazenie/rejestr-wyposazenia', label: 'Rejestr wyposażenia badawczego' },
+      { to: '/wyposazenie/laboratoria-wzorcowania', label: 'Laboratoria wzorcowania' },
+      { to: '/wyposazenie/harmonogram-wzorcowania', label: 'Harmonogram wzorcowania' },
+      { to: '/wyposazenie/zestawienie', label: 'Zestawienie' },
     ],
   },
   {
@@ -73,16 +74,16 @@ export const MENU = [
     label: 'Dokumentacja',
     base: '/dokumentacja',
     items: [
-      { to: '/dokumentacja/oferty',             label: 'Oferty' },
-      { to: '/dokumentacja/zlecenia',           label: 'Zlecenia' },
+      { to: '/dokumentacja/oferty', label: 'Oferty' },
+      { to: '/dokumentacja/zlecenia', label: 'Zlecenia' },
       { to: '/dokumentacja/karty-kalkulacyjne', label: 'Karty kalkulacyjne' },
-      { to: '/dokumentacja/ppp',                label: 'Protokoły Przyjęcia Próbki' },
-      { to: '/dokumentacja/pb',                 label: 'Programy Badań' },
-      { to: '/dokumentacja/karty-badan',        label: 'Karty Badań' },
-      { to: '/dokumentacja/logi',               label: 'Logi' },
-      { to: '/dokumentacja/inne-informacje',    label: 'Inne informacje' },
-      { to: '/dokumentacja/sprawozdania',       label: 'Sprawozdania z badań' },
-      { to: '/dokumentacja/archiwizacja',       label: 'Archiwizacja' },
+      { to: '/dokumentacja/ppp', label: 'Protokoły Przyjęcia Próbki' },
+      { to: '/dokumentacja/pb', label: 'Programy Badań' },
+      { to: '/dokumentacja/karty-badan', label: 'Karty Badań' },
+      { to: '/dokumentacja/logi', label: 'Logi' },
+      { to: '/dokumentacja/inne-informacje', label: 'Inne informacje' },
+      { to: '/dokumentacja/sprawozdania', label: 'Sprawozdania z badań' },
+      { to: '/dokumentacja/archiwizacja', label: 'Archiwizacja' },
     ],
   },
   {
@@ -90,9 +91,7 @@ export const MENU = [
     iconClass: 'fas fa-book',
     label: 'Metody badawcze',
     base: '/metody-badawcze',
-    items: [
-      { to: '/metody-badawcze/spis', label: 'Spis metod' },
-    ],
+    items: [{ to: '/metody-badawcze/spis', label: 'Spis metod' }],
   },
   {
     id: 'operacje',
@@ -101,14 +100,14 @@ export const MENU = [
     base: '/operacje',
     items: [
       { to: '/operacje/zlecenia-do-zarejestrowania', label: 'Zlecenia do zarejestrowania' },
-      { to: '/operacje/oczekiwanie-na-dostawe',      label: 'Oczekiwanie na dostawę' },
-      { to: '/operacje/probki-do-przyjecia',         label: 'Próbki do przyjęcia' },
-      { to: '/operacje/pb-do-przygotowania',         label: 'PB do przygotowania' },
-      { to: '/operacje/badania-do-wykonania',        label: 'Badania do wykonania' },
-      { to: '/operacje/logi-do-przygotowania',       label: 'Logi do przygotowania' },
-      { to: '/operacje/kb-do-przygotowania',         label: 'KB do przygotowania' },
+      { to: '/operacje/oczekiwanie-na-dostawe', label: 'Oczekiwanie na dostawę' },
+      { to: '/operacje/probki-do-przyjecia', label: 'Próbki do przyjęcia' },
+      { to: '/operacje/pb-do-przygotowania', label: 'PB do przygotowania' },
+      { to: '/operacje/badania-do-wykonania', label: 'Badania do wykonania' },
+      { to: '/operacje/logi-do-przygotowania', label: 'Logi do przygotowania' },
+      { to: '/operacje/kb-do-przygotowania', label: 'KB do przygotowania' },
       { to: '/operacje/sprawozdania-do-przygotowania', label: 'Sprawozdania do przygotowania' },
-      { to: '/operacje/dokumentacja-do-archiwizacji',  label: 'Dokumentacja do archiwizacji' },
+      { to: '/operacje/dokumentacja-do-archiwizacji', label: 'Dokumentacja do archiwizacji' },
     ],
   },
   {
@@ -121,4 +120,6 @@ export const MENU = [
 ]
 
 // Przydatna mapa: baza → id sekcji (np. do szybkiego wykrywania aktywnego rodzica)
-export const BASE_TO_ID = Object.fromEntries(MENU.map(s => [s.base, s.id]))
+export const BASE_TO_ID = Object.fromEntries(
+  MENU.filter((s) => !!s.base).map((s) => [s.base, s.id])
+)

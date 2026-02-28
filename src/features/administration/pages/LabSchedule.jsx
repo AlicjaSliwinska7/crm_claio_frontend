@@ -11,7 +11,7 @@ import Legend from '../components/LabSchedule/Legend'
 import Overtime from '../components/Overtime'
 
 import useLabScheduleLogic from '../hooks/useLabScheduleLogic'
-import '../styles/lab-schedule.css'
+import '../styles/schedule.css'
 
 export default function LabSchedule() {
   const {

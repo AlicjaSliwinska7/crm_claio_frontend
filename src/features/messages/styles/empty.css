@@ -1,0 +1,43 @@
+/* ============================ EMPTY STATE ========================= */
+.empty-chat {
+	flex: 1;
+	background: var(--bg-card);
+	border-left: 1px solid var(--border);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 0;
+}
+.empty-card {
+	text-align: center;
+	padding: 36px 20px;
+	max-width: 460px;
+	color: var(--muted);
+}
+.empty-icon {
+	font-size: 48px;
+	line-height: 1;
+	margin-bottom: 10px;
+	color: color-mix(in oklab, var(--pri) 45%, #9fb2c7 55%);
+}
+.empty-title {
+	font-size: 18px;
+	font-weight: 800;
+	color: var(--pri-strong);
+	margin-bottom: 6px;
+	letter-spacing: .2px;
+}
+.empty-desc { font-size: 14px; margin: 0 0 14px; color: #516273; }
+.empty-actions { display: flex; justify-content: center; }
+.empty-actions .btn-primary {
+	background: var(--pri);
+	color: #fff;
+	border: 1px solid var(--pri);
+	border-radius: var(--r-sm);
+	padding: 8px 14px;
+	cursor: pointer;
+	font-size: 14px;
+	box-shadow: var(--shadow-sm);
+	transition: filter .18s ease;
+}
+.empty-actions .btn-primary:hover { filter: brightness(.96); }

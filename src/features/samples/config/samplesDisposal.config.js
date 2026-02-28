@@ -1,7 +1,7 @@
 // src/features/sales/config/samplesDisposal.config.js
-import React from 'react'
 
 /* ============================== Stałe widoków ============================== */
+export const VIEW_ALL = 'wszystkie'
 export const VIEW_ACTIVE = 'do-utylizacji'
 export const VIEW_ARCHIVE = 'archiwum-zutylizowane'
 
@@ -50,90 +50,111 @@ export const initialDisposalArchive = [
 ]
 
 /* ============================== CSV (zależne od widoku) ============================== */
+// ✅ zgodne z useCsvExport: { key, label }
 export const csvColumnsFor = (view) => {
-  if (view === VIEW_ACTIVE) {
+  if (view === VIEW_ALL) {
     return [
-      { key: 'sampleNo', header: 'Nr próbki' },
-      { key: 'orderNo', header: 'Nr zlecenia/umowy' },
-      { key: 'item', header: 'Przedmiot badań' },
-      { key: 'qty', header: 'Ilość próbek' },
-      { key: 'weightKg', header: 'Waga próbek [kg]' },
-      { key: 'disposalCost', header: 'Koszt utylizacji' },
-      { key: 'disposed', header: 'Zutylizowane' },
-      { key: 'disposedAt', header: 'Data utylizacji' },
-      { key: 'id', header: 'ID' },
+      { key: '__viewGroup', label: 'Widok' }, // Aktywne / Archiwum
+      { key: 'sampleNo', label: 'Nr próbki' },
+      { key: 'orderNo', label: 'Nr zlecenia/umowy' },
+      { key: 'item', label: 'Przedmiot badań' },
+      { key: 'qty', label: 'Ilość próbek' },
+      { key: 'weightKg', label: 'Waga próbek [kg]' },
+      { key: 'disposalCost', label: 'Koszt utylizacji' },
+      { key: '__done', label: 'Zutylizowane' }, // tak/nie
+      { key: '__doneAt', label: 'Data utylizacji' },
+      { key: 'id', label: 'ID' },
     ]
   }
+
+  if (view === VIEW_ACTIVE) {
+    return [
+      { key: 'sampleNo', label: 'Nr próbki' },
+      { key: 'orderNo', label: 'Nr zlecenia/umowy' },
+      { key: 'item', label: 'Przedmiot badań' },
+      { key: 'qty', label: 'Ilość próbek' },
+      { key: 'weightKg', label: 'Waga próbek [kg]' },
+      { key: 'disposalCost', label: 'Koszt utylizacji' },
+      { key: 'disposed', label: 'Zutylizowane' },
+      { key: 'disposedAt', label: 'Data utylizacji' },
+      { key: 'id', label: 'ID' },
+    ]
+  }
+
+  // VIEW_ARCHIVE
   return [
-    { key: 'sampleNo', header: 'Nr próbki' },
-    { key: 'orderNo', header: 'Nr zlecenia/umowy' },
-    { key: 'item', header: 'Przedmiot badań' },
-    { key: 'qty', header: 'Ilość próbek' },
-    { key: 'weightKg', header: 'Waga próbek [kg]' },
-    { key: 'disposalCost', header: 'Koszt utylizacji' },
-    { key: 'disposedAt', header: 'Data utylizacji' },
-    { key: 'id', header: 'ID' },
+    { key: 'sampleNo', label: 'Nr próbki' },
+    { key: 'orderNo', label: 'Nr zlecenia/umowy' },
+    { key: 'item', label: 'Przedmiot badań' },
+    { key: 'qty', label: 'Ilość próbek' },
+    { key: 'weightKg', label: 'Waga próbek [kg]' },
+    { key: 'disposalCost', label: 'Koszt utylizacji' },
+    { key: 'disposedAt', label: 'Data utylizacji' },
+    { key: 'id', label: 'ID' },
   ]
 }
 
 /* ============================== Kolumny (fabryka) ============================== */
 /**
- * Zwraca obiekt:
- * {
- *   [VIEW_ACTIVE]: [...],
- *   [VIEW_ARCHIVE]: [...]
- * }
- * i wstrzykujemy handlerami z komponentu:
- *  - openConfirm
- *  - patchArchive
- *  - restoreToActive
+ * makeColumns({ LinkCmp, handlers }) → { [VIEW_*]: COLS[] }
+ * UWAGA: render przyjmuje (row), bo page renderuje: col.render(row)
  */
 export const makeColumns = ({ LinkCmp, handlers }) => {
   const { openConfirm, patchArchive, restoreToActive } = handlers
 
-  const ACTIVE_COLS = [
+  const sampleLink = (row) =>
+    row.sampleNo ? (
+      <LinkCmp to={`/probki/rejestr-probek?sample=${encodeURIComponent(row.sampleNo)}`}>{row.sampleNo}</LinkCmp>
+    ) : (
+      '—'
+    )
+
+  const orderLink = (row) =>
+    row.orderNo ? (
+      <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>{row.orderNo}</LinkCmp>
+    ) : (
+      '—'
+    )
+
+  const BASE_COLS = [
     {
       key: 'sampleNo',
       label: 'Nr próbki',
       sortable: true,
       type: 'string',
-      render: (row) =>
-        row.sampleNo ? (
-          <LinkCmp to={`/probki/rejestr-probek?sample=${encodeURIComponent(row.sampleNo)}`}>
-            {row.sampleNo}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
+      width: 160,
+      render: sampleLink,
     },
     {
       key: 'orderNo',
       label: 'Nr zlecenia/umowy',
       sortable: true,
       type: 'string',
-      render: (row) =>
-        row.orderNo ? (
-          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>
-            {row.orderNo}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
+      width: 170,
+      render: orderLink,
     },
     {
       key: 'item',
       label: 'Przedmiot badań',
       sortable: true,
       type: 'string',
+      minWidth: 260,
       render: (row) => <span title={row.item}>{row.item || '—'}</span>,
     },
-    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number' },
-    { key: 'weightKg', label: 'Waga próbek [kg]', sortable: true, type: 'number' },
-    { key: 'disposalCost', label: 'Koszt utylizacji', sortable: true, type: 'string' },
+    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number', width: 120, align: 'right' },
+    { key: 'weightKg', label: 'Waga [kg]', sortable: true, type: 'number', width: 110, align: 'right' },
+    { key: 'disposalCost', label: 'Koszt utylizacji', sortable: true, type: 'string', width: 150, align: 'right' },
+  ]
+
+  const ACTIVE_COLS = [
+    ...BASE_COLS,
     {
       key: 'disposed',
-      label: 'Zutylizowane?',
+      label: 'Zutylizowane',
       sortable: false,
+      type: 'boolean',
+      width: 130,
+      align: 'center',
       render: (row) => (
         <input
           type="checkbox"
@@ -150,49 +171,14 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
   ]
 
   const ARCHIVE_COLS = [
-    {
-      key: 'sampleNo',
-      label: 'Nr próbki',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.sampleNo ? (
-          <LinkCmp to={`/probki/rejestr-probek?sample=${encodeURIComponent(row.sampleNo)}`}>
-            {row.sampleNo}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
-    {
-      key: 'orderNo',
-      label: 'Nr zlecenia/umowy',
-      sortable: true,
-      type: 'string',
-      render: (row) =>
-        row.orderNo ? (
-          <LinkCmp to={`/sprzedaz/rejestr-zlecen?order=${encodeURIComponent(row.orderNo)}`}>
-            {row.orderNo}
-          </LinkCmp>
-        ) : (
-          '—'
-        ),
-    },
-    {
-      key: 'item',
-      label: 'Przedmiot badań',
-      sortable: true,
-      type: 'string',
-      render: (row) => <span title={row.item}>{row.item || '—'}</span>,
-    },
-    { key: 'qty', label: 'Ilość próbek', sortable: true, type: 'number' },
-    { key: 'weightKg', label: 'Waga próbek [kg]', sortable: true, type: 'number' },
-    { key: 'disposalCost', label: 'Koszt utylizacji', sortable: true, type: 'string' },
+    ...BASE_COLS,
     {
       key: 'disposedAt',
       label: 'Data utylizacji',
       sortable: true,
       type: 'date',
+      width: 160,
+      align: 'center',
       render: (row) => (
         <input
           type="date"
@@ -204,8 +190,11 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
     },
     {
       key: 'disposed',
-      label: 'Zutylizowane?',
+      label: 'W arch.',
       sortable: false,
+      type: 'boolean',
+      width: 100,
+      align: 'center',
       render: (row) => (
         <input
           type="checkbox"
@@ -221,7 +210,38 @@ export const makeColumns = ({ LinkCmp, handlers }) => {
     },
   ]
 
+  const ALL_COLS = [
+    {
+      key: '__viewGroup',
+      label: 'Widok',
+      sortable: true,
+      type: 'string',
+      width: 110,
+      render: (row) => <span title={row.__viewGroup || ''}>{row.__viewGroup || '—'}</span>,
+    },
+    ...BASE_COLS,
+    {
+      key: '__done',
+      label: 'Zutylizowane',
+      sortable: true,
+      type: 'string',
+      width: 130,
+      align: 'center',
+      render: (row) => <span>{row.__done ?? '—'}</span>,
+    },
+    {
+      key: '__doneAt',
+      label: 'Data utylizacji',
+      sortable: true,
+      type: 'date',
+      width: 160,
+      align: 'center',
+      render: (row) => <span>{row.__doneAt || '—'}</span>,
+    },
+  ]
+
   return {
+    [VIEW_ALL]: ALL_COLS,
     [VIEW_ACTIVE]: ACTIVE_COLS,
     [VIEW_ARCHIVE]: ARCHIVE_COLS,
   }

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { useMemo } from 'react'
 
 import { MENU as LEFT_MENU } from '../bars/LeftSideBar/config'
-import { MENU as RIGHT_MENU } from '../bars/RightSidebar/config'
+import { MENU as RIGHT_MENU } from '../bars/RightSideBar/config'
 import { MENU as LOWER_MENU } from '../bars/LowerNavBar/config'
 
 import {
@@ -171,6 +171,8 @@ const titleMap = {
   '/administracja': { label: 'Administracja', Icon: Building2 },
   '/administracja/kontakty': { label: 'Administracja – lista kontaktowa', Icon: Building2 },
   '/administracja/harmonogram': { label: 'Administracja – harmonogram laboratorium', Icon: CalendarDays },
+    '/administracja/grafik_sprzatania': { label: 'Administracja – grafik sprzątania', Icon: CalendarDays },
+
   '/administracja/dokumenty': { label: 'Administracja – dokumenty', Icon: FileText },
   '/administracja/szkolenia': { label: 'Administracja – szkolenia', Icon: Book },
   '/administracja/spotkania': { label: 'Administracja – spotkania', Icon: CalendarDays },

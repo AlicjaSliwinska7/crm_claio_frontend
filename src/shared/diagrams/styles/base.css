@@ -1,0 +1,36 @@
+/* src/shared/diagrams2/styles/base.css */
+/* ======================================================================
+   MUST-HAVE (NO SCOPE)
+   Te reguły działają zawsze, nawet gdy wrapper NIE ma .d2-root.
+   Cel: .d2-chart ZAWSZE ma wysokość -> Recharts nie znika.
+   ====================================================================== */
+
+/* Domyślny kontener wykresu */
+.d2-chart {
+  width: 100%;
+  height: 320px;     /* ✅ kluczowe: konkretna wysokość */
+  min-height: 240px; /* dodatkowe zabezpieczenie */
+}
+
+/* Klasy “wariantów” */
+.d2-chart.big { height: 360px; }
+.d2-chart.mini { height: 160px; }
+
+/* Helpery wysokości (preferujemy HEIGHT, nie min-height) */
+.d2-chart--h320 { height: 320px; }
+.d2-chart--h380 { height: 380px; }
+.d2-chart--h440 { height: 440px; }
+
+/* Wewnętrzny wrapper dla ResponsiveContainer */
+.d2-chart__inner {
+  width: 100%;
+  height: 100%;
+}
+
+/* Opcjonalny slot na toolbar nad wykresem */
+.d2-chart__top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}

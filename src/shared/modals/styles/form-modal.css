@@ -163,7 +163,7 @@
 	width: 100%;
 	background: transparent;
 	border-radius: 0;
-	font-size: 12px;
+	font-size: 14px;
 	padding: 0.5rem 0.3rem;
 	border: none;
 	border-bottom: 2px solid #2c3e50;
@@ -207,11 +207,11 @@
 
 /* Pomoc/walidacja */
 .ui-modal .m-help {
-	font-size: 12px;
+	font-size: 14px;
 	color: var(--m-muted);
 }
 .ui-modal .m-error {
-	font-size: 14px;
+	font-size: 15px;
 	color: var(--m-danger);
 }
 .ui-modal .m-field.m--invalid .m-input,

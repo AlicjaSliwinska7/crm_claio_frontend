@@ -1,0 +1,146 @@
+/* =========================================================
+   PAGINACJA – PREVIEW MODE (bardziej "table-like" + center controls)
+   Wrapper: .board-flat-table-pagination
+   ========================================================= */
+
+body.preview-mode .board-flat-table-pagination {
+  /* geometria jak tabela (symetria) */
+  margin: 0 auto 24px;
+  max-width: 1500px;
+  width: calc(100vw - 2rem);
+  box-sizing: border-box;
+
+  /* zamiast flex -> GRID (środek zawsze w środku) */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 12px;
+  border-top: 1px solid #e0e6ed;
+  background: #ffffff;
+
+  border-left: 1px solid #e0e6ed;
+  border-right: 1px solid #e0e6ed;
+  border-bottom: 1px solid #e0e6ed;
+  border-radius: 0 0 12px 12px;
+
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+/* jeśli wrapper jest zaraz po tabeli */
+body.preview-mode .board-flat-table-wrapper .board-flat-table {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ---------------------------------------
+   LEWA KOLUMNA (info)
+--------------------------------------- */
+body.preview-mode .board-flat-table-pagination .tss-pagination__info {
+  justify-self: start;
+  font-size: 12px;
+  color: #5b6f84;
+  white-space: nowrap;
+}
+
+body.preview-mode .board-flat-table-pagination .tss-pagination__info strong {
+  font-weight: 700;
+  color: #334155;
+}
+
+/* ---------------------------------------
+   ŚRODEK (kontrolki)
+--------------------------------------- */
+body.preview-mode .board-flat-table-pagination .pagination {
+  grid-column: 2;
+  justify-self: center;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  /* lekko “table-like” jak w stopce */
+  padding: 2px 4px;
+  border-radius: 999px;
+  background: rgba(248, 251, 255, 0.85);
+  border: 1px solid rgba(224, 230, 237, 0.9);
+}
+
+/* ---------------------------------------
+   PRAWA KOLUMNA – balans (pusta)
+   (Jeśli kiedyś dodasz np. "Page size", wrzuć to tutaj)
+--------------------------------------- */
+body.preview-mode .board-flat-table-pagination .tss-pagination__right {
+  justify-self: end;
+}
+
+/* ---------------------------------------
+   BUTTONY
+--------------------------------------- */
+body.preview-mode .board-flat-table-pagination .page-btn {
+  height: 34px;
+  min-width: 34px;
+  padding: 0 10px;
+
+  border-radius: 10px;
+  border: 1px solid #e6ecf5;
+  background: #fff;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+
+body.preview-mode .board-flat-table-pagination .page-btn:hover:not(:disabled) {
+  border-color: color-mix(in oklab, #3a628a 45%, white);
+  background: #f8fbff;
+  box-shadow: 0 0 0 3px color-mix(in oklab, #3a628a 18%, transparent);
+  color: color-mix(in oklab, #3a628a 85%, black);
+}
+
+body.preview-mode .board-flat-table-pagination .page-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* aktywna strona */
+body.preview-mode .board-flat-table-pagination .page-btn.num.active {
+  border-color: color-mix(in oklab, #3a628a 45%, white);
+  background: color-mix(in oklab, #3a628a 12%, white);
+  color: #17324b;
+  font-weight: 800;
+}
+
+/* wielokropek */
+body.preview-mode .board-flat-table-pagination .page-ellipsis {
+  color: rgba(51, 65, 85, 0.55);
+  padding: 0 4px;
+}
+
+/* strzałki */
+body.preview-mode .board-flat-table-pagination .page-btn.icon {
+  padding: 0 8px;
+}
+
+/* ---------------------------------------
+   MOBILE: układ w 2 rzędy (środek dalej na środku)
+--------------------------------------- */
+@media (max-width: 720px) {
+  body.preview-mode .board-flat-table-pagination {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  body.preview-mode .board-flat-table-pagination .tss-pagination__info {
+    justify-self: center;
+  }
+
+  body.preview-mode .board-flat-table-pagination .pagination {
+    grid-column: 1;
+  }
+}

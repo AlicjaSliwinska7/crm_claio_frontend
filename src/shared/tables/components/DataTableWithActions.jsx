@@ -1,190 +1,191 @@
 // src/shared/tables/components/DataTableWithActions.jsx
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 import PropTypes from 'prop-types'
+
 import ActionsHeader from './ActionsHeader'
+import EmptyStateRow from './EmptyStateRow'
 import ActionsCell from './cells/ActionsCell'
+import SortableTh from './SortableTh'
+import TableScrollWrapper from './TableScrollWrapper'
 
-/**
- * DataTableWithActions – zwykła tabela z wbudowaną kolumną akcji (ostatnia).
- *
- * Użycie:
- *  - columns: definicje kolumn (HEADER_COLS z configu)
- *  - rows: przefiltrowane + spaginowane dane
- *  - sortConfig / setSortConfig / onAfterSort: obsługa sortowania
- *  - actionsForRow(row): zwraca tablicę akcji do ActionsCell
- *  - rowProps(row): (opcjonalnie) dodatkowe propsy dla <tr> (className, title, itp.)
- *  - onRowClick(row): (opcjonalnie) kliknięcie w wiersz
- */
+import DataCell from './cells/DataCell'
+import StatusCell from './cells/StatusCell'
+
 function DataTableWithActions({
-	columns = [],
-	rows = [],
-	sortConfig,
-	setSortConfig,
-	onAfterSort,
-	actionsForRow, // (row) => Action[]
-	rowProps, // (row) => extra props for <tr>
-	onRowClick, // (row) => void
-	bare = false,
-	ariaLabel = 'Tabela',
-	actionsWidth = 3, // 2 | 3 | 4 – szerokość kolumny akcji
-	actionsSticky = false, // czy przyklejamy ostatnią kolumnę
+  columns = [],
+  rows = [],
+  sortConfig,
+  setSortConfig,
+  onAfterSort,
+  actionsForRow,
+  rowProps,
+  onRowClick,
+  bare = false,
+  ariaLabel = 'Tabela',
+  actionsWidth = 3,
+  actionsSticky = false,
 }) {
-	const onSort = key => {
-		if (!setSortConfig || !key) return
-		const dir = sortConfig?.key === key ? (sortConfig.direction === 'asc' ? 'desc' : 'asc') : 'asc'
-		setSortConfig({ key, direction: dir })
-		onAfterSort?.()
-	}
+  const asCssWidth = (w) => (w == null ? undefined : typeof w === 'number' ? `${w}px` : w)
 
-	const onThKeyDown = (e, key, isSortable) => {
-		if (!isSortable) return
-		if (e.key === 'Enter' || e.key === ' ') {
-			e.preventDefault()
-			onSort(key)
-		}
-	}
+  const actionsColClass = [
+    'actions-col',
+    actionsSticky && 'sticky',
+    actionsWidth === 2 ? 'w-2' : actionsWidth === 4 ? 'w-4' : 'w-3',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
-	const asCssWidth = w => (w == null ? undefined : typeof w === 'number' ? `${w}px` : w)
+  const tableClass = ['data-table', bare && 'data-table--bare'].filter(Boolean).join(' ')
+  const containerClass = ['table-container', bare && 'table-container--bare'].filter(Boolean).join(' ')
 
-	// jedna klasa dla całej kolumny akcji
-	const actionsColClass = [
-		'actions-col',
-		actionsSticky ? 'sticky' : '',
-		actionsWidth === 2 ? 'w-2' : actionsWidth === 4 ? 'w-4' : 'w-3',
-	]
-		.filter(Boolean)
-		.join(' ')
+  // deps: tylko rzeczy wpływające na szerokość
+  const scrollDeps = useMemo(
+    () => [
+      rows?.length || 0,
+      columns?.length || 0,
+      bare,
+      actionsWidth,
+      actionsSticky,
+      Boolean(actionsForRow),
+      sortConfig?.key || '',
+      sortConfig?.direction || '',
+    ],
+    [
+      rows?.length,
+      columns?.length,
+      bare,
+      actionsWidth,
+      actionsSticky,
+      actionsForRow,
+      sortConfig?.key,
+      sortConfig?.direction,
+    ]
+  )
 
-	const tableClass = ['data-table', bare ? 'data-table--bare' : ''].filter(Boolean).join(' ')
-	const containerClass = ['table-container', bare ? 'table-container--bare' : ''].filter(Boolean).join(' ')
+  return (
+    <TableScrollWrapper className={containerClass} deps={scrollDeps}>
+      <table className={tableClass} aria-label={ariaLabel}>
+        <colgroup>
+          {columns.map((c) => (
+            <col
+              key={c.key || c.label}
+              style={{
+                width: asCssWidth(c.width),
+                minWidth: asCssWidth(c.minWidth),
+                maxWidth: asCssWidth(c.maxWidth),
+              }}
+            />
+          ))}
+          {actionsForRow ? <col className="col-actions" /> : null}
+        </colgroup>
 
-	return (
-		<div className={containerClass}>
-			<table className={tableClass} aria-label={ariaLabel}>
-				<colgroup>
-					{columns.map(c => (
-						<col key={c.key || c.label} style={{ width: asCssWidth(c.width) }} />
-					))}
-					{actionsForRow ? <col className='col-actions' /> : null}
-				</colgroup>
+        <thead>
+          <tr>
+            {columns.map((col, i) => {
+              const key = col.key ?? `col-${i}`
+              const isSortable = col.sortable !== false && Boolean(col.key)
 
-				<thead>
-					<tr>
-						{columns.map((col, i) => {
-							const isSortable = col.sortable !== false && !!col.key
-							const isActive = isSortable && sortConfig?.key === col.key
-							const dir = isActive ? sortConfig.direction : undefined
+              if (!isSortable) {
+                const style = {}
+                if (col.width) style.width = asCssWidth(col.width)
+                if (col.minWidth != null) style.minWidth = asCssWidth(col.minWidth)
+                if (col.maxWidth != null) style.maxWidth = asCssWidth(col.maxWidth)
 
-							const classes = [
-								col.align ? `align-${col.align}` : '',
-								isSortable ? 'sortable' : '',
-								isActive ? `sorted-${dir}` : '',
-							]
-								.filter(Boolean)
-								.join(' ')
+                const thClass = [col.align ? `align-${col.align}` : ''].filter(Boolean).join(' ')
 
-							const style = {}
-							const width = asCssWidth(col.width)
-							if (width) style.width = width
+                return (
+                  <th
+                    key={key}
+                    className={thClass}
+                    style={style}
+                    title={col.title}
+                    scope="col"
+                    {...(col.align ? { 'data-align': col.align } : {})}
+                  >
+                    <span className="th-label">{col.label}</span>
+                  </th>
+                )
+              }
 
-							return (
-								<th
-									key={col.key ?? i}
-									className={classes}
-									style={style}
-									onClick={isSortable ? () => onSort(col.key) : undefined}
-									onKeyDown={e => onThKeyDown(e, col.key, isSortable)}
-									tabIndex={isSortable ? 0 : undefined}
-									aria-sort={
-										isSortable ? (isActive ? (dir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined
-									}
-									scope='col'>
-									<span className='th-label'>{col.label}</span>
-									{isSortable && <span className='th-sort-caret' aria-hidden />}
-								</th>
-							)
-						})}
+              return (
+                <SortableTh
+                  key={key}
+                  columnKey={col.key}
+                  label={col.label}
+                  align={col.align}
+                  width={col.width}
+                  minWidth={col.minWidth}
+                  maxWidth={col.maxWidth}
+                  title={col.title}
+                  sortConfig={sortConfig}
+                  setSortConfig={setSortConfig}
+                  onAfterSort={onAfterSort}
+                />
+              )
+            })}
 
-						{actionsForRow ? (
-							<ActionsHeader className={actionsColClass} title='Akcje' width={actionsWidth} sticky={actionsSticky} />
-						) : null}
-					</tr>
-				</thead>
+            {actionsForRow ? (
+              <ActionsHeader className={actionsColClass} title="Akcje" width={actionsWidth} sticky={actionsSticky} />
+            ) : null}
+          </tr>
+        </thead>
 
-				<tbody>
-					{rows.map((row, ri) => {
-						// props z zewnątrz
-						const baseRowProps = typeof rowProps === 'function' ? rowProps(row) || {} : {}
+        <tbody>
+          {rows.map((row, ri) => {
+            const baseRowProps = typeof rowProps === 'function' ? rowProps(row) || {} : {}
+            const finalRowProps = { ...baseRowProps }
 
-						// domyślnie nie nadpisujemy istniejącego onClick z rowProps
-						const finalRowProps = { ...baseRowProps }
-						if (onRowClick && !finalRowProps.onClick) {
-							finalRowProps.onClick = () => onRowClick(row)
-						}
+            if (onRowClick && !finalRowProps.onClick) {
+              finalRowProps.onClick = () => onRowClick(row)
+            }
 
-						return (
-							<tr key={row.id ?? ri} {...finalRowProps}>
-								{columns.map((col, ci) => {
-									const val = row[col.key]
-									const tdClass = col.align ? `align-${col.align}` : undefined
-									const tdDataAlign = col.align ? { 'data-align': col.align } : {}
-									return (
-										<td
-											key={col.key ?? ci}
-											className={tdClass}
-											{...tdDataAlign}
-											title={col.titleAccessor ? col.titleAccessor(row) : undefined}>
-											{col.render ? col.render(val, row) : val ?? '—'}
-										</td>
-									)
-								})}
+            return (
+              <tr key={row?.id ?? ri} {...finalRowProps}>
+                {columns.map((col, ci) => {
+                  const value = col.key ? row?.[col.key] : undefined
+                  const cellKey = col.key ?? ci
 
-								{actionsForRow ? (
-									<ActionsCell className={actionsColClass} actions={actionsForRow(row)} sticky={actionsSticky} />
-								) : null}
-							</tr>
-						)
-					})}
+                  if (col.type === 'status') {
+                    return <StatusCell key={cellKey} row={row} col={col} value={value} />
+                  }
 
-					{!rows || rows.length === 0 ? (
-						<tr>
-							<td colSpan={columns.length + (actionsForRow ? 1 : 0)} className='empty-cell'>
-								Brak danych
-							</td>
-						</tr>
-					) : null}
-				</tbody>
-			</table>
-		</div>
-	)
+                  return <DataCell key={cellKey} row={row} col={col} value={value} />
+                })}
+
+                {actionsForRow ? (
+                  <ActionsCell className={actionsColClass} actions={actionsForRow(row)} sticky={actionsSticky} />
+                ) : null}
+              </tr>
+            )
+          })}
+
+          {!rows?.length ? (
+            <EmptyStateRow
+              colSpan={columns.length + (actionsForRow ? 1 : 0)}
+              text="Brak danych"
+              className="empty-row"
+              cellClassName="empty-cell"
+            />
+          ) : null}
+        </tbody>
+      </table>
+    </TableScrollWrapper>
+  )
 }
 
 DataTableWithActions.propTypes = {
-	columns: PropTypes.arrayOf(
-		PropTypes.shape({
-			key: PropTypes.string,
-			label: PropTypes.string.isRequired,
-			render: PropTypes.func,
-			sortable: PropTypes.bool,
-			width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-			align: PropTypes.oneOf(['left', 'center', 'right']),
-			titleAccessor: PropTypes.func,
-		})
-	),
-	rows: PropTypes.array,
-	sortConfig: PropTypes.shape({
-		key: PropTypes.string,
-		direction: PropTypes.oneOf(['asc', 'desc']),
-	}),
-	setSortConfig: PropTypes.func,
-	onAfterSort: PropTypes.func,
-	actionsForRow: PropTypes.func,
-	rowProps: PropTypes.func,
-	onRowClick: PropTypes.func,
-	bare: PropTypes.bool,
-	ariaLabel: PropTypes.string,
-	actionsWidth: PropTypes.oneOf([2, 3, 4]),
-	actionsSticky: PropTypes.bool,
+  columns: PropTypes.array.isRequired,
+  rows: PropTypes.array,
+  sortConfig: PropTypes.object,
+  setSortConfig: PropTypes.func,
+  onAfterSort: PropTypes.func,
+  actionsForRow: PropTypes.func,
+  rowProps: PropTypes.func,
+  onRowClick: PropTypes.func,
+  bare: PropTypes.bool,
+  ariaLabel: PropTypes.string,
+  actionsWidth: PropTypes.oneOf([2, 3, 4]),
+  actionsSticky: PropTypes.bool,
 }
 
 export default memo(DataTableWithActions)

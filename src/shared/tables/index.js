@@ -39,8 +39,8 @@ export { default as FileUploaderCompact } from './components/FileUploaderCompact
 // ───────────────────────────────────────────────────────────
 // Hooki
 // ───────────────────────────────────────────────────────────
-export { useUrlPagination } from './hooks/usePagination'
-export { useListCrud } from './hooks/useListCrud'
+export { default as useUrlPagination } from './hooks/usePagination'
+export { default as useListCrud } from './hooks/useListCrud'
 export { useListQuery } from './hooks/useListQuery'
 export { useCsvExport } from './hooks/useCsvExport'
 
@@ -60,10 +60,31 @@ export { downloadAction, downloadEditDeleteActions } from './utils/actions'
 
 // Agregacje, sortowanie, nawigacja po wierszu
 export {
-	rowNavigateProps,
-	rowNavigateProps as makeRowNavigateProps, // legacy alias
+  rowNavigateProps,
+  rowNavigateProps as makeRowNavigateProps, // legacy alias
 } from './utils/rowNavigateProps'
 
 export { sortRows, nextDirection, sortIndicator, sortAria, buildDateTimeAccessor } from './utils/sorters'
 export * as sorters from './utils/sorters'
+
+// ✅ Namespace (opcjonalnie — jak lubisz `renderers.emailRenderer`)
 export * as renderers from './utils/renderers'
+
+// ✅ Named exports — pozwala na: `import { emailRenderer } from '../../../shared/tables'`
+export {
+  textRenderer,
+  numberRenderer,
+  labelRenderer,
+  linkRenderer,
+  emailRenderer,
+  buildingRoomRenderer,
+  arrayJoinRenderer,
+  textWithTitleRenderer,
+  contactGridRenderer,
+  dateInputRenderer,
+} from './utils/renderers'
+
+// ───────────────────────────────────────────────────────────
+// Wrapper: custom poziomy scrollbar (stabilny na focus)
+// ───────────────────────────────────────────────────────────
+export { default as TableScrollWrapper } from './components/TableScrollWrapper.jsx'

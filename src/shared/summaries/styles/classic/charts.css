@@ -1,0 +1,24 @@
+/* src/shared/summaries2/styles/classic/_charts.css */
+
+/* -------------------- Charts -------------------- */
+.es-root .ts-chart { width: 100%; height: 320px; }
+.es-root .ts-chart.big { height: 360px; }
+.es-root .ts-chart.mini { height: 160px; }
+
+.es-root .ts-empty,
+.es-root .es-empty,
+.es-root .tss-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--es-muted);
+}
+
+/* Recharts helpers */
+.es-root .ts-chart .recharts-legend-wrapper,
+.es-root .es-chart .recharts-legend-wrapper {
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}

@@ -7,29 +7,35 @@
   display: flex;
   align-items: center;
   padding: 5px 20px;
-  z-index: 999;
-  background: linear-gradient(145deg, #0e0e0ea5 0%, #1c1c1cd3 25%, #3a3a3a 50%, #1c1c1cd4 75%, #0e0e0e8f 100%);
+
+  /* ✅ NAVBAR MA BYĆ NAD SIDEBARAMI */
+  position: relative;
+  z-index: 4900;
+
+  /* ✅ porządek warstw (linki nad tłem) */
+  isolation: isolate;
+  overflow: visible;
+
+  background: linear-gradient(
+    145deg,
+    #0e0e0ea5 0%,
+    #1c1c1cd3 25%,
+    #3a3a3a 50%,
+    #1c1c1cd4 75%,
+    #0e0e0e8f 100%
+  );
+
   box-shadow:
     inset 0 2px 4px rgba(255, 255, 255, 0.2),
     inset 0 -2px 4px rgba(0, 0, 0, 0.6),
     0 4px 10px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid #444;
-  overflow: visible;
-  position: relative;
-  z-index: 10;
+
+  border-bottom: 1px solid #8b8a8a;
 }
 
+/* ✅ NIE chcemy shimmera na pasku — wyłącz pseudo-element */
 .lower-navbar::after {
-  content: '';
-  pointer-events: none;
-  top: 0;
-  height: 25px;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.2) 45%,
-    rgba(255, 255, 255, 0) 60%
-  );
+  content: none;
 }
 
 /* =========================================================
@@ -41,27 +47,40 @@
   gap: 20px;
   align-items: center;
   margin: 0 auto;
+
+  position: relative;
   z-index: 1;
 }
 
 /* =========================================================
-   LINKI & SHIMMER
+   SHIMMER (wspólny dla tekstów i ikon)
+   ========================================================= */
+:root {
+  /* (opcjonalnie) możesz przenieść to do tokenów/globali */
+  --lnb-shimmer: linear-gradient(120deg, #ccc 20%, #fff 40%, #999 60%, #ccc 80%);
+}
+
+/* =========================================================
+   LINKI & SHIMMER (TEKST + IKONY)
    ========================================================= */
 .nav-link {
-  z-index: 1;
   position: relative;
+  z-index: 1;
+
   text-decoration: none;
-  color: #ffffff;
-  font-weight: 500;
-  transition: color 0.3s, border-bottom 0.3s;
   font-weight: 700;
-  background: linear-gradient(120deg, #ccc 20%, #fff 40%, #999 60%, #ccc 80%);
+  transition: border-bottom 0.3s, filter 0.3s;
+
+  background: var(--lnb-shimmer);
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
+
   color: transparent;
   -webkit-text-fill-color: transparent;
+
   animation: shimmer-text 3s linear infinite;
+  border-bottom: 2px solid transparent;
 }
 
 @keyframes shimmer-text {
@@ -69,35 +88,41 @@
   100% { background-position: 100% 0; }
 }
 
+/* ✅ Ikony w linkach też shimmerują (dziedziczą gradient z .nav-link) */
 .nav-link i {
   margin-right: 6px;
+  color: transparent;
+  background: inherit;
+  background-size: inherit;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* Hover bez psucia gradientu */
 .nav-link:hover {
-  color: inherit;
   border-bottom: 2px solid #3a628a;
   filter: brightness(1.2);
 }
 
 .nav-link.active,
 .nav-link:focus {
-  border-bottom: 2px solid #949494;
+  border-bottom: 2.2px solid #ffffff90;
 }
 
+/* ✅ glint tylko na linku aktywnym (to jest efekt “podkreślenia/linku”, nie tła paska) */
 .nav-link.active::after {
   content: '';
   position: absolute;
   top: 0;
   left: -50%;
   width: 200%;
-  height: 100%;
-  color: linear-gradient(120deg,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.4) 45%,
-    rgba(255, 255, 255, 0) 60%
-  );
+  height: 100%
+  ;
+
   animation: metallic-glint 4s linear infinite;
   z-index: -1;
+  pointer-events: none;
 }
 
 @keyframes metallic-glint {
@@ -128,7 +153,6 @@
   display: block;
   padding: 3px 5px;
   text-decoration: none;
-  color: #333;
   font-size: 14px;
   color: #edededc9;
   cursor: pointer;
@@ -147,16 +171,25 @@
   display: inline-block;
 }
 
-.icon-with-badge i {
+/* ✅ shimmer ikon badge tylko w navbarze */
+.lower-navbar .icon-with-badge i {
   position: relative;
   font-size: 16px;
-  color: #fff;
+
+  color: transparent;
+  background: var(--lnb-shimmer);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shimmer-text 3s linear infinite;
 }
 
 .nav-icon-wrapper {
   display: flex;
   align-items: center;
-  gap: 6px; /* rozsunie badge od napisu „Wiadomości” */
+  gap: 6px;
 }
 
 .caret-icon {
@@ -175,12 +208,15 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(120deg, #ccc 20%, #fff 40%, #999 60%, #ccc 80%);
+
+  background: var(--lnb-shimmer);
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
+
   color: transparent;
   -webkit-text-fill-color: transparent;
+
   animation: shimmer-text 3s linear infinite;
   cursor: pointer;
 }
@@ -215,41 +251,8 @@
 }
 
 /* =========================================================
-   OVERRIDES (świadome nadpisania — zachowują aktualny wygląd)
+   BADGE + FIXY
    ========================================================= */
-
-/* 2) .icon-with-badge i — wersja z tekstowym shimmerem (gradient) */
-.icon-with-badge {
-  position: relative;
-  display: inline-block;
-}
-
-.icon-with-badge i {
-  font-size: 16px;
-  color: transparent;
-  background: linear-gradient(120deg, #ccc 20%, #fff 40%, #999 60%, #ccc 80%);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer-text 3s linear infinite;
-}
-
-/* 3) caret — powtórzone deklaracje */
-.caret-icon {
-  margin-left: 4px;
-  transition: transform 0.3s ease;
-}
-.caret-icon.rotated { transform: rotate(180deg); }
-
-/* 4) nav-icon-wrapper — powtórzenie */
-.nav-icon-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* 5) notification-badge — zostawione tutaj */
 .notification-badge {
   background-color: #6c9bcaa3;
   color: white;
@@ -259,39 +262,28 @@
   height: 16px;
   padding: 0 5px;
   border-radius: 999px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   line-height: 1;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
   pointer-events: none;
   z-index: 2;
 
-  /* ✨ nadpisanie shimmera */
+  /* badge ma być normalny, bez shimmera */
   background-clip: border-box !important;
   -webkit-background-clip: border-box !important;
   -webkit-text-fill-color: white !important;
   color: white !important;
 }
 
-/* 6) ostatnie wymuszenie koloru */
-.notification-badge {
-  color: white !important;
-}
-
-/* =========================================================
-   FIX: badge w prawym górnym rogu ikony w LowerNavBar
-   ========================================================= */
+/* badge w prawym górnym rogu ikony w LowerNavBar */
 .lower-navbar .icon-with-badge {
   position: relative;
   display: inline-block;
   line-height: 0;
-}
-
-.lower-navbar .icon-with-badge i {
-  display: inline-block;
-  line-height: 1;
-  vertical-align: middle;
 }
 
 .lower-navbar .notification-badge {
@@ -313,13 +305,20 @@
   }
 }
 
-/* =========================================================
-   ANTI-UNDERLINE dla dropdownu w lower-navbar
-   ========================================================= */
+/* ANTI-UNDERLINE dla dropdownu w lower-navbar */
 .lower-navbar .submenu-link,
 .lower-navbar .submenu-link:link,
 .lower-navbar .submenu-link:visited,
 .lower-navbar .submenu-link:hover,
 .lower-navbar .submenu-link:focus {
+  text-decoration: none !important;
+}
+
+/* usuń underline z globalnego a:hover */
+.lower-navbar a.nav-link,
+.lower-navbar a.nav-link:hover,
+.lower-navbar a.nav-link:focus,
+.lower-navbar a.nav-link:active,
+.lower-navbar a.nav-link:visited {
   text-decoration: none !important;
 }

@@ -1,0 +1,33 @@
+/* src/shared/diagrams2/styles/_shell.css */
+
+.d2-root .es-section,
+.d2-root .d2-section {
+  position: relative;
+  margin: 0 0 16px;
+}
+
+.d2-root .es-section + .es-section,
+.d2-root .d2-section + .d2-section {
+  margin-top: 18px;
+}
+
+.d2-root .es-section + .es-section::before,
+.d2-root .d2-section + .d2-section::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: -10px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--es-hair), rgba(0, 0, 0, 0.02));
+}
+
+/* card shell (kafelek) */
+.d2-root .es-card,
+.d2-root .ts-card,
+.d2-root .d2-card {
+  background: var(--es-card);
+  border: 1px solid var(--es-border);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  padding: 14px;
+}

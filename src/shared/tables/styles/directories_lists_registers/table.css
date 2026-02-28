@@ -1,88 +1,261 @@
-/* src/shared/tables/styles/directories_lists_registers/registers-table.css */
+/* src/shared/tables/styles/directories_lists_registers/table.css */
 /* =========================================================
-   Registers – Table base / layout (FULL FILE)
+   Registers – Table base / layout
    ========================================================= */
 
+/* ✅ table-container jest teraz “ramą”, ale NIE scrolluje poziomo.
+   Poziomy scroll robi .table-xscroller z TableScrollWrapper. */
 .table-container {
-	position: relative;
-	width: 100%;
-	max-width: 100%;
-	overflow-x: auto;
-	overflow-y: visible; /* ✅ ważne: nie generuj pionowego scrolla przez hover/scale */
-	padding-bottom: 4px;
-	box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding-bottom: 0; /* bar jest w wrapperze */
+  box-sizing: border-box;
 }
 
+/* =========================================================
+   Table base
+   ========================================================= */
+
+/*
+  ✅ Szerokość tabeli:
+  - min-width: 100% → zawsze wypełnia kontener
+  - width: max-content → może urosnąć do treści i wtedy zadziała poziomy scroll w wrapperze
+*/
 table,
 .data-table {
-	width: 100%;
-	border-collapse: collapse;
-	background: transparent;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-	table-layout: auto;
+  display: inline-table;
+  width: max-content;
+  min-width: 100%;
+
+  border-collapse: collapse;
+  background: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  table-layout: auto;
 }
 
 .data-table thead {
-	background-color: #3a628a89;
-	color: #efefef;
+  background-color: #3a628a89;
+  color: #efefef;
 }
 
 .data-table thead th {
-	padding: 5px;
-	cursor: pointer;
-	font-weight: 600;
-	white-space: nowrap;
-	text-align: center;
-	transition: background-color 0.3s;
-	box-sizing: border-box;
+  vertical-align: middle;
+  padding: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: center;
+  transition: background-color 0.25s ease;
+  box-sizing: border-box;
 }
 
 .data-table thead th:hover {
-	background-color: #3a628a9a;
+  background-color: #3a628a9a;
 }
 
 .data-table tbody td {
-	border-bottom: 1px solid #ddd;
-	font-size: 12px;
-	color: #1f2937c4;
-	padding: 4px;
-	vertical-align: top; /* ważne: treści w wielu linijkach */
-	text-align: center;
-	box-sizing: border-box;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+  color: #1f2937c4;
+  padding: 2px;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+
+  /* ✅ domyślnie zawijamy → kolumny nie robią się “autostradą” */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-/* zebra + hover */
-.data-table tbody tr:nth-child(odd) td {
-	background: rgba(0, 0, 0, 0.015);
-}
-.data-table tbody tr:hover td {
-	background: rgba(58, 98, 138, 0.06);
+/* =========================================================
+   Kontrolowane nowrap (kolumny/komórki w 1 linii)
+   Użycie: w definicji kolumn dodaj className: 'cell-nowrap'
+   ========================================================= */
+.data-table :is(td, th).cell-nowrap {
+  white-space: nowrap;
 }
 
-/* aligny specjalne */
-.data-table .num,
-.data-table [data-align='right'] {
-	text-align: right;
+/* ✅ żeby długie wartości w nowrap NIE rozpychały tabeli */
+.data-table td.cell-nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px; /* dostosuj: 160–320 */
 }
-.data-table .text-left,
-.data-table [data-align='left'] {
-	text-align: left;
+
+/* warianty (opcjonalnie) */
+.data-table td.cell-nowrap.wide {
+  max-width: 360px;
+}
+
+.data-table td.cell-nowrap.narrow {
+  max-width: 160px;
+}
+
+/* =========================================================
+   (Opcjonalnie) Wymuszone zawijanie + limit szerokości
+   Użycie: className: 'cell-wrap' dla opisów/uwag
+   ========================================================= */
+.data-table :is(td, th).cell-wrap {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.data-table td.cell-wrap {
+  max-width: 420px;
+}
+
+/* =========================================================
+   WYŚRODKOWANIE ZAWARTOŚCI KOMÓREK
+   ========================================================= */
+.data-table tbody td :is(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  svg,
+  img,
+  .icon,
+  .btn,
+  .badge
+) {
+  vertical-align: middle;
+}
+
+.data-table tbody td a {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.data-table tbody td :is(a, button).icon-only,
+.data-table tbody td .cell-center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* checkboxy */
 .data-table .select-col {
-	width: 40px;
-	text-align: center;
-}
-.data-table .select-col input[type='checkbox'] {
-	transform: translateY(1px);
+  width: 40px;
+  text-align: center;
 }
 
-/* puste stany */
+.data-table .select-col input[type='checkbox'] {
+  vertical-align: middle;
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   Zebra + hover
+   ========================================================= */
+.data-table tbody tr:nth-child(odd) td {
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.data-table tbody tr:hover td {
+  background: rgba(58, 98, 138, 0.06);
+}
+
+/* =========================================================
+   Aligny specjalne (celowo wszystko centrowane)
+   ========================================================= */
+.data-table .num,
+.data-table [data-align='right'],
+.data-table .text-left,
+.data-table [data-align='left'] {
+  text-align: center;
+}
+
+/* =========================================================
+   Puste stany
+   ========================================================= */
 .data-table .empty-cell,
 .data-table .empty-row td {
-	text-align: center;
-	padding: 18px 12px;
-	color: #6b7280;
-	font-style: italic;
+  text-align: center;
+  padding: 18px 12px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* =========================================================
+   SORTOWANIE – STRZAŁKA
+   ========================================================= */
+.data-table thead th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.data-table thead th.sortable .th-sort-caret,
+.data-table thead th.sortable .sort-arrows,
+.data-table thead th.sortable .sort-arrows-inline {
+  display: none !important;
+}
+
+.data-table thead th .th-label {
+  display: inline;
+  white-space: nowrap;
+}
+
+.data-table thead th.sortable .th-label::after {
+  content: '';
+}
+
+.data-table thead th.sortable.sorted-asc .th-label::after {
+  content: ' ▲';
+  color: #f0f0f0;
+}
+
+.data-table thead th.sortable.sorted-desc .th-label::after {
+  content: ' ▼';
+  color: #f0f0f0;
+}
+
+.data-table thead th.th--disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* =========================================================
+   STATUSY
+   ========================================================= */
+.data-table tbody td.td--status {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.data-table tbody td:has(.badge),
+.data-table tbody td:has(.status),
+.data-table tbody td:has(.pill) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.data-table tbody td .badge,
+.data-table tbody td .status,
+.data-table tbody td .pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* =========================================================
+   DATY – zawsze w jednej linii
+   (zostawiamy; możesz też dodać className: 'cell-nowrap' w kolumnach dat)
+   ========================================================= */
+.data-table tbody td.td--date,
+.data-table tbody td .date-cell {
+  white-space: nowrap;
+}
+
+.data-table tbody td:has(time),
+.data-table tbody td:has(.date),
+.data-table tbody td:has([data-type='date']) {
+  white-space: nowrap;
 }

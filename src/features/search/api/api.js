@@ -1,5 +1,5 @@
 // src/app/features/search/api.js
-import { getJSON } from '../../api/http';
+import { getJSON } from './http'
 
 export function getSuggestions(q) {
   // dopasuj ścieżkę do swojego backendu / proxy

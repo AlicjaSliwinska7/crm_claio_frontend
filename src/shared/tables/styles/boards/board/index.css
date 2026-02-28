@@ -1,0 +1,14 @@
+/* src/shared/tables/styles/boards/index.css */
+
+/* Bazowa skórka shared/tables (zachowanie + komponenty) */
+@import '../../directories_lists_registers/index.css';
+
+/* Board – moduły */
+@import './filters.css';
+@import './controls.css';
+@import './register.css';
+@import './pagination.css';
+
+/* Board – NOWA skórka tabeli */
+@import './table.css';
+@import './utilities.css';

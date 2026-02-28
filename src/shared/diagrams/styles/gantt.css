@@ -1,0 +1,11 @@
+/* src/shared/diagrams2/styles/_gantt.css */
+
+/* gantt zwykle potrzebuje więcej miejsca na etykiety po lewej */
+.d2-root .d2-chart.d2-gantt {
+  height: 440px;
+}
+
+/* delikatnie przytnij labelki Y gdy są długie */
+.d2-root .d2-gantt .recharts-yAxis .recharts-text {
+  opacity: 0.9;
+}

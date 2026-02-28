@@ -1,0 +1,21 @@
+/* src/shared/summaries2/styles/classic/_utilities.css */
+
+/* -------------------- Utilities -------------------- */
+.es-root .muted { color: var(--es-muted); }
+
+.es-root .ts-subtitle {
+  margin: 8px 2px 6px;
+  color: var(--es-slate);
+  font-size: 13px;
+  text-align: left;
+}
+
+/* Local overrides: headings */
+.es-root h1,
+.es-root h2,
+.es-root h3,
+.es-root h4,
+.es-root h5,
+.es-root h6 {
+  text-align: left;
+}

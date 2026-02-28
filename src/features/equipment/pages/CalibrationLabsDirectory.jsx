@@ -31,10 +31,10 @@ import {
 	HEADER_COLS,
 	CSV_COLUMNS,
 	initialLabs,
-	normalizeOnLoad,
 	normalizeOnSave,
 	labelForDelete,
 	getSearchFields,
+	EMPTY_LAB,
 } from '../config/calibration.config'
 
 import { rid } from '../../../shared/utils/id'
@@ -43,7 +43,7 @@ export default function CalibrationLabs() {
 	const navigate = useNavigate()
 	const [sp, setSp] = useSearchParams()
 
-	const validate = useCallback(draft => (!draft?.name ? 'Nazwa laboratorium jest wymagana.' : null), [])
+	const validate = useCallback(draft => (!draft?.name?.trim() ? 'Nazwa laboratorium jest wymagana.' : null), [])
 
 	const {
 		list: labs,
@@ -61,7 +61,8 @@ export default function CalibrationLabs() {
 		deleteLabel,
 		save,
 	} = useListCrud({
-		initialItems: normalizeOnLoad(initialLabs),
+		// ✅ initialLabs już jest normalizeOnLoad(...) w configu
+		initialItems: initialLabs,
 		idKey: 'id',
 		makeId: () => rid('LAB'),
 		validate,
@@ -69,14 +70,12 @@ export default function CalibrationLabs() {
 		labelForDelete,
 	})
 
-	const { searchQuery, setSearchQuery, sortConfig, setSortConfig, filteredSorted, total } = useListQuery(
-		labs,
-		HEADER_COLS,
-		{
-			initialSort: { key: 'name', direction: 'asc' },
-			getSearchFields,
-		}
-	)
+	const { searchQuery, setSearchQuery, sortConfig, setSortConfig, filteredSorted } = useListQuery(labs, HEADER_COLS, {
+		initialSort: { key: 'name', direction: 'asc' },
+		getSearchFields,
+	})
+
+	const total = filteredSorted.length
 
 	const { pageCount, currentPage, visible, onPageChange, resetToFirstPage } = useUrlPagination(filteredSorted, {
 		pageSize: PAGE_SIZE,
@@ -124,7 +123,11 @@ export default function CalibrationLabs() {
 						}}
 					/>
 
-					<AddButton className='add-lab-btn' label='Dodaj laboratorium' onClick={() => openAdd({})} />
+					<AddButton
+						className='add-lab-btn'
+						label='Dodaj laboratorium'
+						onClick={() => openAdd(EMPTY_LAB)}
+					/>
 				</>
 			}
 			footer={
@@ -145,7 +148,6 @@ export default function CalibrationLabs() {
 					setSortConfig(cfg)
 					resetToFirstPage(true)
 				}}
-				onAfterSort={() => resetToFirstPage(true)}
 				rowProps={row => ({
 					...rowNavProps(row.id),
 					className: 'row-clickable',
@@ -164,7 +166,7 @@ export default function CalibrationLabs() {
 			{modalOpen && (
 				<Modal title={isEditing ? 'Edytuj laboratorium' : 'Dodaj laboratorium'} onClose={closeModal} size='md'>
 					<CalibrationLabForm
-						lab={form}
+						lab={form || EMPTY_LAB}
 						setLab={setForm}
 						onSubmit={e => save(e, { after: () => resetToFirstPage(true) })}
 						onClose={closeModal}
